@@ -10,7 +10,8 @@ export default new Router({ //创建路由
             path: '/',
             name: 'login',
             component:() => import('@/views/login')
-        },
+        }
+        /*,
         {
             path: '/index',
             name: 'index',
@@ -34,6 +35,6 @@ export default new Router({ //创建路由
                     component: resolve => {require(['@/views/index/systemInfo'],resolve)},
                 }
             ]
-        }
+        }*/
     ]
 })

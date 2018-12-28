@@ -10,7 +10,7 @@ axios.defaults.timeout = 5000;
 
 axios.interceptors.request.use((config) => {
     //设置请求的格式，根据具体需求来修改，这个项目因为有些地方请求的header头部格式不一致，所以需要特殊处理
-    config.withCredentials = true;
+    config.withCredentials = true;//跨域请求
     if (config.type === 'form' && config.file !== 'image'){
         config.data = qs.stringify(config.data);
     }else {
