@@ -47,7 +47,7 @@
                     return
                 }
                 this.$http.post('merchant/login', this.form, {
-                    //向服务器发送post请求
+                    //向服务器发送post请求,使用了vue-resource插件，可以用axios代替
                     type: 'form'
                 }).then((res) => {
                     //处理服务器响应
