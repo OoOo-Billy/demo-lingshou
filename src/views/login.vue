@@ -58,7 +58,7 @@
                     }, 500)
                 }, (err) => {
                     this.$msgErr(err.msg);
-                })
+                });
             }
         }
     }

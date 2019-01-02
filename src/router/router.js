@@ -10,15 +10,14 @@ export default new Router({ //创建路由
             path: '/',
             name: 'login',
             component:() => import('@/views/login')
-        }
-        /*,
+        },
         {
             path: '/index',
             name: 'index',
             component: resolve => {require(['@/views/index'],resolve)},
             redirect: '/index/systemIndex', //重定向
             children: [
-                //二级路由
+                /*//二级路由
                 {
                     path: '/index/systemIndex',
                     name: 'systemIndex',
@@ -33,8 +32,8 @@ export default new Router({ //创建路由
                     path: '/index/systemInfo',
                     name: 'systemInfo',
                     component: resolve => {require(['@/views/index/systemInfo'],resolve)},
-                }
+                }*/
             ]
-        }*/
+        }
     ]
 })
