@@ -3,12 +3,13 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import { Message } from 'element-ui'
+import Element from 'element-ui'
 import plugin from './utils/plugin'
 import VueResource from 'vue-resource'
-
+import './assets/css/element-variables.scss'
 
 Vue.config.productionTip = false;
-// Vue.use(Element);
+Vue.use(Element);
 Vue.use(plugin);
 Vue.use(VueResource);
 

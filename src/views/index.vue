@@ -18,6 +18,10 @@
                 </ul>
             </div>
             <div class="content">
+                <!--<subTitle :isRefresh="true" :isBack="true" :isClose="true"
+                          subTitle="系统首页"
+                @refresh="refresh"></subTitle>-->
+                <!--<pagination></pagination>-->
                 <router-view></router-view>
             </div>
         </div>
@@ -26,7 +30,8 @@
 
 <script>
     import nav from '../utils/nav'
-
+    // import subTitle from '../components/subTitle'
+    // import pagination from '../components/pagination'
     export default {
         name: "index",
         computed: {//计算属性
@@ -43,14 +48,21 @@
             return {
                 nav,
                 mainHeight: window.innerHeight - 90,
-                loginData: [{}, {}]
+                loginData: [{}, {}],
             }
         },
         methods: {
             switchNav(path) {
                 this.$router.push(path);
-            }
-        }
+            },
+            /*refresh(){
+                alert("点击了刷新")
+            }*/
+        },
+        /*components: {
+            // subTitle,
+            // pagination,
+        }*/
     }
 </script>
 
