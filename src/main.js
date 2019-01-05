@@ -2,17 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
+import axios from 'axios'
 import { Message } from 'element-ui'
 import Element from 'element-ui'
 import plugin from './utils/plugin'
-import VueResource from 'vue-resource'
 import './assets/css/element-variables.scss'
 
 Vue.config.productionTip = false;
 Vue.use(Element);
 Vue.use(plugin);
-Vue.use(VueResource);
-
+Vue.prototype.$ajax = axios;
 //全局路由判断函数
 router.beforeEach((to,from,next)=>{//导航守卫
     if (!localStorage.getItem('userInfo') || JSON.stringify(store.getters.userInfo) === '{}'){
@@ -20,7 +19,6 @@ router.beforeEach((to,from,next)=>{//导航守卫
         if (to.name === 'login'){
             next();
         } else {
-            // this.$message.error('登陆过期');
             Message.error('登陆过期');
             router.replace('/');//replace不会再history中添加新记录，而是替换当前的history记录
         }
@@ -33,5 +31,6 @@ router.beforeEach((to,from,next)=>{//导航守卫
 
 new Vue({
     router,
+    store,
     render: h => h(App),
 }).$mount('#app')

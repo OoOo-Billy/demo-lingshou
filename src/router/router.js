@@ -9,7 +9,8 @@ export default new Router({ //创建路由
         {
             path: '/',
             name: 'login',
-            component:() => import('@/views/login')
+            // component:() => import('@/views/login')
+            component:() => import('@/views/index')
         },
         {
             path: '/index',

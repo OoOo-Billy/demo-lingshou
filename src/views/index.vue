@@ -29,6 +29,7 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
     import nav from '../utils/nav'
     // import subTitle from '../components/subTitle'
     // import pagination from '../components/pagination'
@@ -36,8 +37,8 @@
         name: "index",
         computed: {//计算属性
             menu() {//根据vuex状态管理里的activeNav动态改变menu的值，然后重新生成菜单
-                //return nav[this.$store.getters.activeNav].child
-                return nav['index'].child
+                return nav[this.$store.getters.activeNav].child
+                // return nav['index'].child
             },
             userInfo(){
                 return JSON.parse(this.$store.getters.userInfo);

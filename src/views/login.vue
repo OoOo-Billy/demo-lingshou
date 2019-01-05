@@ -46,17 +46,21 @@
                     this.$msgWar('请输入密码');
                     return
                 }
-                this.$http.post('merchant/login', this.form, {
-                    //向服务器发送post请求,使用了vue-resource插件，可以用axios代替
+                this.$ajax.post('merchant/login', this.form, {
+                    //向服务器发送post请求,用axios
+                    //路径：merchant/login
+                    //数据：this.form
+                    //格式：type: 'form'
                     type: 'form'
                 }).then((res) => {
-                    //处理服务器响应
+                    //处理服务器响应success
                     this.$store.commit("SET_USERINFO", JSON.stringify(res));
                     this.$msgSuc('登录成功');
                     setTimeout(() => {
                         this.$router.push('/index');
                     }, 500)
                 }, (err) => {
+                    //error
                     this.$msgErr(err.msg);
                 });
             }
