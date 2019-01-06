@@ -4,7 +4,7 @@ module.exports = {
     devServer: { //配置代理
         proxy: {
             '/api': {
-                target: 'http://192.168.249.108:8080',
+                target: 'http://47.107.167.164:8080',
                 ws: true,
                 changeOrigin: true,
                 pathRewrite: {
