@@ -1,7 +1,8 @@
 export default {
     index:{
         title: '首页',
-        path: '/index/systemIndex',
+        // path: '/index/systemIndex',
+        path: '/index/',//调试
         child:[//子项
             {
                 sub:'系统首页',
@@ -26,31 +27,52 @@ export default {
             }
         ]
     },
-    test:{
-        title: '测试页',
-        path: '/index/test',
-        child:[//子项
+    goods: {
+        title: "商品",
+        path: '/goods/list',
+        child: [
             {
-                sub:'测试标题',
-                menu:[//侧边菜单栏数组
+                sub: "商品管理",
+                menu: [
                     {
-                        name:'测试标题',//菜单item名
-                        path:'/index/systemIndex',
+                        name: "商品列表",
+                        path: "/goods/list"
                     },
                     {
-                        name:'测试1',
-                        path:'/index/accountSetting',
+                        name: "添加商品",
+                        path: "/goods/add"
                     },
                     {
-                        name:'测试2',
-                        path:'/index/systemInfo',
+                        name: "商品回收站",
+                        path: "/goods/recycle"
                     },
                     {
-                        name:'测试3',
-                        path:'/index/conLog',
+                        name: "商品评价",
+                        path: "/goods/comment"
+                    }
+                ]
+            },
+            {
+                sub: "商品配置",
+                menu: [
+                    {
+                        name: "商品分类",
+                        path: "/goods/category"
+                    },
+                    {
+                        name: "商品类型",
+                        path: "/goods/type"
+                    },
+                    {
+                        name: "品牌管理",
+                        path: "/goods/brand"
+                    },
+                    {
+                        name: "商品图片库",
+                        path: "/goods/image"
                     },
                 ]
             }
         ]
-    }
+    },
 }

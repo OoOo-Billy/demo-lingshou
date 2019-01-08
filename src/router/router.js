@@ -16,7 +16,7 @@ export default new Router({ //创建路由
             path: '/index',
             name: 'index',
             component: resolve => {require(['@/views/index'],resolve)},
-            redirect: '/index/systemIndex', //重定向
+            // redirect: '/index/systemIndex', //重定向
             children: [
                 /*//二级路由
                 {
@@ -33,7 +33,12 @@ export default new Router({ //创建路由
                     path: '/index/systemInfo',
                     name: 'systemInfo',
                     component: resolve => {require(['@/views/index/systemInfo'],resolve)},
-                }*/
+                },*/
+                {
+                    path: '/goods/list',   //商品列表
+                    name: 'goodsList',
+                    component: resolve => {require(['@/views/goods/list'], resolve)},
+                },
             ]
         }
     ]
