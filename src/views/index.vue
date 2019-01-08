@@ -2,7 +2,8 @@
     <div class="container">
         <header class="header">
             <div class="logo"></div>
-            <div class="nav-item" :key="index" @click="switchNav(item.path)"
+            <div class="nav-item" :class="index === activeNav ? 'active' : ''" :key="index"
+                 @click="switchNav(item.path)"
                  v-for="(item,index) in nav">
                 {{item.title}}
             </div>
@@ -43,7 +44,9 @@
             userInfo(){
                 return JSON.parse(this.$store.getters.userInfo);
             },
-            //activeNav(){}
+            activeNav(){
+                return this.$store.getters.activeNav
+            }
         },
         data() {
             return {
@@ -88,6 +91,9 @@
             background: url("../assets/logo.png") no-repeat;
             background-size: contain;
             vertical-align: top;
+        }
+        .active{
+            background-color: #7CCDCC;
         }
         .nav-item{
             display: inline-block;
