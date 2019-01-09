@@ -8,17 +8,17 @@
             <div class="filter-wrap">
                 <div class="filter-up">
                     <div>
-                        <span><i class="el-icon-search"></i>筛选查询</span>
+                        <i class="el-icon-search">筛选查询</i>
                     </div>
                     <div>
-                        <span><i class="el-icon-arrow-down"></i>打开筛选</span>
-                        <span><i class="el-icon-arrow-up"></i>收起筛选</span>
+                        <i class="el-icon-arrow-down">打开筛选</i>
+                        <i class="el-icon-arrow-up">收起筛选</i>
                         <el-button>查询结果</el-button>
                     </div>
                 </div>
                 <div class="filter-down">
                     <span>输入搜索:</span>
-                    <el-input></el-input>
+                    <el-input v-model="goodsName"></el-input>
                     <span>选择分类:</span>
                     <el-select>
                         <el-option>1</el-option>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <!--数据区域-->
-            <el-table class="mall-table" :data="goodsList">
+            <el-table class="mall-table" :data="goodsList" v-loading="loading">
                 <el-table-column type="selection" prop="id"></el-table-column>
                 <el-table-column label="编号" prop="id"></el-table-column>
                 <el-table-column label="商品图片">
@@ -60,7 +60,7 @@
                 </el-table-column>
                 <el-table-column label="SKU库存">
                     <template slot-scope="scope">
-                        <img src="@/assets/icon-edit.png" alt="" @click="">
+                        <img src="@/assets/icon-edit.png" alt="" @click="dialogVisible = true">
                     </template>
                 </el-table-column>
                 <el-table-column label="销量" prop="buyNum"></el-table-column>
@@ -80,7 +80,33 @@
             <!--分页组件-->
             <pagination></pagination>
             <!--库存编辑弹窗-->
-            <div></div>
+            <el-dialog title="编辑货品信息" :visible.sync="dialogVisible" :append-to-body="true">
+                <div class="dialog-header" v-loading="">
+                   <div>
+                       <p>商品货号:{{goodsNo}}</p>
+                   </div>
+                    <table>
+                        <thead>
+                        <td>item</td>
+                        <td>销售价格</td>
+                        <td>商品库存</td>
+                        <td>库存预警值</td>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>大衣:女</td>
+                            <td><el-input type="number"></el-input></td>
+                            <td><el-input type="number"></el-input></td>
+                            <td><el-input type="number"></el-input></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="dialogVisible = false">确定</el-button>
+                </span>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -88,15 +114,18 @@
 <script>
     import subTitle from '../../components/subTitle'
     import pagination from '../../components/pagination'
+    import mixin from  '../../utils/mixin'
 
     export default {
         name: "list",
+        mixins: [mixin],
         components: {
             subTitle,
             pagination,
         },
         data() {
             return {
+                //测试用数据↓
                 goodsList: [
                     {
                         id: 52131,
@@ -238,7 +267,12 @@
                         buyNum: 8851,
                         status: 1
                     },
-                ]
+                ],
+                dialogVisible: true,
+                goodsNo: 'abcdefa95dag47gagd245d2',
+                //测试用数据↑
+
+                goodsName: '',
             }
         }
     }
