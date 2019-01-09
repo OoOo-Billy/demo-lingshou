@@ -1,7 +1,7 @@
 <template>
-    <div class="pagination-wrap flex h-center between">
+    <div class="pagination-wrap">
         <div>
-            <div class="batch-wrap flex h-center" v-if="isBatch">
+            <div class="batch-wrap" v-if="isBatch">
                 <el-checkbox v-model="checkAll" @change="handleChangeAll">全选</el-checkbox>
                 <el-select @change="batchChange" :clearable="isClear" v-model="checkBatch" placeholder="批量操作" size="mini" class="select">
                     <el-option :value="index" :label="item" v-for="(item, index) in optionsList" :key="index"></el-option>
@@ -63,23 +63,5 @@
 </script>
 
 <style scoped lang="scss">
-    @import "~@/assets/css/common";
 
-    .el-pagination.is-background .el-pager li:not(.disabled).active{
-        background-color: #5BC0BF !important;
-    }
-    .el-pagination.is-background .btn-prev, .el-pagination.is-background .btn-next, .el-pagination.is-background .el-pager li{
-        background-color: #fff !important;
-    }
-    .pagination-wrap{
-        padding: 0 20px;
-        height: 44px;
-        background-color: $bgColor;
-        border: $border;
-        border-top-color: transparent;
-    }
-    .select{
-        margin: 0 20px;
-        width: 150px;
-    }
 </style>
