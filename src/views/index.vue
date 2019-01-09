@@ -71,14 +71,14 @@
 </script>
 
 <style lang="scss" scoped>
-    /*.container{*/
+    .container{
         /*position: fixed;*/
         /*width: 100vw;*/
         /*height: 100vh;*/
         /*left: 0;*/
         /*top: 0;*/
-        /*overflow: auto;*/
-    /*}*/
+        /*overflow: hidden;*/
+    }
     .header{
         width: 100%;
         /*min-width: 1240px;*/
@@ -129,9 +129,9 @@
             }
         }
         .content{
-            position: relative;
             flex: 1;
-            /*min-width: 1040px;*/
+            min-width: 1040px;
+            overflow: auto;
         }
     }
 </style>
