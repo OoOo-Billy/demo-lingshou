@@ -127,6 +127,11 @@
                 box-sizing: border-box;
                 cursor: pointer;
             }
+            .active{
+                color: #5BC0BF;
+                border-bottom: 1px solid #5BC0BF;
+                background-color: #fff;
+            }
         }
         .content{
             flex: 1;
