@@ -39,6 +39,11 @@ export default new Router({ //创建路由
                     name: 'goodsList',
                     component: resolve => {require(['@/views/goods/list'], resolve)},
                 },
+                {
+                    path: '/goods/add',  //添加商品
+                    name: 'add',
+                    component: resolve => {require(['@/views/goods/add'], resolve)},
+                },
             ]
         }
     ]
