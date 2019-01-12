@@ -59,38 +59,38 @@
                         </div>
                         <el-form :model="ruleForm" :rules="rules" class="form-info" label-width="100px" ref="ruleForm">
                             <el-form-item label="商品分类：">
-                                <span class="font-14 green bold">化妆品</span>
+                                <span class="font-14 green bold" @click="stepActive = 0">化妆品</span>
                                 <span class="font-14 green bold"> &gt 化妆品</span>
                             </el-form-item>
-                            <el-form-item label="商品名称">
+                            <el-form-item label="商品名称" prop="goodsName">
                                 <el-input v-model="ruleForm.goodsName"></el-input>
                             </el-form-item>
-                            <el-form-item label="副标题">
+                            <el-form-item label="副标题" prop="goodsSubtitle">
                                 <el-input v-model="ruleForm.goodsSubtitle"></el-input>
                             </el-form-item>
-                            <el-form-item label="商品品牌">
+                            <el-form-item label="商品品牌" prop="brandId">
                                 <el-select v-model="ruleForm.brandId" placeholder="请选择品牌">
                                     <el-option :label="'贵人鸟'" :value="'旗下'"></el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="商品介绍">
+                            <el-form-item label="商品介绍" prop="goodsDesc">
                                 <el-input type="textarea" v-model="ruleForm.goodsDesc"></el-input>
                             </el-form-item>
                             <el-form-item label="商品货号">
                                 <el-input v-model="ruleForm.goodsNo"></el-input>
-                                <p>如果您不输入商品货号，系统将自动生成一个唯一的货号</p>
+                                <p class="form-tips">如果您不输入商品货号，系统将自动生成一个唯一的货号</p>
                             </el-form-item>
-                            <el-form-item label="商品售价">
+                            <el-form-item label="商品售价" prop="goodsPrice">
                                 <el-input v-model="ruleForm.goodsPrice" type="number"></el-input>
                             </el-form-item>
                             <el-form-item label="市场价">
                                 <el-input v-model="ruleForm.marketPrice" type="number"></el-input>
                             </el-form-item>
-                            <el-form-item label="商品库存">
+                            <el-form-item label="商品库存" prop="goodsStock">
                                 <el-input v-model="ruleForm.goodsStock" type="number"></el-input>
-                                <p>该设置只对单品有效，当商品存在多规格货品时为不可编辑状态，库存数值取决于货品数量</p>
+                                <p class="form-tips">该设置只对单品有效，当商品存在多规格货品时为不可编辑状态，库存数值取决于货品数量</p>
                             </el-form-item>
-                            <el-form-item label="库存预警">
+                            <el-form-item label="库存预警" prop="goodsWarning">
                                 <el-input v-model="ruleForm.goodsWarning" type="number"></el-input>
                             </el-form-item>
                             <el-form-item label="计量单位">
@@ -104,7 +104,45 @@
                 </div>
 
                 <!--选择商品属性-->
-                <div></div>
+                <div v-if="stepActive === 2">
+                    <div class="form-item-3 flex">
+                        <div class="form-label">商品属性</div>
+                        <div class="flex-1">
+                            <el-form class="form-prop" label-width="100px" v-loading="">
+                                <el-form-item label="商品类型：">
+                                    <el-select v-model="ruleForm.typeId" :disabled="!isAdd" placeholder="请选择商品类型" @click="getProp">
+                                        <el-option :label="item.styleName" :value="item.id"
+                                                   v-for="item in typeList"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="商品规格：" v-if="propList.length > 0">
+                                    <div class="prop-wrap">
+                                        <el-checkbox-group>
+                                            <div></div>
+                                            <el-checkbox></el-checkbox>
+                                        </el-checkbox-group>
+                                        <div>
+                                            <el-button></el-button>
+                                        </div>
+                                    </div>
+                                </el-form-item>
+                            </el-form>
+                            <table class="goods-table" border="1" v-show="propSpecList.length > 0"></table>
+                        </div>
+                    </div>
+                    <div class="form-item-3 flex">
+                        <div class="form-label">商品参数</div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="form-item-3 flex">
+                        <div class="form-label">商品相册</div>
+                        <div class="flex-1"></div>
+                    </div>
+                    <div class="form-item-3 flex">
+                        <div class="form-label">商品详情</div>
+                        <div class="flex-1"></div>
+                    </div>
+                </div>
 
                 <!--选择关联类目-->
                 <div></div>
@@ -129,8 +167,7 @@
         data() {
             return {
                 stepActive: 1,
-                formData: [],//测试
-                ruleForm:{
+                ruleForm: {
                     typeId: '', //一级分类ID
                     childId: '', //二级分类ID
                     goodsName: '', //商品名称
@@ -156,9 +193,18 @@
                     navId: '',
                     navChildId: '',
                 },
-                rules:{
-
-                }
+                rules: {
+                    goodsName: [],
+                    goodsSubtitle: [],
+                    brandId: [],
+                    goodsDesc: [],
+                    goodsPrice: [],
+                    goodsStock: [],
+                    goodsWarning: []
+                },
+                typeList: [],//类型列表
+                propList: [],//商品属性列表
+                propSpecList: [],//商品规格列表
             }
         },
         methods: {
@@ -171,8 +217,14 @@
             /**
              * step0 提交商品分类
              */
-            submitType(){
+            submitType() {
                 this.next();
+            },
+            /**
+             * step2 商品属性选择商品类型
+             */
+            getProp(id) {
+
             }
         }
     }
@@ -180,12 +232,13 @@
 
 <style scoped lang="scss">
     @import "~@/assets/css/common";
-    .form-wrap{
+
+    .form-wrap {
         margin-top: 50px;
-        >div{
+        > div {
             width: 100%;
         }
-        .form-label{
+        .form-label {
             width: 175px;
             height: 50px;
             line-height: 50px;
@@ -195,7 +248,7 @@
             background-color: $green;
             position: relative;
             margin-right: 100px;
-            &::after{
+            &::after {
                 content: '';
                 display: block;
                 position: absolute;
@@ -206,6 +259,7 @@
             }
         }
     }
+
     .select-category {
         margin-top: 40px;
         .title {
@@ -256,17 +310,33 @@
             }
         }
     }
-    .tips{
+
+    .tips {
         font-size: 14px;
         margin: 20px 0;
-        span{
+        span {
             color: $green;
         }
     }
-    .form-info,.form-prop{
+
+    .form-info, .form-prop {
         width: 500px;
     }
-    .label-2{
+
+    .label-2 {
         margin-top: 274px;
+    }
+
+    .form-tips {
+        font-size: 12px;
+        color: $gray;
+        line-height: 16px;
+        margin-top: 5px;
+    }
+
+    .prop-wrap {
+        padding: 20px;
+        border: $border;
+        border-radius: 4px;
     }
 </style>
