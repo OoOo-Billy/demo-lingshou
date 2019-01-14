@@ -10,8 +10,36 @@ export default {
         }
     },
     methods:{
+        /**
+         * 搜索框显示/隐藏
+         */
         showSearch(){
             this.visibleSearch = !this.visibleSearch;
-        }
+        },
+
+        /**
+         * 上传图片文件
+         * @param file
+         * @returns {Promise<any>}
+         */
+        uploadFiles(file){
+            return new Promise((resolve, reject) => {
+                let formData = new FormData();
+                formData.append('file', file);
+                this.$ajax.post('merchant/upload_file',formData, {
+                    type: 'form',
+                    file: 'image'
+                }).then((res) => {
+                    resolve({
+                        //图片文件上传至后台服务器，通过后台的处理转换成图片链接
+                        imgUrl: res.imgUrl + res.image
+                        //连接+后缀名
+                    });
+                },(err) => {
+                    this.$msgErr(err);
+                    reject(err);
+                })
+            })
+        },
     }
 }
