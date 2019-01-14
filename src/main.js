@@ -7,11 +7,16 @@ import { Message } from 'element-ui'
 import Element from 'element-ui'
 import plugin from './utils/plugin'
 import './assets/css/element-variables.scss'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+// import 'quill/dist/quill.bubble.css'
 
 Vue.config.productionTip = false;
 Vue.use(Element);
 Vue.use(plugin);
 Vue.prototype.$ajax = axios;
+Vue.use(VueQuillEditor);
 //全局路由判断函数
 router.beforeEach((to,from,next)=>{//导航守卫
     if (!localStorage.getItem('userInfo') || JSON.stringify(store.getters.userInfo) === '{}'){
