@@ -7,6 +7,7 @@ export default {
             pageSize: 10,//页数大小
             total: 0,//数据总数
             isAdd: true,//是否添加(true)/修改(false)商品
+            input: '',//
         }
     },
     methods:{
