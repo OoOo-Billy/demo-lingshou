@@ -10,7 +10,6 @@
                 <el-step title="填写商品属性"></el-step>
                 <el-step title="选择商品关联"></el-step>
             </el-steps>
-            <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
 
             <!--内容展示-->
             <div class="form-wrap flex" v-loading="loading">
@@ -24,8 +23,8 @@
                                 <div class="flex-1">
                                     <div class="title font-18 gray bold">选择一级分类</div>
                                     <ul class="category-list">
-                                        <li>
-                                            <span>化妆品</span>
+                                        <li :class="ruleForm.typeId === item.id ? 'active' : ''" v-for="item in categoryList" @click="getCategory(item)">
+                                            <span>{{ item.typeName }}</span>
                                             <i class="el-icon-arrow-right fr"></i>
                                         </li>
                                     </ul>
@@ -34,16 +33,17 @@
                                 <!--二级分类-->
                                 <div class="flex-1">
                                     <div class="title font-18 gray bold">选择二级分类</div>
-                                    <ul class="category-list">
-                                        <li>{{}}</li>
+                                    <ul class="category-list" v-if="childCategoryList.length > 0">
+                                        <li :class="ruleForm.childId === item.id ? 'active' : ''" v-for="item in childCategoryList" @click="getChildCategory(item)">{{ item.typeName }}</li>
                                     </ul>
-                                    <div class="category-list">
+                                    <div class="category-list" v-if="childCategoryList.length === 0">
                                         <span class="empty">暂无分类</span>
                                     </div>
                                 </div>
                             </div>
                             <p class="tips">您当前选择的商品类别是：
-                                <span>化妆品 > 的深V</span>
+                                <span>{{ categoryName || '未选择' }}</span>
+                                <span v-show="childCategoryName"> &gt; {{ childCategoryName || '未选择' }}</span>
                             </p>
                             <el-button type="primary" @click="submitType">下一步，填写商品信息</el-button>
                         </div>
@@ -59,8 +59,8 @@
                         </div>
                         <el-form :model="ruleForm" :rules="rules" class="form-info" label-width="100px" ref="ruleForm">
                             <el-form-item label="商品分类：">
-                                <span class="font-14 green bold" @click="stepActive = 0">化妆品</span>
-                                <span class="font-14 green bold"> &gt 化妆品</span>
+                                <span class="font-14 green bold point" @click="stepActive = 0">{{ categoryName }}</span>
+                                <span class="font-14 green bold point" v-show="childCategoryName" @click="stepActive = 0"> &gt; {{ childCategoryName }}</span>
                             </el-form-item>
                             <el-form-item label="商品名称" prop="goodsName">
                                 <el-input v-model="ruleForm.goodsName"></el-input>
@@ -70,7 +70,7 @@
                             </el-form-item>
                             <el-form-item label="商品品牌" prop="brandId">
                                 <el-select v-model="ruleForm.brandId" placeholder="请选择品牌">
-                                    <el-option :label="'贵人鸟'" :value="'旗下'"></el-option>
+                                    <el-option :label="item.name" :value="item.id" v-for="item in brandList"></el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="商品介绍" prop="goodsDesc">
@@ -101,7 +101,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button @click="stepActive = 0">上一步,选择商品分类</el-button>
-                                <el-button type="primary" @click="submitType">下一步,填写商品属性</el-button>
+                                <el-button type="primary" @click="submitForm('ruleForm')">下一步,填写商品属性</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -114,7 +114,7 @@
                         <div class="flex-1">
                             <el-form class="form-prop" label-width="100px" v-loading="propLoading">
                                 <el-form-item label="商品类型：">
-                                    <el-select v-model="ruleForm.typeId" :disabled="!isAdd" placeholder="请选择商品类型"
+                                    <el-select v-model="ruleForm.styleId" :disabled="!isAdd" placeholder="请选择商品类型"
                                                @click="getProp">
                                         <el-option :label="item.styleName" :value="item.id"
                                                    v-for="item in typeList"></el-option>
@@ -295,15 +295,34 @@
             <el-dialog
             title="从图库选择"
             :visible.sync="dialogVisible"
-            :append-to-body="true"></el-dialog>
+            :append-to-body="true">
+                <div class="flex between h-center">
+                    <span>商品图库 &gt; 全部图片</span>
+                    <el-select v-model="input" placeholder="请选择图库分类" size="small">
+                        <el-option v-for="item in albumList" :label="item.name" :value="item.id"></el-option>
+                    </el-select>
+                </div>
+                <div class="img-table flex">
+                    <div>
+                        <img src="" alt="">
+                        <i></i>
+                    </div>
+                </div>
+                <pagination :isBatch="false" :total="total" :pageSize="pageSize" @next="next"></pagination>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary">确 定</el-button>
+                </span>
+            </el-dialog>
         </div>
     </div>
 </template>
 
 <script>
     import subTitle from '../../components/subTitle'
+    import pagination from '../../components/pagination'
     import mixin from '../../utils/mixin'
-    import {quillEditor} from 'vue-quill-editor'
+    import { quillEditor } from 'vue-quill-editor'
 
     const toolbarOptions = [//配置富文本编辑器的工具栏
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -329,6 +348,7 @@
         mixins: [mixin],
         components: {
             subTitle,
+            pagination
         },
         data() {
             //商品库存规则
@@ -344,8 +364,22 @@
                 }
             };
             return {
-                stepActive: 3,
+                stepActive: 1,
                 dialogVisible: false,//图片库弹窗可视
+                categoryList: [
+                    {typeName: '化妆品', id: '0', list:[{typeName: '口红', id: '0'},{typeName:'眼影',id: '1'}]},
+                    {typeName: '食品', id: '1', list:[{typeName: '烧麦', id: '0'},{typeName: '包子', id: '1'},{typeName: '油条', id: '2'}]},
+                    {typeName: '服装', id: '2', list:[{typeName: '大衣', id: '0'},{typeName: '裙子', id: '1'}]},
+                    {typeName: '玩具', id: '3', list:[]}
+                ],//一级分类列表
+                childCategoryList: [],//二级分类列表
+                brandList: [
+                    {name: '李宁',id: '0'},
+                    {name: '耐克',id: '1'},
+                    {name: '阿迪达斯',id: '2'},
+                ],//品牌列表
+                categoryName: '',//商品一级分类名
+                childCategoryName: '',//商品二级分类名
                 ruleForm: {
                     typeId: '', //一级分类ID
                     childId: '', //二级分类ID
@@ -360,9 +394,8 @@
                     goodsWarning: '', //库存预警值
                     goodsUnit: '', //计量单位
                     goodsWeight: '', //商品重量
+                    goodsMobileImg: '',//商品详情goodsDetail，后台字段没改，用这个代替
                     styleId: '', //类型ID
-                    merchantSpecifications: [], //商品属性列表
-                    merchantGoodsTypePropertyList: [], //商品属性值列表
                     merchantParamDetailIds: {
                         merchantParamDetails: [
                             {name: '多肉', specificationsValue: ''},
@@ -375,7 +408,6 @@
                     goodsImg: '', //商品图片
                     navId: '1',//关联类目一级类目ID
                     navChildId: '0',//关联类目二级类目ID
-                    goodsMobileImg: ''//商品详情goodsDetail，后台字段没改，用这个代替
                 },
                 rules: {
                     goodsName: [
@@ -410,8 +442,10 @@
                 propList: [
                     {name: '烧卖', value: ['大份', '小份']},
                     {name: '包子', value: ['肉包', '菜包', "糖包"]},
-                ],//商品属性列表
-                checkProp: [],//组件选中属性
+                ],//step2商品总的属性列表
+                propHeader: ['种类', '规格'],//step2选中的商品属性名
+                checkProp: [],//step2商品选中的具体属性
+                checkPropList: [],//商品的选中属性总列表，通过服务器获取，处理后能得到propHeader和checkProp
                 propSpecList: [
                     {
                         nameValue: [{name: '种类', value: '烧卖'}, {name: '规格', value: '大份'}],
@@ -426,14 +460,22 @@
                         stockWarning: 10
                     },
                 ],//step2商品规格列表
-                propHeader: ['种类', '规格'],//step2商品表格头
                 propLoading: false,//属性loading
                 paramsList: [
                     {name: '多肉', list: ['少', '中', '微']},
                     {name: '多糖', list: ['全糖', '无糖']},
                     {name: '多菜', list: ['有菜', '无菜']},
                 ],//step2商品参数列表
-                imgList: ['@', ''],//商品图片列表
+
+                //保存商品旧属性
+                oldStyleId: '',
+                oldPropList: [],
+                oldCheckProp: [],
+                oldPropHeader: [],
+                oldCheckPropList: [],
+                oldPropSpecList: [],
+                oldMerchantParamDetailIds: {},
+
                 headerList:[
                     {navName: '鞋子',id: '0'},
                     {navName: '数码',id: '1'},
@@ -445,6 +487,12 @@
                     {navName: '特步', id: '1'},
                     {navName: '耐克', id: '2'},
                 ],//关联类目二级类目列表
+                imgList: ['@', ''],//商品图片列表
+                albumList: [
+                    {name:'食品',id:0},
+                    {name:'服装',id:1},
+                    {name:'美妆',id:2},
+                ],//相册分类列表
                 serverUrl: 'https://ls.diandianyuyue.com',//这里写你要上传的图片服务器地址
                 editorOption: {//富文本编辑器功能
                     placeholder: '',
@@ -468,18 +516,191 @@
                 }
             }
         },
+        /*mounted(){
+            this.loading = true;
+            //1.第一次请求:商品一级分类列表
+            this.$ajax.post("merchantGoodsType/query_goods_type_tree").then((res) => {
+                //第一次请求*响应
+                this.categoryList = res;
+                //2.第二次请求:商品品牌列表
+                this.$ajax.post("merchant_goods_brand/query_list").then((res) => {
+                    //第二次请求*响应
+                    this.brandList = res;
+                    //3.第三次请求:商品类型列表
+                    this.$ajax.post("merchantGoodsStyle/merchant_goods_style_list_page",{
+                        currentPage:1,//当前页数
+                        pageSize: 100,//总页数
+                    }).then((res) => {
+                        //第三次请求*响应
+                        this.typeList = res.list;
+                        //4.第四次请求:相册分类列表
+                        this.$ajax.post("merchant_goods_galleries/query_for_page",{
+                            currentPage: 1,
+                            pageSize: 100
+                        }).then((res) => {
+                            //第四次请求*响应
+                            this.albumList = res.list;
+                            //5.第五次请求:关联类目一级类目列表
+                            this.$ajax.post("merchantNavigation/query_navigation_type_tree").then((res) => {
+                                //第五次请求*响应
+                                this.headerList = res;
+
+                                //6.判断是否为添加新商品
+                                if (this.$route.query.id){
+                                    //6.1否，编辑旧商品
+                                    //注意:传参是this.$router,接收参数是this.$route,这里千万要看清了！！！
+                                    this.isAdd = false;
+
+                                    //6.1.1更新step0里的分类列表
+                                    //--6.1.1.1根据id获取商品信息
+                                    this.$ajax.post("merchantGoods/merchant_goods_by_id",{
+                                        id: this.$route.query.id
+                                    }).then((res) => {
+                                        this.categoryName = res.typeName;//商品一级分类
+                                        this.childCategoryName = res.childName;//商品二级分类
+                                        this.$set(this.ruleForm, 'typeId', res.typeId);//一级分类ID
+                                        //受ES5的限制。Vue.js不能检测到对象属性的添加或删除。因为 Vue.js在初始化实例时将属性转为getter/setter，所以属性必须在data对象上才能让Vue.js转换它，才能让它是响应的。而这里typeId是在data对象上的ruleForm属性里的，所以必须使用$set
+
+                                        //--6.1.1.2判断商品是否有二级分类
+                                        if (String(res.childId)){//是
+                                            this.$set(this.ruleForm, 'childId', res.childId);//二级分类ID
+                                            //把商品一级分类ID与总分类列表里匹配，从而获取二级列表
+                                            this.categoryList.map((item) => {
+                                                if (item.id === res.typeId) {
+                                                    //更新step0里二级分类列表的数据
+                                                    this.childCategoryList = item.list;
+                                                }
+                                            })
+                                        }
+                                        //6.1.2更新step1里面的表单数据
+                                        this.$set(this.ruleForm, 'goodsName', res.goodsName);
+                                        this.$set(this.ruleForm, 'goodsSubtitle', res.goodsSubtitle);
+                                        this.$set(this.ruleForm, 'brandId', res.brandId);
+                                        this.$set(this.ruleForm, 'goodsDesc', res.goodsDesc);
+                                        this.$set(this.ruleForm, 'goodsNo', res.goodsNo);
+                                        this.$set(this.ruleForm, 'goodsPrice', res.goodsPrice);
+                                        this.$set(this.ruleForm, 'marketPrice', res.marketPrice);
+                                        this.$set(this.ruleForm, 'goodsStock', res.goodsStock);
+                                        this.$set(this.ruleForm, 'goodsWarning', res.goodsWarning);
+                                        this.$set(this.ruleForm, 'goodsUnit', res.goodsUnit);
+                                        this.$set(this.ruleForm, 'goodsWeight', res.goodsWeight);
+                                        this.$set(this.ruleForm, 'goodsMobileImg', res.goodsMobileImg);
+                                        this.$set(this.ruleForm, 'styleId', res.styleId);
+                                        this.$set(this.ruleForm, 'merchantParamDetailIds', res.merchantParamDetailIds);
+                                        this.$set(this.ruleForm, 'navId', res.navId);
+                                        this.$set(this.ruleForm, 'navChildId', res.navChildId);
+                                        //6.1.3更新step3里的关联类目列表
+                                        if (String(res.navId)){
+                                            this.headerList.map((item) => {
+                                                if (item.id === res.navId){
+                                                    //更新关联类目二级列表
+                                                    this.childHeaderList = item.list;
+                                                }
+                                            })
+                                        }
+                                        //6.1.4更新step2商品属性里的参数/特殊属性列表
+                                        this.paramsList = res.merchantParamDetailIds.merchantParamDetails;
+                                        this.propSpecList = res.merchantGoodsTypePropertyList;
+                                        //6.1.5根据商品类型向服务器请求step2里的商品常规属性列表
+                                        this.$ajax.post("merchantGoodsProperty/merchant_goods_property_list_page",{
+                                            styleId: res.styleId,
+                                            currentPage: 1,
+                                            pageSize: 100,
+                                        }).then((res) =>{
+                                            let list = [];
+                                            res.list.map((item) => {
+                                                list.push({
+                                                    name: item.propertyName,
+                                                    value: item.propertyList.split(",")
+                                                });
+                                            });
+                                            this.propList = list;
+
+                                            //6.1.6获取商品的选中属性
+                                            this.checkPropList = res.map;//服务器获取的数据
+                                            let checkProp = [];//选中的具体属性
+                                            let propHeader = [];//选中的属性名
+                                            //处理逻辑
+                                            this.checkPropList.map((item) => {
+                                                propHeader.push(item.name);
+                                                item.value.map((prop) => {
+                                                    checkProp.push(item.name + prop);
+                                                })
+                                            });
+                                            //赋值
+                                            this.checkProp = checkProp;
+                                            this.propHeader = propHeader;
+
+                                            //6.1.7保存商品的旧属性
+                                            this.oldStyleId = res.styleId;
+                                            this.oldPropList = list;
+                                            this.oldCheckProp = checkProp;
+                                            this.oldCheckPropList = res.map;
+                                            this.oldPropHeader = propHeader;
+                                            this.oldPropSpecList = res.merchantGoodsTypePropertyList;
+                                            this.oldMerchantParamDetailIds = res.merchantParamDetailIds;
+                                            //6.1.8保存商品图片信息
+                                            if (res.goodsImg){
+                                                this.imgList = res.goodsImg.split(',');
+                                            }
+                                            //6.1.9编辑旧商品的数据处理完毕，关闭加载状态
+                                            this.loading = false;
+                                        })
+                                    })
+                                }
+                                //7.isAdd=true，是添加新商品，所有数据为空，关闭加载状态
+                                this.loading = false;
+                            })
+                        })
+                    })
+                })
+
+            })
+        },*/
         methods: {
             /**
-             * 测试
+             * step0 点击商品一级分类
              */
-            next() {
-                if (this.stepActive++ > 3) this.stepActive = 0;
+            getCategory(item){
+                //判断是否跟原有属性一样
+                if (this.ruleForm.typeId !== item.id){
+                    this.ruleForm.typeId = item.id;
+                    this.ruleForm.childId = '';
+                    this.childCategoryName = '';
+                    this.childCategoryList = item.list;
+                    this.categoryName = item.typeName;
+                }
+            },
+            /**
+             * step0 点击商品二级分类
+             */
+            getChildCategory(item){
+                this.ruleForm.childId = item.id;
+                this.childCategoryName = item.typeName;
             },
             /**
              * step0 提交商品分类
              */
             submitType() {
-                this.next();
+                if (!this.ruleForm.typeId){
+                    this.$msgErr("请先选择商品分类");
+                    return
+                }
+                this.stepActive = 1;
+            },
+            /**
+             * step1提交商品信息表单
+             */
+            submitForm(formName){
+                //Function(callback: Function(boolean, object))
+                this.$refs[formName].validate((valid)=>{
+                    if (valid){
+                        this.stepActive = 2;
+                        document.documentElement.scrollTop = 0
+                    } else {
+                        return false;
+                    }
+                });
             },
             /**
              * step2 商品属性选择商品类型
@@ -522,6 +743,13 @@
             submitGoods(){
                 alert('完成提交！');
                 this.next();
+            },
+            /**
+             * 图片库翻页
+             * @param {number}val
+             */
+            next(val){
+
             }
         }
     }
@@ -697,5 +925,10 @@
     }
     .mt20{
         margin-top: 20px;
+    }
+    .dialog-footer{
+        button:last-child{
+            margin-right: 0;
+        }
     }
 </style>
