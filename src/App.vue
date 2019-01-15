@@ -141,4 +141,8 @@
     .el-tag .el-icon-close{
         color: #fff !important;
     }
+    .point{
+        cursor: pointer;
+    }
+
 </style>
