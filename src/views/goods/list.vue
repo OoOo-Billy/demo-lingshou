@@ -78,7 +78,7 @@
                 </el-table-column>
             </el-table>
             <!--分页组件-->
-            <pagination></pagination>
+            <pagination :total="total" :pageSize="pageSize" ref="pagination" :optionsList="optionsList"></pagination>
             <!--库存编辑弹窗-->
             <el-dialog title="编辑货品信息" :visible.sync="dialogVisible" :append-to-body="true">
                 <div class="dialog-header" v-loading="dialogLoading">
@@ -287,6 +287,10 @@
                 // categoryList: [{typeName: '大衣', id: 0}, {typeName: '长裙', id: 1}],
                 brandList: [],
                 // brandList: [{name: '安踏', id: 0}, {name: '贵人鸟', id: 1}],
+
+                optionsList:{
+                    'delete': '删除'
+                },
             }
         },
         mounted() {
