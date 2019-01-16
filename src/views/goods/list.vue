@@ -33,7 +33,7 @@
             <div class="box-title flex between h-center">
                 <span class="font-20">数据列表</span>
                 <div class="flex h-center">
-                    <el-button>添加商品</el-button>
+                    <el-button @click="$router.push('/goods/add')">添加商品</el-button>
                 </div>
             </div>
             <!--数据区域-->
@@ -72,7 +72,7 @@
                 <el-table-column label="操作" prop="">
                     <template slot-scope="scope">
                         <span class="table-btn" @click="outGoods(scope.row.id,scope.row.status)">{{ scope.row.status === 0 ? '上架' : '下架'}}</span>
-                        <span class="table-btn">编辑</span>
+                        <span class="table-btn" @click="$router.push('/goods/add?id=' + scope.row.id)">编辑</span>
                         <span class="table-btn" @click="remove([scope.row.id])">删除</span>
                     </template>
                 </el-table-column>
