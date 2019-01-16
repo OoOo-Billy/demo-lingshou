@@ -42,5 +42,12 @@ export default {
                 })
             })
         },
+
+        /**
+         * 返回上一个页面
+         */
+        back(){
+            this.$router.go(-1);
+        }
     }
 }
