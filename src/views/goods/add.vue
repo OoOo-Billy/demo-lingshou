@@ -312,7 +312,7 @@
                 <pagination :isBatch="false" :total="total" :pageSize="pageSize" @next="next"></pagination>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary">确 定</el-button>
+                    <el-button type="primary" @click="addImg">确 定</el-button>
                 </span>
             </el-dialog>
         </div>
@@ -1166,7 +1166,18 @@
              * step2 图片库弹窗：点击选择商品图片
              */
             checkAlbumImg(item){
-                
+                //检查图片选区列表中是否有当前图片
+                if (this.checkAlbumImgList.indexOf(item.imgUrl) < 0){
+                    //没有,添加这张图片
+                    if (this.checkAlbumImgList.length + this.imgList.length >= 5){
+                        this.$msgWar("最多添加5张");
+                        return
+                    }
+                    this.checkAlbumImgList.push(item.imgUrl);
+                }else {
+                    //有,删除这张图片
+                    this.checkAlbumImgList.splice(this.checkAlbumImgList.indexOf(item.imgUrl), 1);
+                }
             },
 
             /**
@@ -1174,7 +1185,17 @@
              * @param {number}val
              */
             next(val){
+                this.currentPage = val;
+                this.getAlbumImg(this.albumId);
+            },
 
+            /**
+             * step2 图片库弹窗：确定按钮
+             */
+            addImg(){
+                this.imgList = [...this.imgList, ...this.checkAlbumImgList];
+                this.checkAlbumImgList = [];
+                this.dialogVisible = false;
             }
         }
     }
