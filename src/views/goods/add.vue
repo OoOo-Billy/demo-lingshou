@@ -126,11 +126,11 @@
                                                            :key="index">
                                             <div class="font-14 gray">{{item.name}}</div>
                                             <el-checkbox :disabled="!isAdd" :label="item.name + prop"
-                                                         v-for="prop in item.value">{{prop}}
+                                                         v-for="prop in item.value" @change="handleCheckProp(prop, item.name, $event)">{{prop}}
                                             </el-checkbox>
                                         </el-checkbox-group>
                                         <div>
-                                            <el-button size="small" type="primary" v-if="isAdd">添加</el-button>
+                                            <el-button size="small" type="primary" v-if="isAdd" @click="addProps">添加</el-button>
                                         </div>
                                     </div>
                                 </el-form-item>
@@ -158,6 +158,7 @@
                                         <el-input v-model="item.stockWarning" size="mini" type="number"
                                                   :max="99999"></el-input>
                                     </td>
+                                    <!--<td><el-input v-model="item.skuCode" size="mini"></el-input></td>-->
                                 </tr>
                                 </tbody>
                             </table>
@@ -211,8 +212,8 @@
                                     </div>
                                     <div class="flex h-center around">
                                         <span class="font-14 red" v-if="index === 0">商品主图</span>
-                                        <span class="font-14 green table-btn" v-if="index !== 0">设为主图</span>
-                                        <span class="font-14 green table-btn">删除图片</span>
+                                        <span class="font-14 green table-btn" v-if="index !== 0" @click="setMainPic(item,index)">设为主图</span>
+                                        <span class="font-14 green table-btn" @click="deleteImg(index)">删除图片</span>
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +250,7 @@
                             </div>
                             <div style="margin-top: 80px">
                                 <el-button @click="stepActive = 1">上一步,填写商品信息</el-button>
-                                <el-button type="primary" @click="submitType">下一步,选择商品类目</el-button>
+                                <el-button type="primary" @click="submitGood">下一步,选择商品类目</el-button>
                             </div>
                         </div>
                     </div>
@@ -265,7 +266,7 @@
                                 <div class="flex-1">
                                     <div class="title font-18 gray bold">选择一级类目</div>
                                     <ul class="category-list">
-                                        <li :class="ruleForm.navId === item.id ? 'active' : ''" v-for="item in headerList">
+                                        <li :class="ruleForm.navId === item.id ? 'active' : ''" v-for="item in headerList" @click="getHeader(item)">
                                             <span>{{ item.navName}}</span>
                                             <i class="el-icon-arrow-right fr"></i>
                                         </li>
@@ -275,7 +276,7 @@
                                 <div class="flex-1">
                                     <div class="title font-18 gray bold">选择二级类目</div>
                                     <ul class="category-list" v-if="childHeaderList.length > 0">
-                                        <li :class="ruleForm.navChildId === item.id ? 'active' : ''" v-for="item in childHeaderList">{{ item.navName}}</li>
+                                        <li :class="ruleForm.navChildId === item.id ? 'active' : ''" v-for="item in childHeaderList" @click="getChildHeader(item)">{{ item.navName}}</li>
                                     </ul>
                                     <div class="category-list" v-if="childHeaderList.length === 0">
                                         <span class="empty">暂无类目</span>
@@ -298,14 +299,14 @@
             :append-to-body="true">
                 <div class="flex between h-center">
                     <span>商品图库 &gt; 全部图片</span>
-                    <el-select v-model="input" placeholder="请选择图库分类" size="small">
+                    <el-select v-model="input" placeholder="请选择图库分类" size="small" @change="getAlbumImg">
                         <el-option v-for="item in albumList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </div>
                 <div class="img-table flex">
-                    <div>
-                        <img src="" alt="">
-                        <i></i>
+                    <div v-for="(item,index) in albumImgList" :key="index" @click="checkAlbumImg(item)">
+                        <img :src="item.imgUrl" alt="">
+                        <i class="el-icon-success" v-if="checkAlbumImgList.indexOf(item.imgUrl) >= 0"></i>
                     </div>
                 </div>
                 <pagination :isBatch="false" :total="total" :pageSize="pageSize" @next="next"></pagination>
@@ -364,7 +365,7 @@
                 }
             };
             return {
-                stepActive: 1,
+                stepActive: 2,
                 dialogVisible: false,//图片库弹窗可视
                 categoryList: [
                     {typeName: '化妆品', id: '0', list:[{typeName: '口红', id: '0'},{typeName:'眼影',id: '1'}]},
@@ -396,6 +397,8 @@
                     goodsWeight: '', //商品重量
                     goodsMobileImg: '',//商品详情goodsDetail，后台字段没改，用这个代替
                     styleId: '', //类型ID
+                    merchantSpecifications: [], //商品属性列表
+                    merchantGoodsTypePropertyList: [], //商品规格列表
                     merchantParamDetailIds: {
                         merchantParamDetails: [
                             {name: '多肉', specificationsValue: ''},
@@ -406,8 +409,8 @@
                         paramObject: '所有人',
                     }, //商品参数值列表
                     goodsImg: '', //商品图片
-                    navId: '1',//关联类目一级类目ID
-                    navChildId: '0',//关联类目二级类目ID
+                    navId: '0',//关联类目一级类目ID
+                    navChildId: '1',//关联类目二级类目ID
                 },
                 rules: {
                     goodsName: [
@@ -440,21 +443,21 @@
                     {styleName: '玩具', id: 2},
                 ],//类型列表
                 propList: [
-                    {name: '烧卖', value: ['大份', '小份']},
+                    {name: '烧麦', value: ['大份', '小份']},
                     {name: '包子', value: ['肉包', '菜包', "糖包"]},
                 ],//step2商品总的属性列表
-                propHeader: ['种类', '规格'],//step2选中的商品属性名
+                propHeader: ['包子', '烧卖'],//step2选中的商品属性名
                 checkProp: [],//step2商品选中的具体属性
-                checkPropList: [],//商品的选中属性总列表，通过服务器获取，处理后能得到propHeader和checkProp
+                checkPropList: [],//商品的选中属性总列表，编辑商品时通过服务器获取，添加商品时通过选择商品属性并点“添加”更新，处理后能得到propHeader和checkProp
                 propSpecList: [
                     {
-                        nameValue: [{name: '种类', value: '烧卖'}, {name: '规格', value: '大份'}],
+                        nameValue: [{name: '烧麦', value: '大份'}, {name: '包子', value: '肉包'}],
                         goodsSalePrice: 100,
                         goodsStock: 42,
                         stockWarning: 10
                     },
                     {
-                        nameValue: [{name: '种类', value: '包子'}, {name: '规格', value: '菜包'}],
+                        nameValue: [{name: '烧麦', value: '小份'}, {name: '包子', value: '菜包'}],
                         goodsSalePrice: 100,
                         goodsStock: 42,
                         stockWarning: 10
@@ -476,11 +479,42 @@
                 oldPropSpecList: [],
                 oldMerchantParamDetailIds: {},
 
+                albumId: '',//相册id
+                albumImgList: [],//相册列表
+                checkAlbumImgList: [],//图片库选区图片
+
                 headerList:[
-                    {navName: '鞋子',id: '0'},
-                    {navName: '数码',id: '1'},
-                    {navName: '服装',id: '2'},
-                    {navName: '眼镜',id: '3'},
+                    {
+                        navName: '鞋子',
+                        id: '0',
+                        list:[
+                            {navName: '安踏', id: '0'},
+                            {navName: '特步', id: '1'},
+                            {navName: '耐克', id: '2'},
+                        ]
+                    },
+                    {
+                        navName: '数码',
+                        id: '1',
+                        list:[
+                            {navName: '索尼', id: '0'},
+                            {navName: '松下', id: '1'}
+                        ]
+                    },
+                    {
+                        navName: '服装',
+                        id: '2',
+                        list:[
+                            {navName: '杰克琼斯', id: '0'},
+                            {navName: '南极人', id: '1'},
+                            {navName: '李维斯', id: '2'},
+                        ]
+                    },
+                    {
+                        navName: '眼镜',
+                        id: '3',
+                        list: []
+                    },
                 ],//关联类目一级类目列表
                 childHeaderList: [
                     {navName: '安踏', id: '0'},
@@ -706,16 +740,265 @@
              * step2 商品属性选择商品类型
              */
             getProp(id) {
-
+                //判断是否跟原来的类型一样
+                if (id === this.oldStyleId){
+                    //1.如果一样，则数据跟原来的一样，并更新参数列表
+                    this.propList = this.oldPropList;
+                    this.checkProp = this.oldCheckProp;
+                    this.checkPropList = this.oldCheckPropList;
+                    this.propHeader = this.oldPropHeader;
+                    this.propSpecList = this.oldPropSpecList;
+                    this.ruleForm.merchantParamDetailIds = this.oldMerchantParamDetailIds;
+                    this.$ajax.post("merchantGoodsParam/merchant_goods_property_list_page",{
+                        styleId: id,
+                        currentPage: 1,
+                        pageSize: 100
+                    }).then((res) => {
+                        let list = [];
+                        res.list.map((item) => {
+                            list.push({
+                                name: item.paramName,
+                                list: item.paramList.split(",")
+                            })
+                        });
+                        this.paramsList = list;
+                    })
+                } else {
+                    //2.如果不一样，则重新拉取数据
+                    //2.1清空原有数据
+                    this.checkProp = [];
+                    this.checkPropList = [];
+                    this.propHeader = [];
+                    this.propSpecList = [];
+                    this.propLoading = true;
+                    //2.2请求属性列表
+                     this.$ajax.post("merchantGoodsProperty/merchant_goods_property_list_page",{
+                         styleId: id,
+                         currentPage: 1,
+                         pageSize: 100
+                     }).then((res) => {
+                         let list = [];
+                         res.list.map((item) => {
+                             list.push({
+                                 name: item.propertyName,
+                                 value: item.propertyList.split(",")
+                             });
+                         });
+                         this.propList = list;
+                         //2.3请求参数列表和商品参数名
+                         this.$ajax.post("merchantGoodsParam/merchant_goods_property_list_page",{
+                             styleId: val,
+                             currentPage: 1,
+                             pageSize: 100,
+                         }).then((res) => {
+                             let list = [];
+                             let formList = [];
+                             res.list.map((item) => {
+                                 list.push({
+                                     name: item.paramName,
+                                     list: item.paramList.split(",")
+                                 });
+                                 formList.push({
+                                     paramDetailName: item.paramName,
+                                     specificationsValue: ''
+                                 })
+                             });
+                             this.paramsList= list;
+                             this.$set(this.ruleForm, 'merchantParamDetailIds', {
+                                 'merchantParamDetails': formList,
+                                 'mainMaterial': '',
+                                 'paramObject': '',
+                             });
+                             this.propLoading = false;
+                         });
+                     })
+                }
             },
             /**
-             * step2上传图片
+             * step2 选择商品属性
              */
-            uploadGoodImg() {
+            handleCheckProp(prop, name, $event){
+                //1.如果是勾选
+                if ($event){
+                    if (this.checkPropList.length === 0){
+                        this.checkPropList.push({
+                            name: name,
+                            value: [prop]
+                        })
+                    } else {
+                        let isExist = false;
+                        for (let i = 0; i < this.checkPropList.length; i++){
+                            if (this.checkPropList[i].name === name){
+                                this.checkPropList[i].value.push(prop);
+                                isExist = true;
+                                break;
+                            }
+                        }
+                        if (!isExist){
+                            this.checkPropList.push({
+                                name: name,
+                                value: [prop]
+                            })
+                        }
+                    }
+                } else {
+                    //如果是取消勾选
+                    for (let i = 0; i < this.checkPropList.length; i++) {
+                        if (this.checkPropList[i].name === name){
+                            for (let j = 0; j < this.checkPropList[i].value.length; j++){
+                                if (this.checkPropList[i].value[j] === prop){
+                                    this.checkPropList[i].value.splice(j,1);
+                                    if (this.checkPropList[i].value.length === 0){
+                                        this.checkPropList.splice(i,1)
+                                    }
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            },
 
+            /**
+             * step2 把选择的商品属性添加到商品ruleForm里
+             */
+            addProps(){
+                if (!this.ruleForm.styleId){
+                    this.$msgWar("请选择商品类型");
+                    return
+                }
+                if (!this.checkPropList.length === 0){
+                    this.$msgWar("请选择商品属性");
+                    return
+                }
+                let propHeader = [];
+                let propArr = [];
+                this.checkPropList.map((item,index) => {
+                    propHeader.push(item.name);
+                    propArr[index] = [];
+                    this.checkPropList[index].value.map((val) => {
+                        propArr[index].push({
+                            name: this.checkPropList[index].name,
+                            value: val
+                        })
+                    })
+                });
+                this.propHeader = propHeader;
+                let propItem = sortAll(propArr);
+                this.propSpecList = [];
+                propItem.map((item) => {
+                    this.propSpecList.push({
+                        nameValue: item instanceof Array ? item : [item],
+                        goodsSalePrice: '',
+                        goodsStock: '',
+                        stockWarning: '',
+                        skuCode: ''
+                    })
+                });
+
+                //sortAll(arr)处理前：
+                // propArr = [
+                //     [
+                //      {name: '烧麦',value: '大份'},
+                //      {name: '烧麦',value: '小份'}
+                //      ],
+                //     [
+                //      {name: '包子',value: '肉包'},
+                //      {name: '包子',value: '菜包'},
+                //      {name: '包子',value: '糖包'}
+                //      ]
+                // ]
+                /**
+                 * 把propArr不同属性名下的属性排列组合，得到不同的商品规格列表
+                 * @param arr
+                 * @returns {Array}
+                 */
+                function sortAll(arr) {
+                    let len = arr.length;
+                    if (len >= 2){
+                        let len1 = arr[0].length;
+                        let len2 = arr[1].length;
+                        let lenBoth = len1 * len2;
+                        let items = new Array(lenBoth);
+                        let index = 0;
+                        for (let i = 0; i < len1; i++){
+                            for (let j = 0; j < len2; j++){
+                                if (arr[0][i] instanceof Array){
+                                    items[index] = [...arr[0][i],arr[1][j]];
+                                } else {
+                                    items[index] = [arr[0][i],arr[1][j]];
+                                }
+                                index++;
+                            }
+                        }
+                        let newArr = new Array(len -1);
+                        for (let i = 2; i <arr.length; i++){
+                            newArr[i -1] = arr[i];
+                        }
+                        newArr[0] = items;
+                        return sortAll(newArr);
+                    } else {
+                        return arr[0]
+                    }
+                }
+                //sortAll(arr)处理后：
+                /* newPropArr = [
+                    [ { name: '烧麦', value: '大份' }, { name: '包子', value: '肉包' } ],
+                    [ { name: '烧麦', value: '大份' }, { name: '包子', value: '菜包' } ],
+                    [ { name: '烧麦', value: '大份' }, { name: '包子', value: '糖包' } ],
+                    [ { name: '烧麦', value: '小份' }, { name: '包子', value: '肉包' } ],
+                    [ { name: '烧麦', value: '小份' }, { name: '包子', value: '菜包' } ],
+                    [ { name: '烧麦', value: '小份' }, { name: '包子', value: '糖包' } ]
+                ]*/
+            },
+
+            /**
+             * step2把图片设为主图
+             */
+            setMainPic(url,index){
+                this.imgList.splice(index,1);
+                this.imgList.unshift(url);
+            },
+
+            /**
+             * step2删除图片
+             */
+            deleteImg(index){
+                this.imgList.splice(index,1);
             },
             /**
-             * step2 上传图片
+             * step2商品上传图片
+             */
+            uploadGoodImg(file) {
+                //1.判断是否上传过多图片
+                let files = file.target.files;//获取上传的图片列表
+                if (files.length + this.imgList.length > 5){
+                    this.$msgWar("商品图片最多5张");
+                    return
+                }
+                //2.处理上传的图片
+                let imgUrl = this.imgList;
+                let promiseList = [];
+                for (let i = 0; i < files.length; i++){
+                    //2.1处理空图片
+                    if (files[i] === []){
+                        continue;
+                    }
+                    //2.2用服务器处理成功上传的图片地址
+                    promiseList.push(this.uploadFiles(files[i]))
+                }
+                //3.更新视图层图片列表
+                Promise.all(promiseList).then((res) => {
+                    res.map((item) => {
+                        //debugger:有个疑问：这里把所有处理好的图片连接都已经加到imgUrl里面了，但是this.imgList数据好像并没有更新？是否应该在最后加上“this.imgList = imgUrl”？待解答
+                        imgUrl.push(item.imgUrl)
+                    })
+                },() => {
+                    this.$msgErr("上传失败");
+                })
+            },
+            /**
+             * step2 富文本编辑器调用的el-upload上传图片
              */
             uploadEditor(files){
                 this.uploadFiles(files.file).then((res) => {
@@ -737,15 +1020,157 @@
                     }
                 })
             },
+
             /**
-             * 完成商品编辑并提交
+             * step2 完成填写，提交商品属性
+             */
+            submitGood(){
+                let formData = this.ruleForm;
+                //1.检查商品类型是否选择
+                if (!formData.styleId){
+                    this.$msgWar("请填写商品类型");
+                    return
+                }
+                //2.检查商品规格是否选择
+                if (this.checkPropList.length === 0){
+                    this.$msgWar("请选择商品规格");
+                    return
+                }
+                //3检查商品规格列表是否填写
+                if (this.propSpecList.length === 0){
+                    this.$msgWar("请添加商品规格列表");
+                    return
+                }
+                //4.检查商品规格列表填写是否符合规范
+                for (let i = 0; i < this.propSpecList.length; i++){
+                    let data = this.propSpecList[i];
+                    if (!data.goodsSalePrice || !data.goodsStock || !data.stockWarning){
+                        this.$msgWar("请填写完整商品规格列表");
+                        return
+                    }
+                    if (data.goodsStock > 99999 || data.stockWarning > 99999){
+                        this.$msgWar("库存最大值为99999");
+                        return
+                    }
+                    if (data.goodsSalePrice < 0){
+                        this.$msgWar("规格列表商品售价不能小于0");
+                        return
+                    }
+                    if (data.goodsStock < 0){
+                        this.$msgWar("规格列表商品库存不能小于0");
+                        return
+                    }
+                    if(data.stockWarning < 0){
+                        this.$msgWar("规格列表库存预警值不能小于0");
+                        return
+                    }
+                }
+                //5.检查商品参数是否填写
+                for (let j = 0; j < formData.merchantParamDetailIds.merchantParamDetails.length; j++){
+                    if (!formData.merchantParamDetailIds.merchantParamDetails[i].specificationsValue){
+                        this.$msgWar("请录入商品参数");
+                        return
+                    }
+                }
+                if (!formData.merchantParamDetailIds.mainMaterial || !formData.merchantParamDetailIds.paramObject) {
+                    this.$msgWar("请录入商品参数");
+                    return
+                }
+                //6.检查商品图片是否上传
+                if (this.imgList.length === 0){
+                    this.$msgWar("请上传商品图片");
+                    return
+                }
+                this.stepActive = 3;
+            },
+
+            /**
+             * step3 选择关联一级类目
+             */
+            getHeader(item){
+                if (this.ruleForm.navId !== item.id) {
+                    this.ruleForm.navId = item.id;
+                    this.ruleForm.navChildId = '';
+                    this.childHeaderList = item.list;
+                }else {
+                    this.ruleForm.navId = '';
+                    this.ruleForm.navChildId = '';
+                    this.childHeaderList = []
+                }
+            },
+
+            /**
+             * step3 选择关联二级类目
+             */
+            getChildHeader(item){
+                this.ruleForm.navChildId = item.id;
+            },
+            /**
+             * step3 完成商品编辑并提交
              */
             submitGoods(){
                 alert('完成提交！');
-                this.next();
+                //1.规则检查
+                if (this.ruleForm.navId && !this.ruleForm.navChildId){
+                    this.$msgWar('选了一级类目必须选择二级类目');
+                    return
+                }
+                //2.规范商品表格数据
+                let formData = JSON.parse(JSON.stringify(this.ruleForm));
+                if (!formData.merchantParamDetailIds.merchantParamDetails) {
+                    formData.merchantParamDetailIds.merchantParamDetails = [];
+                }
+                formData.goodsImg = this.imgList.join(',');
+                formData.merchantSpecifications = this.checkPropList;
+                formData.merchantGoodsTypePropertyList = this.propSpecList;
+
+                //3.检查是否编辑/添加商品
+                if (this.isAdd){//添加新商品
+                    this.$ajax.post("merchantGoods/merchant_goods_add",formData).then(() => {
+                        this.$msgSuc("添加商品成功");
+                        setTimeout(() => {
+                            this.back();
+                        },500)
+                    },(err) => {
+                        this.$msgErr(err.msg);
+                    })
+                } else {//编辑旧商品
+                    formData.id = this.$route.query.id;
+                    this.$ajax.post("merchantGoods/merchant_goods_update",formData).then(() => {
+                        this.$msgSuc("修改成功");
+                        setTimeout(() => {
+                            this.back();
+                        },500)
+                    },(err) => {
+                        this.$msgErr(err.msg);
+                    })
+                }
             },
+
             /**
-             * 图片库翻页
+             * step2 图片库弹窗：根据选择图库分类从服务器获取图片列表
+             */
+            getAlbumImg(val){
+                this.albumId = val;
+                this.$ajax.post("merchant_goods_galleries_detail/query_for_page",{
+                    currentPage: this.currentPage,
+                    pageSize: this.pageSize,
+                    galleriesId: val
+                }).then((res) => {
+                    this.albumImgList = res.list;
+                    this.total = res.totalCount;//图片总数,需要传给分页组件
+                })
+            },
+
+            /**
+             * step2 图片库弹窗：点击选择商品图片
+             */
+            checkAlbumImg(item){
+                
+            },
+
+            /**
+             * step2 图片库弹窗：图片库翻页
              * @param {number}val
              */
             next(val){
