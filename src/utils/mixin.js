@@ -48,6 +48,64 @@ export default {
          */
         back(){
             this.$router.go(-1);
-        }
+        },
+
+        /**
+         * 分页组件批量操作确定按钮事件
+         * @param {String}val
+         */
+        confirmBatch(val){
+            if (val && this.checkItemId.length > 0){
+                //1.删除商品
+                if ('delete' === val){
+                    this.remove(this.checkItemId);
+                }
+                //2.其他操作
+            } else {
+                this.$msgWar("未选择操作项");
+            }
+        },
+
+        /*
+         * 批量操作操作选项选择事件
+         * @param val
+        batchChange(val){
+            console.log(typeof val,val);//string delete
+        }*/
+
+        /**
+         * 表格selection事件
+         * @param {Array} val
+         */
+        tableSelection(val){
+            let checkItemId = [];
+            this.$refs.pagination._data.checkAll = val.length === this.tableData.length;
+            val.forEach((item) => {
+                checkItemId.push(item.id);
+            });
+            this.checkItemId = checkItemId;
+        },
+
+        //公共表头样式
+        headerStyle(){
+            return {
+                color: '#595757',
+                background: '#F6F6F6',
+                fontSize: '15px',
+                borderLeft: '1px solid #b4b4b4',
+                borderTop: '1px solid #b4b4b4',
+                textAlign: 'center'
+            }
+        },
+        //公共表格样式
+        tdStyle(){
+            return {
+                color: '#595757',
+                fontSize: '15px',
+                borderLeft: '1px solid #b4b4b4',
+                borderTop: '1px solid #b4b4b4',
+                textAlign: 'center'
+            }
+        },
     }
 }
