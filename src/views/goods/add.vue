@@ -863,6 +863,9 @@
              * step2 把选择的商品属性添加到商品ruleForm里
              */
             addProps(){
+                //注意：为了测试，data里属性“食品”的ID是0，造成
+                //!this.ruleForm.styleId这条判断返回为true
+                // 正常服务器返回的商品类型ID不会为0
                 if (!this.ruleForm.styleId){
                     this.$msgWar("请选择商品类型");
                     return
