@@ -16,15 +16,15 @@ export default new Router({ //创建路由
             path: '/index',
             name: 'index',
             component: resolve => {require(['@/views/index'],resolve)},
-            // redirect: '/index/systemIndex', //重定向
+            redirect: '/index/systemIndex', //重定向
             children: [
-                /*//二级路由
+                //二级路由
                 {
                     path: '/index/systemIndex',
                     name: 'systemIndex',
                     component: resolve => {require(['@/views/index/systemIndex'],resolve)},
                 },
-                {
+                /*{
                     path: '/index/accountSetting',
                     name: 'accountSetting',
                     component: resolve => {require(['@/views/index/accountSetting'],resolve)},
