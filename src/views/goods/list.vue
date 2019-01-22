@@ -37,7 +37,7 @@
                 </div>
             </div>
             <!--数据区域-->
-            <el-table class="mall-table" :data="tableData" v-loading="loading" height="800">
+            <el-table class="mall-table" :data="tableData" v-loading="loading" height="800" @selection-change="tableSelection" :header-cell-style="headerStyle" :cell-style="tdStyle">
                 <el-table-column type="selection" prop="id"></el-table-column>
                 <el-table-column label="编号" prop="id"></el-table-column>
                 <el-table-column label="商品图片">
@@ -78,7 +78,7 @@
                 </el-table-column>
             </el-table>
             <!--分页组件-->
-            <pagination :total="total" :pageSize="pageSize" ref="pagination" :optionsList="optionsList"></pagination>
+            <pagination :total="total" :pageSize="pageSize" ref="pagination" :optionsList="optionsList" @confirmBatch="confirmBatch"></pagination>
             <!--库存编辑弹窗-->
             <el-dialog title="编辑货品信息" :visible.sync="dialogVisible" :append-to-body="true">
                 <div class="dialog-header" v-loading="dialogLoading">
@@ -291,6 +291,7 @@
                 optionsList:{
                     'delete': '删除'
                 },
+                checkItemId: [],//选中的物品ID
             }
         },
         mounted() {
@@ -420,7 +421,7 @@
                         this.$msgErr(err.msg);
                     })
                 })
-            }
+            },
         }
     }
 </script>
@@ -449,10 +450,6 @@
         }
         .box-title{
             padding-right: 20px;
-        }
-        .mall-table{
-            border-left: $border;
-            border-top:  $border;
         }
     }
 </style>
