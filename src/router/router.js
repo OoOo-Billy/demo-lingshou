@@ -20,16 +20,16 @@ export default new Router({ //创建路由
             children: [
                 //二级路由
                 {
-                    path: '/index/systemIndex',
+                    path: '/index/systemIndex',//系统首页
                     name: 'systemIndex',
                     component: resolve => {require(['@/views/index/systemIndex'],resolve)},
                 },
-                /*{
-                    path: '/index/accountSetting',
+                {
+                    path: '/index/accountSetting',//账户设置
                     name: 'accountSetting',
                     component: resolve => {require(['@/views/index/accountSetting'],resolve)},
                 },
-                {
+                /*{
                     path: '/index/systemInfo',
                     name: 'systemInfo',
                     component: resolve => {require(['@/views/index/systemInfo'],resolve)},
