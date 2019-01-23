@@ -3,7 +3,7 @@
         <!--头部-->
         <subTitle :subTitle="'商品列表'"/>
         <!--body-->
-        <div class="content">
+        <div class="body2">
             <!--筛选栏-->
             <div class="filter-wrap">
                 <div class="flex h-center between">
@@ -13,18 +13,19 @@
                     <div class="search-wrap font-14 gray">
                         <i class="el-icon-arrow-down" @click="showSearch" v-show="!visibleSearch">打开筛选</i>
                         <i class="el-icon-arrow-up" @click="showSearch" v-show="visibleSearch">收起筛选</i>
-                        <el-button class="search">查询结果</el-button>
+                        <el-button class="search" @click="search">查询结果</el-button>
                     </div>
                 </div>
                 <div class="flex h-center" v-show="visibleSearch">
                     <span class="font-14 gray">输入搜索:</span>
-                    <el-input class="search-input" v-model="goodsName" placeholder="商品名称/商品货号"></el-input>
+                    <el-input class="search-input" v-model="goodsName" @clear="search" @keyup.enter.native="search"
+                              placeholder="商品名称/商品货号" clearable></el-input>
                     <span class="font-14 gray">选择分类:</span>
-                    <el-select class="search-input" v-model="typeId" placeholder="请选择商品分类">
+                    <el-select class="search-input" v-model="typeId" @change="search" placeholder="请选择商品分类" clearable>
                         <el-option v-for="item in categoryList" :label="item.typeName" :value="item.id"></el-option>
                     </el-select>
                     <span class="font-14 gray">选择品牌:</span>
-                    <el-select class="search-input" v-model="brandId" placeholder="请选择商品品牌">
+                    <el-select class="search-input" v-model="brandId" @change="search" placeholder="请选择商品品牌" clearable>
                         <el-option v-for="item in brandList" :label="item.name" :value="item.id"></el-option>
                     </el-select>
                 </div>
@@ -37,13 +38,13 @@
                 </div>
             </div>
             <!--数据区域-->
-            <el-table class="mall-table" :data="tableData" v-loading="loading" height="800" @selection-change="tableSelection" :header-cell-style="headerStyle" :cell-style="tdStyle">
-                <el-table-column type="selection" prop="id"></el-table-column>
+            <el-table class="mall-table" :data="tableData" v-loading="loading" max-height="800"
+                      @selection-change="tableSelection" :header-cell-style="headerStyle" :cell-style="tdStyle">
+                <el-table-column type="selection" prop="id" width="55"></el-table-column>
                 <el-table-column label="编号" prop="id"></el-table-column>
                 <el-table-column label="商品图片">
                     <template slot-scope="scope">
-                        <img :src="scope.row.goodsImg" alt="">
-                        <!--<img src="@/assets/image.png" alt="">-->
+                        <img :src="getGoodImg(scope.row.goodsImg)" alt="">
                     </template>
                 </el-table-column>
                 <el-table-column label="商品名称">
@@ -69,7 +70,7 @@
                         {{ scope.row.status === 0 ? '未上架' : '已上架' }}
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" prop="">
+                <el-table-column label="操作">
                     <template slot-scope="scope">
                         <span class="table-btn" @click="outGoods(scope.row.id,scope.row.status)">{{ scope.row.status === 0 ? '上架' : '下架'}}</span>
                         <span class="table-btn" @click="$router.push('/goods/add?id=' + scope.row.id)">编辑</span>
@@ -78,7 +79,8 @@
                 </el-table-column>
             </el-table>
             <!--分页组件-->
-            <pagination :total="total" :pageSize="pageSize" ref="pagination" :optionsList="optionsList" @confirmBatch="confirmBatch"></pagination>
+            <pagination :total="total" :pageSize="pageSize" ref="pagination" :optionsList="optionsList"
+                        @confirmBatch="confirmBatch" @next="next" @handleChangeAll="handleChangeAll"></pagination>
             <!--库存编辑弹窗-->
             <el-dialog title="编辑货品信息" :visible.sync="dialogVisible" :append-to-body="true">
                 <div class="dialog-header" v-loading="dialogLoading">
@@ -95,9 +97,15 @@
                         <tbody>
                         <tr v-for="item in stockList">
                             <td v-for="prop in item.nameValue">{{ prop.value }}</td>
-                            <td><el-input type="number" v-model="item.goodsSalePrice"></el-input></td>
-                            <td><el-input type="number" v-model="item.goodsStock"></el-input></td>
-                            <td><el-input type="number" v-model="item.stockWarning"></el-input></td>
+                            <td>
+                                <el-input type="number" v-model="item.goodsSalePrice"></el-input>
+                            </td>
+                            <td>
+                                <el-input type="number" v-model="item.goodsStock"></el-input>
+                            </td>
+                            <td>
+                                <el-input type="number" v-model="item.stockWarning"></el-input>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -282,15 +290,15 @@
                 typeId: '',
                 brandId: '',
 
-                //其他数据
+                //筛选栏数据
                 categoryList: [],
                 // categoryList: [{typeName: '大衣', id: 0}, {typeName: '长裙', id: 1}],
                 brandList: [],
                 // brandList: [{name: '安踏', id: 0}, {name: '贵人鸟', id: 1}],
 
-                optionsList:{
+                optionsList: {
                     'delete': '删除'
-                },
+                },//分页组件下拉操作选项
                 checkItemId: [],//选中的物品ID
             }
         },
@@ -310,11 +318,11 @@
             /**
              * 从服务器获取表格数据
              */
-            getList(){
+            getList() {
                 //修改mixin里的loading属性，表示正在加载
                 this.loading = true;
                 //向服务器请求数据
-                this.$ajax.post('merchantGoods/merchant_goods_list_page',{
+                this.$ajax.post('merchantGoods/merchant_goods_list_page', {
                     //上传的数据
                     currentPage: this.currentPage,
                     pageSize: this.pageSize,
@@ -325,7 +333,7 @@
                     //处理服务器相应
                     this.total = res.totalCount;
                     this.tableData = res.list;
-                },(err) => {
+                }, (err) => {
                     //请求错误的处理
                     this.$msgErr(err.msg);
                 }).finally(() => {
@@ -337,14 +345,14 @@
              * 库存弹窗编辑
              * @param id
              */
-            editStock(id){
+            editStock(id) {
                 //初始化表头数据
                 this.stockHeader = [];
                 //打开库存弹窗窗口，并修改加载状态
                 this.dialogVisible = true;
                 this.dialogLoading = true;
                 //向服务器发送请求
-                this.$ajax.post("merchantGoods/merchant_goods_by_id",{
+                this.$ajax.post("merchantGoods/merchant_goods_by_id", {
                     id: id
                 }).then((res) => {
                     //处理服务器响应
@@ -361,21 +369,21 @@
             /**
              * 更新商品库存
              */
-            updateStock(){
+            updateStock() {
                 //条件判断
-                for (let i = 0; i < this.stockList.length; i++){
-                    if (!this.stockList[i].goodsSalePrice || !this.stockList[i].goodsStock || !this.stockList[i].stockWarning){
+                for (let i = 0; i < this.stockList.length; i++) {
+                    if (!this.stockList[i].goodsSalePrice || !this.stockList[i].goodsStock || !this.stockList[i].stockWarning) {
                         this.$msgWar("请完整填写信息");
                         return
                     }
                 }
-                this.$ajax.post("merchantGoods/merchant_goods_update_sku",{
+                this.$ajax.post("merchantGoods/merchant_goods_update_sku", {
                     merchantGoodsTypePropertyList: this.stockList,
                     id: this.goodsId
                 }).then((res) => {
                     this.$msgSuc("操作成功");
                     this.dialogVisible = false;
-                },(err) => {
+                }, (err) => {
                     this.$msgErr(err.msg);
                 })
             },
@@ -384,26 +392,26 @@
              * @param id
              * @param status \ 0 : 1
              */
-            outGoods(id,status){
+            outGoods(id, status) {
                 //判断是否已上架
-                if (status === 0){
+                if (status === 0) {
                     //未上架
-                    this.$ajax.post('merchantGoods/merchant_goods_put',{
+                    this.$ajax.post('merchantGoods/merchant_goods_put', {
                         id: id
                     }).then(() => {
                         this.$msgSuc('上架成功');
                         this.getList();
-                    },(err) => {
+                    }, (err) => {
                         this.$msgErr(err.msg);
                     })
                 } else {
                     //已上架
-                    this.$ajax.post('merchantGoods/merchant_goods_pull',{
+                    this.$ajax.post('merchantGoods/merchant_goods_pull', {
                         id: id
                     }).then(() => {
                         this.$msgSuc('下架成功');
                         this.getList();
-                    },(err) => {
+                    }, (err) => {
                         this.$msgErr(err.msg);
                     })
                 }
@@ -412,12 +420,12 @@
              * 删除商品
              * @param id
              */
-            remove(id){
+            remove(id) {
                 this.$confirm("确认删除商品？").then(() => {
-                    this.$ajax.post("merchantGoods/delete_batch",id).then(() =>{
+                    this.$ajax.post("merchantGoods/delete_batch", id).then(() => {
                         this.$msgSuc("删除成功");
                         this.getList();
-                    },(err) => {
+                    }, (err) => {
                         this.$msgErr(err.msg);
                     })
                 })
@@ -428,28 +436,28 @@
 
 <style scoped lang="scss">
     @import "~@/assets/css/common";
-    .content{
-        padding: 10px 20px;
-        .filter-wrap {
-            border: $border;
-            margin-bottom: 24px;
-            > div {
-                padding: 0 22px;
-                height: 56px;
-                &:last-child {
-                    background-color: $bgColor;
-                }
-            }
-            .search{
-                margin-left: 20px;
+
+    .filter-wrap {
+        border: $border;
+        margin-bottom: 24px;
+        > div {
+            padding: 0 22px;
+            height: 56px;
+            &:last-child {
+                background-color: $bgColor;
             }
         }
-        .search-input{
-            width: 200px;
-            margin: 0 15px;
+        .search {
+            margin-left: 20px;
         }
-        .box-title{
-            padding-right: 20px;
-        }
+    }
+
+    .search-input {
+        width: 200px;
+        margin: 0 15px;
+    }
+
+    .box-title {
+        padding-right: 20px;
     }
 </style>
