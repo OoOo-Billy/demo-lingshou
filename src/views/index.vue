@@ -19,10 +19,6 @@
                 </ul>
             </div>
             <div class="content">
-                <!--<subTitle :isRefresh="true" :isBack="true" :isClose="true"
-                          subTitle="系统首页"
-                @refresh="refresh"></subTitle>-->
-                <!--<pagination></pagination>-->
                 <router-view></router-view>
             </div>
         </div>
@@ -71,14 +67,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .container{
-        /*position: fixed;*/
-        /*width: 100vw;*/
-        /*height: 100vh;*/
-        /*left: 0;*/
-        /*top: 0;*/
-        /*overflow: hidden;*/
-    }
     .header{
         width: 100%;
         /*min-width: 1240px;*/
@@ -134,6 +122,7 @@
             }
         }
         .content{
+            position: relative;
             flex: 1;
             min-width: 1040px;
             overflow: auto;
