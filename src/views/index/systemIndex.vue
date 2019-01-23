@@ -1,7 +1,7 @@
 <template>
     <div>
         <subTitle :subTitle="'系统首页'"/>
-        <div class="body">
+        <div class="body2">
             <!--头部销售额信息-->
             <div class="row-top flex between">
                 <div>
