@@ -119,6 +119,9 @@
     .body{
         padding: 80px 30px 30px;
     }
+    .body2{
+        padding: 20px 20px;
+    }
     .text-center{
         text-align: center;
     }
