@@ -12,10 +12,20 @@ export default {
     },
     methods:{
         /**
-         * 搜索框显示/隐藏
+         * 筛选框显示/隐藏
          */
         showSearch(){
             this.visibleSearch = !this.visibleSearch;
+        },
+
+        /**
+         * 筛选框搜索按钮事件
+         * 跟next()不同的是，重新给currentPage赋值为1
+         * getList()里面已经定义上传的数据包括了搜索数据,所以这里搜索事件直接调用getList()即可
+         */
+        search(){
+            this.currentPage = 1;
+            this.getList();
         },
 
         /**
@@ -51,6 +61,15 @@ export default {
         },
 
         /**
+         * 分页组件前往第n页
+         * @param val
+         */
+        next(val){
+            this.currentPage = val;
+            this.getList();
+        },
+
+        /**
          * 分页组件批量操作确定按钮事件
          * @param {String}val
          */
@@ -61,8 +80,23 @@ export default {
                     this.remove(this.checkItemId);
                 }
                 //2.其他操作
+                else if ('restore' === val){
+                    this.restore(this.checkItemId);
+                }
             } else {
                 this.$msgWar("未选择操作项");
+            }
+        },
+
+        /**
+         * 分页组件全选change事件
+         * @param val
+         */
+        handleChangeAll(val){
+            if (val){
+                this.$refs.table.toggleAllSelection();
+            } else {
+                this.$refs.table.clearSelection();
             }
         },
 
@@ -84,6 +118,20 @@ export default {
                 checkItemId.push(item.id);
             });
             this.checkItemId = checkItemId;
+        },
+
+        /**
+         * 商品列表：显示商品图片
+         * @param data
+         * @returns {*}
+         */
+        getGoodImg(data){
+            /*if (data){
+                return data.split(',')[0]
+            } else {
+                return require('@/assets/image.png')
+            }*/
+            return require('@/assets/image.png')
         },
 
         //公共表头样式
