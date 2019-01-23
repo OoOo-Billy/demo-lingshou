@@ -29,11 +29,16 @@ export default new Router({ //创建路由
                     name: 'accountSetting',
                     component: resolve => {require(['@/views/index/accountSetting'],resolve)},
                 },
-                /*{
-                    path: '/index/systemInfo',
+                {
+                    path: '/index/systemInfo',//系统信息
                     name: 'systemInfo',
                     component: resolve => {require(['@/views/index/systemInfo'],resolve)},
-                },*/
+                },
+                {
+                    path: '/index/conLog',//登录日志
+                    name: 'conLog',
+                    component: resolve => {require(['@/views/index/conLog'],resolve)},
+                },
                 {
                     path: '/goods/list',   //商品列表
                     name: 'goodsList',
@@ -43,6 +48,11 @@ export default new Router({ //创建路由
                     path: '/goods/add',  //添加商品
                     name: 'add',
                     component: resolve => {require(['@/views/goods/add'], resolve)},
+                },
+                {
+                    path: '/goods/recycle',  //商品回收站
+                    name: 'recycle',
+                    component: resolve => {require(['@/views/goods/recycle'], resolve)},
                 },
             ]
         }
