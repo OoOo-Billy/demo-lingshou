@@ -59,7 +59,7 @@
                 <el-table-column label="货号" prop="goodsNo"></el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <span class="table-btn" @click="update(scope.row.id)">编辑</span>
+                        <span class="table-btn" @click="update(scope.row.id)">还原</span>
                         <span class="table-btn" @click="remove([scope.row.id])">删除</span>
                     </template>
                 </el-table-column>
@@ -195,6 +195,7 @@
                     this.tableData = res.list;
                 }, (err) => {
                     //请求错误的处理
+                    // this.$msgErr(`前往第${this.currentPage}页错误:无法请求服务器`);
                     this.$msgErr(err.msg);
                 }).finally(() => {
                     //结束加载状态
@@ -231,6 +232,8 @@
                     }, (err) => {
                         this.$msgErr(err.msg);
                     })
+                },() => {
+
                 })
             },
 
