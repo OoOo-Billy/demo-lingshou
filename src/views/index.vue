@@ -7,6 +7,23 @@
                  v-for="(item,index) in nav">
                 {{item.title}}
             </div>
+            <!--<div class="flex-1">
+                <el-popover placement="top-start" width="360" ref="popover" trigger="hover">
+                    <div class="popover">
+                        <p class="title clearFix">
+                            <span>登录信息</span>
+                            <span class="fr" @click="$router.push('/index/accountSetting')">账户设置</span>
+                        </p>
+                        <p>• 本次登录：{{ loginData[0].operateTime }}</p>
+                        <p>• 登录地区：广东省深圳市 (IP：{{ loginData[0].ip }})</p>
+                        <p>• 上次登录：{{ loginData[1].operateTime }}</p>
+                    </div>
+                </el-popover>
+                <img class="avatar" :src="userInfo.imgUrl + userInfo.merchantLogo || '@/assets/headpto.png'" alt="" title="头像">
+                <span v-popover:popover>{{ userInfo.merchantName }}</span>
+                <img src="@/assets/icon-index.png" title="回到首页" @click="linkIndex">
+                <img @click="loginOut" src="@/assets/icon-exit.png" title="退出">
+            </div>-->
         </header>
         <div class="main">
             <div class="menu">
@@ -124,7 +141,7 @@
         .content{
             position: relative;
             flex: 1;
-            min-width: 1040px;
+            /*min-width: 1040px;*/
             overflow: auto;
         }
     }
