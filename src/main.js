@@ -25,15 +25,7 @@ router.beforeEach((to,from,next)=>{//导航守卫
             next();
         } else {
             Message.error('登陆过期');
-            // router.replace('/');//replace不会再history中添加新记录，而是替换当前的history记录
-
-            //开始*调试代码
-            let module = to.path.split('/')[1] ? to.path.split('/')[1] : 'index';
-            // console.log('nav:'+ module);
-            // console.log(to.path);
-            store.commit('ACTIVE_NAV',module); //调用vuex的commit方法修改状态
-            next();
-            //调试代码*结束
+            router.replace('/');//replace不会再history中添加新记录，而是替换当前的history记录
         }
     }else {//利用vuex管理nav状态，达到动态修改菜单的效果
         let module = to.path.split('/')[1] ? to.path.split('/')[1] : 'index';
