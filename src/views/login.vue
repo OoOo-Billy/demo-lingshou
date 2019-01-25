@@ -31,6 +31,19 @@
                 config: CONFIG,
             }
         },
+
+        /*调试代码↓*/
+        mounted(){
+            let obj = {
+                merchantName: '管理员',
+                merchantLogo: 'https://img.xinzhibang168.com/FmR88ILyONmakl5P1khxHlEt3qxc.jpg',
+                imgUrl: 'https://img.xinzhibang168.com/FmR88ILyONmakl5P1khxHlEt3qxc.jpg',
+            };
+            let userInfo = JSON.stringify(obj);
+            localStorage.setItem('userInfo',userInfo)
+        },
+        /*调试代码↑*/
+
         methods: {
             login() {
                 //1.检查用户输入信息是否符合规格
@@ -46,6 +59,7 @@
                     this.$msgWar('请输入密码');
                     return
                 }
+                /*
                 this.$ajax.post('merchant/login', this.form, {
                     //向服务器发送post请求,用axios
                     //路径：merchant/login
@@ -63,6 +77,16 @@
                     //error
                     this.$msgErr(err.msg);
                 });
+                */
+
+                /*调试代码↓*/
+                if (this.form.loginName === '13272777674' && this.form.loginPassword === '666666') {
+                    this.$msgSuc('登录成功!');
+                    setTimeout(() => {
+                        this.$router.push('/index');
+                    }, 500)
+                }
+                /*调试代码↑*/
             }
         }
     }
