@@ -74,7 +74,7 @@
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="商品介绍" prop="goodsDesc">
-                                <el-input type="textarea" v-model="ruleForm.goodsDesc"></el-input>
+                                <el-input type="textarea" v-model="ruleForm.goodsDesc" resize="none"></el-input>
                             </el-form-item>
                             <el-form-item label="商品货号">
                                 <el-input v-model="ruleForm.goodsNo"></el-input>
@@ -365,7 +365,7 @@
                 }
             };
             return {
-                stepActive: 2,
+                stepActive: 0,
                 dialogVisible: false,//图片库弹窗可视
                 categoryList: [
                     {typeName: '化妆品', id: '0', list:[{typeName: '口红', id: '0'},{typeName:'眼影',id: '1'}]},
