@@ -24,6 +24,7 @@ export default {
          * getList()里面已经定义上传的数据包括了搜索数据,所以这里搜索事件直接调用getList()即可
          */
         search(){
+            this.$msgWar('搜索中...');//调试,可删除
             this.currentPage = 1;
             this.getList();
         },
