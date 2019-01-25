@@ -1,7 +1,8 @@
 import { Message, MessageBox} from 'element-ui'
 
 export default {
-    install(Vue){
+    install(Vue){//必须使用install方法才能让main.js里面use这个plugin
+        //Vue.prototype.$function = 在Vue原型上注册$function方法
         Vue.prototype.$msgSuc = (content) =>{
             Message({
                 message: content,
