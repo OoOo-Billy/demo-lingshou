@@ -9,8 +9,8 @@ export default new Router({ //创建路由
         {
             path: '/',
             name: 'login',
-            // component:() => import('@/views/login')
-            component:() => import('@/views/index')
+            component:() => import('@/views/login')
+            // component:() => import('@/views/index')
         },
         {
             path: '/index',
@@ -53,6 +53,16 @@ export default new Router({ //创建路由
                     path: '/goods/recycle',  //商品回收站
                     name: 'recycle',
                     component: resolve => {require(['@/views/goods/recycle'], resolve)},
+                },
+                {
+                    path: '/goods/comment',  //商品评价
+                    name: 'comment',
+                    component: resolve => {require(['@/views/goods/comment'], resolve)},
+                },
+                {
+                    path: '/goods/comment/detail',  //商品评价详情
+                    name: 'commentDetail',
+                    component: resolve => {require(['@/views/goods/commentDetail'], resolve)},
                 },
             ]
         }
