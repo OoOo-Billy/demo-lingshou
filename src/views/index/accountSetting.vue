@@ -9,7 +9,7 @@
                         :http-request="uploadFile"
                         accept="image/jpeg, image/png"
                         :show-file-list="false">
-                    <img class="uploading-img" :src="avatar" alt="">
+                    <img class="uploading-img" :src="avatar ? avatar : require('@/assets/headpto.png')" alt="">
                     <div slot="tip" class="el-upload__tip">上传头像</div>
                 </el-upload>
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm" required>
@@ -42,12 +42,12 @@
         components: {
             subTitle,
         },
-        /*created(){
+        created(){
             this.userInfo = JSON.parse(this.$store.getters.userInfo);
             this.ruleForm.name = this.userInfo.merchantName;
             this.ruleForm.merchantLogo = this.userInfo.merchantLogo;
             this.avatar = this.userInfo.imgUrl + this.userInfo.merchantLogo;
-        },*/
+        },
         data() {
             let validatePass2 = (rule, value, callBack) => {
                 if (value === ''){
@@ -90,7 +90,6 @@
              * @param {file}file
              */
             uploadFile(file) {
-                console.log(file);
                 let formData = new FormData();
                 formData.append('file', file.file);
                 this.$ajax.post("merchant/upload_file",formData,{
