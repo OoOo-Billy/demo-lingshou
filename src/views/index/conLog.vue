@@ -141,9 +141,6 @@
             line-height: 50px;
             background: #efefef;
         }
-        .el-pagination {
-            text-align: right;
-        }
         .table-middle {
             width: 100%;
             margin: 0 auto;
