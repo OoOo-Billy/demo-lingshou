@@ -64,6 +64,16 @@ export default new Router({ //创建路由
                     name: 'commentDetail',
                     component: resolve => {require(['@/views/goods/commentDetail'], resolve)},
                 },
+                {
+                    path: '/goods/category',  //商品分类
+                    name: 'category',
+                    component: resolve => {require(['@/views/goods/category'], resolve)},
+                },
+                {
+                    path: '/goods/category/addCategory',  //添加商品分类
+                    name: 'addCategory',
+                    component: resolve => {require(['@/views/goods/addCategory'], resolve)},
+                },
             ]
         }
     ]
