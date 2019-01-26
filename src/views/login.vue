@@ -37,7 +37,7 @@
             let obj = {
                 merchantName: '管理员',
                 merchantLogo: 'https://img.xinzhibang168.com/FmR88ILyONmakl5P1khxHlEt3qxc.jpg',
-                imgUrl: 'https://img.xinzhibang168.com/FmR88ILyONmakl5P1khxHlEt3qxc.jpg',
+                imgUrl: '',
             };
             let userInfo = JSON.stringify(obj);
             localStorage.setItem('userInfo',userInfo)
