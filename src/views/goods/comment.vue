@@ -54,7 +54,7 @@
                 <el-table-column label="评论时间" prop="createTime" width="180"></el-table-column>
                 <el-table-column label="是否显示" width="120">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.status" @change="handleStatus($event, scope.row.id)" :active-value="0" :inactive-value="2" active-color="#5BC0BF" inactive-color="#FF4949"></el-switch>
+                        <el-switch v-model="scope.row.status" @change="handleStatus($event, scope.row.id)" :active-value="0" :inactive-value="2" active-color="#5BC0BF" inactive-color="#dedede"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作">
