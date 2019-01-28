@@ -456,8 +456,4 @@
         width: 200px;
         margin: 0 15px;
     }
-
-    .box-title {
-        padding-right: 20px;
-    }
 </style>

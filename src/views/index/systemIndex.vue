@@ -191,6 +191,7 @@
 </script>
 
 <style scoped lang="scss">
+    @import "~@/assets/css/common";
     .row-top {
         > div {
             flex: 1;
@@ -212,17 +213,6 @@
                 margin-right: 0;
             }
         }
-    }
-    .box-title {
-        line-height: 60px;
-        color: #5a5a5a;
-        font-weight: bold;
-        font-size: 22px;
-        background-color: #efefef;
-        text-align: left;
-        padding-left: 20px;
-        border: 1px solid #b4b4b4;
-        border-bottom-color: transparent;
     }
     .table-middle {
         width: 100%;

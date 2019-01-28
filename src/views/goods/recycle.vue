@@ -217,7 +217,9 @@
                     }, (err) => {
                         this.$msgErr(err.msg);
                     })
-                })
+                },() => [
+
+                ])
             },
 
             /**
@@ -276,13 +278,5 @@
     .search-input {
         width: 200px;
         margin: 0 15px;
-    }
-
-    .box-title {
-        padding-right: 20px;
-        /*.search-input{
-            width: 150px;
-            margin-left: 20px;
-        }*/
     }
 </style>
