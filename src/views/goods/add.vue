@@ -250,7 +250,7 @@
                             </div>
                             <div style="margin-top: 80px">
                                 <el-button @click="stepActive = 1">上一步,填写商品信息</el-button>
-                                <el-button type="primary" @click="submitGood">下一步,选择商品类目</el-button>
+                                <el-button type="primary" @click="submitProp">下一步,选择商品类目</el-button>
                             </div>
                         </div>
                     </div>
@@ -1027,7 +1027,7 @@
             /**
              * step2 完成填写，提交商品属性
              */
-            submitGood(){
+            submitProp(){
                 let formData = this.ruleForm;
                 //1.检查商品类型是否选择
                 if (!formData.styleId){
@@ -1070,7 +1070,7 @@
                 }
                 //5.检查商品参数是否填写
                 for (let j = 0; j < formData.merchantParamDetailIds.merchantParamDetails.length; j++){
-                    if (!formData.merchantParamDetailIds.merchantParamDetails[i].specificationsValue){
+                    if (!formData.merchantParamDetailIds.merchantParamDetails[j].specificationsValue){
                         this.$msgWar("请录入商品参数");
                         return
                     }
