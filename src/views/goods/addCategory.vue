@@ -1,6 +1,6 @@
 <template>
     <div>
-        <subTitle :subTitle="isAdd ? '添加分类' : '编辑分类'" :isBack="true"/>
+        <subTitle :subTitle="isAdd ? '添加分类' : '编辑分类'"/>
         <div class="body" v-loading="loading">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="form">
                 <el-form-item label="分类名称：" prop="typeName">
