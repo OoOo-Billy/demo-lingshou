@@ -115,7 +115,7 @@
                             <el-form class="form-prop" label-width="100px" v-loading="propLoading">
                                 <el-form-item label="商品类型：">
                                     <el-select v-model="ruleForm.styleId" :disabled="!isAdd" placeholder="请选择商品类型"
-                                               @click="getProp">
+                                               @change="getProp">
                                         <el-option :label="item.styleName" :value="item.id"
                                                    v-for="item in typeList"></el-option>
                                     </el-select>
@@ -811,6 +811,8 @@
                              });
                              this.propLoading = false;
                          });
+                     },(err) => {
+                         this.$msgErr('无法请求服务器')
                      })
                 }
             },
