@@ -74,6 +74,11 @@ export default new Router({ //创建路由
                     name: 'addCategory',
                     component: resolve => {require(['@/views/goods/addCategory'], resolve)},
                 },
+                {
+                    path: '/goods/type',  //商品类型
+                    name: 'type',
+                    component: resolve => {require(['@/views/goods/type'], resolve)},
+                },
             ]
         }
     ]
