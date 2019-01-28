@@ -79,6 +79,18 @@ export default new Router({ //创建路由
                     name: 'type',
                     component: resolve => {require(['@/views/goods/type'], resolve)},
                 },
+                {
+                    path: '/goods/type/prop/:id',   //商品类型属性
+                    //:id 是router的params传参的参数名
+                    name: 'prop',
+                    component: resolve => {require(['@/views/goods/prop'], resolve)},
+                },
+                {
+                    path: '/goods/type/addProp',   //添加商品类型属性
+                    //:id 是router的params传参的参数名
+                    name: 'addProp',
+                    component: resolve => {require(['@/views/goods/addProp'], resolve)},
+                },
             ]
         }
     ]
