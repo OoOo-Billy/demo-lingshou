@@ -109,7 +109,7 @@
                         if (this.isAdd) {
                             this.addEdit("merchantGoodsType/merchant_add_goods_type");
                         } else {
-                            this.ruleForm.id = this.$route.query.id;
+                            this.$set(this.ruleForm, 'id', this.$route.query.id);
                             this.addEdit("merchantGoodsType/merchant_goods_type_update");
                         }
                     } else {
@@ -120,9 +120,9 @@
 
             addEdit(path) {
                 this.$ajax.post(path, this.ruleForm).then(() => {
-                    this.$msgSuc("操作成功");
+                    this.$msgSuc("提交成功");
                     setTimeout(() => {
-                        this.$router.push("goods/category");
+                        this.$router.push("/goods/category");
                     }, 500)
                 }, (err) => {
                     this.$msgErr(err.msg);
