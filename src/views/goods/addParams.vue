@@ -1,44 +1,44 @@
 <template>
     <div>
-        <subTitle :subTitle="isAdd ? '添加属性' : '编辑属性'"/>
+        <subTitle :subTitle="isAdd ? '添加参数' : '编辑参数'"/>
         <div class="body">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="form">
-                <el-form-item label="属性名称：" prop="propertyName">
-                    <el-input v-model="ruleForm.propertyName"></el-input>
+                <el-form-item label="参数名称：" prop="paramName">
+                    <el-input v-model="ruleForm.paramName"></el-input>
                 </el-form-item>
                 <el-form-item label="商品类型：" prop="styleId">
                     <el-select v-model="ruleForm.styleId" placeholder="请选择类型">
                         <el-option v-for="item in typeList" :label="item.styleName" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="属性是否可选">
-                    <el-radio v-model="ruleForm.propertySelect" :label="0" disabled>唯一属性</el-radio>
-                    <el-radio v-model="ruleForm.propertySelect" :label="1" disabled>单选属性</el-radio>
-                    <el-radio v-model="ruleForm.propertySelect" :label="2" disabled>复选属性</el-radio>
+                <el-form-item label="参数是否可选">
+                    <el-radio v-model="ruleForm.paramSelect" :label="0" disabled>唯一参数</el-radio>
+                    <el-radio v-model="ruleForm.paramSelect" :label="1" disabled>单选参数</el-radio>
+                    <el-radio v-model="ruleForm.paramSelect" :label="2" disabled>复选参数</el-radio>
                     <p class="form-tips">选择"单选/复选属性"时，可以对商品该属性设置多个值，同时还能对不同属性值指定不同的价格加价，用户购买商品时需要选定具体的属性值。选择"唯一属性"时，商品的该属性值只能设置一个值，用户只能查看该值。</p>
                 </el-form-item>
-                <el-form-item label="属性值：" prop="propertyList">
+                <el-form-item label="属性值：" prop="paramList">
                     <el-tag
-                    :key="tag"
-                    v-for="tag in dynamicTags"
-                    closable
-                    :disable-transitions="false"
-                    @close="handleClose(tag)">
+                            :key="tag"
+                            v-for="tag in dynamicTags"
+                            closable
+                            :disable-transitions="false"
+                            @close="handleClose(tag)">
                         {{tag}}
                     </el-tag>
                     <el-input
-                    class="input-new-tag"
-                    v-if="inputVisible"
-                    v-model="inputValue"
-                    ref="saveTagInput"
-                    size="small"
-                    @keyup.enter.native="handleInputConfirm"
-                    @blur="closeInput"></el-input>
+                            class="input-new-tag"
+                            v-if="inputVisible"
+                            v-model="inputValue"
+                            ref="saveTagInput"
+                            size="small"
+                            @keyup.enter.native="handleInputConfirm"
+                            @blur="closeInput"></el-input>
                     <el-button v-else class="button-new-tag" size="small" @click="showInput">添加属性值</el-button>
                     <p class="form-tips">输入属性名，按“回车”键确认</p>
                 </el-form-item>
                 <el-form-item label="属性排序：">
-                    <el-input v-model="ruleForm.propertyOrder" type="number"></el-input>
+                    <el-input v-model="ruleForm.paramSort" type="number"></el-input>
                     <p class="form-tips">排序级别最高的属性可单独上传属性图片</p>
                 </el-form-item>
                 <el-form-item>
@@ -55,16 +55,16 @@
     import mixin from "@/utils/mixin"
 
     export default {
-        name: "addProp",
+        name: "addParams",
         mixins: [mixin],
         components: {
             subTitle
         },
         data() {
-            let validProp = (item, value, callBack) => {
+            let validParams = (item, value, callBack) => {
                 if (this.dynamicTags.length === 0){
                     callBack(new Error('请添加属性值'));
-                } else if (this.ruleForm.propertySelect === 0 && this.dynamicTags.length > 1){
+                } else if (this.ruleForm.paramSelect === 0 && this.dynamicTags.length > 1){
                     callBack(new Error('唯一属性只能添加一个属性值'));
                 } else {
                     callBack();
@@ -73,22 +73,22 @@
             return {
                 ruleForm: {
                     id: '',
-                    propertyName: '颜色',
+                    paramName: '形状',
                     styleId: '',
-                    propertySelect: 1,
-                    propertyList: '',
-                    propertyOrder: '',
+                    paramSelect: 1,
+                    paramList: '',
+                    paramSort: '',
                 },
                 rules: {
-                    propertyName: [
-                        {required: true, message: '请输入属性名称', trigger:'blur'},
+                    paramName: [
+                        {required: true, message: '请输入参数名称', trigger:'blur'},
                         {max: 20, message: '长度必须小于20个字符', trigger:'blur'},
                     ],
                     styleId: [
                         {required: true, message: '请选择商品类型', trigger: 'change'}
                     ],
-                    propertyList: [
-                        {validator: validProp, required: true, trigger: 'change'}
+                    paramList: [
+                        {validator: validParams, required: true, trigger: 'change'}
                     ]
                 },
                 typeList: [
@@ -96,7 +96,7 @@
                     {id: 5299, styleName: '情趣丝袜',},
                     {id: 1128, styleName: '性感蕾丝丝袜',},
                 ],//商品类型列表
-                dynamicTags: ['红色','白色','黑色','肉色','墨绿'],
+                dynamicTags: ["渔网状", "纱状", "大镂空" ],
                 inputVisible: false,//默认false
                 inputValue: '',
             }
@@ -106,15 +106,15 @@
                 this.typeList = res;
                 if (this.$route.query.id){
                     this.isAdd = false;
-                    this.$ajax.post("merchantGoodsProperty/merchant_goods_type_by_id",{
+                    this.$ajax.post("merchantGoodsParam/merchant_goods_type_by_id",{
                         id: this.$route.query.id
                     }).then((res) => {
-                        this.$set(this.ruleForm, 'propertyName', res.propertyName);
+                        this.$set(this.ruleForm, 'paramName', res.paramName);
                         this.$set(this.ruleForm, 'styleId', res.styleId);
-                        this.$set(this.ruleForm, 'propertySelect', res.propertySelect);
-                        this.$set(this.ruleForm, 'propertyOrder', res.propertyOrder);
-                        if (res.propertyList.length > 0){
-                            this.dynamicTags = res.propertyList.split(',');
+                        this.$set(this.ruleForm, 'paramSelect', res.paramSelect);
+                        this.$set(this.ruleForm, 'paramSort', res.paramSort);
+                        if (res.paramList.length > 0){
+                            this.dynamicTags = res.paramList.split(',');
                         }
                     },(err) => {
                         this.$msgErr(err.msg);
@@ -173,12 +173,12 @@
             submitForm(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid){
-                        this.$set(this.ruleForm, 'propertyList', this.dynamicTags.join(','));
+                        this.$set(this.ruleForm, 'paramList', this.dynamicTags.join(','));
                         if (this.isAdd){
-                            this.addEdit("merchantGoodsProperty/merchant_goods_type_add", this.ruleForm);
+                            this.addEdit("merchantGoodsParam/merchant_goods_type_add", this.ruleForm);
                         }else {
                             this.ruleForm.id = this.$route.query.id;
-                            this.addEdit("merchantGoodsProperty/merchant_goods_type_update", this.ruleForm);
+                            this.addEdit("merchantGoodsParam/merchant_goods_type_update", this.ruleForm);
                         }
                     } else {
                         return false;
