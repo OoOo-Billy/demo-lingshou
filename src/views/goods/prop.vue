@@ -73,13 +73,29 @@
                 }
             }
         },
+       /* mounted(){
+            this.getList("merchantGoodsProperty/merchant_goods_property_list_page",{
+                styleId: this.$route.params.id
+            })
+        },*/
         methods: {
             /**
-             * 删除商品
+             * 删除属性
              * @param {Array}id
              */
             remove(id){
-
+                this.$confirm("确认删除吗?").then(() => {
+                    this.$ajax.post("merchantGoodsProperty/delete_batch",id).then(() => {
+                        this.getList("merchantGoodsProperty/merchant_goods_property_list_page",{
+                            styleId: this.$route.params.id
+                        });
+                        this.$msgSuc("删除成功");
+                    },(err) => {
+                        this.$msgErr(err.msg);
+                    })
+                },() => {
+                    // console.log("取消了删除");
+                })
             }
         }
     }
