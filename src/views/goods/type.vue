@@ -46,7 +46,7 @@
             :append-to-body="true">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
                     <el-form-item label="类型名称：" prop="styleName">
-                        <el-input v-model="ruleForm.styleName"></el-input>
+                        <el-input v-model="ruleForm.styleName" class="form-input"></el-input>
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
@@ -130,6 +130,8 @@
             addType(){
                 this.isAdd = true;
                 this.dialogVisible = true;
+                this.ruleForm.id = '';
+                this.ruleForm.styleName = '';
             },
 
             /**
@@ -200,6 +202,9 @@
 <style scoped lang="scss">
     @import "~@/assets/css/common";
 
+    .form-input{
+        width: 200px;
+    }
     .dialog-footer {
         button:last-child {
             margin-right: 0;
