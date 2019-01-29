@@ -68,7 +68,7 @@ export default {
                     },
                     {
                         name: "商品图片库",
-                        path: "/goods/image"
+                        path: "/goods/imgGallery"
                     },
                 ]
             }
