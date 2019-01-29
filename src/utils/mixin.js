@@ -80,9 +80,16 @@ export default {
                 if ('delete' === val){
                     this.remove(this.checkItemId);
                 }
-                //2.其他操作
+                //2.还原商品
                 else if ('restore' === val){
                     this.restore(this.checkItemId);
+                }
+                //3.显示品牌
+                else if ('show' === val){
+                    this.batchShow(this.checkItemId,1);
+                }//4.隐藏品牌
+                else if ('hide' === val){
+                    this.batchShow(this.checkItemId,0);
                 }
             } else {
                 this.$msgWar("未选择操作项");
@@ -133,6 +140,43 @@ export default {
                 return require('@/assets/image.png')
             }*/
             return require('@/assets/image.png')
+        },
+
+        /**
+         * 商品类型>属性列表 获取数据
+         * @param path
+         * @param params
+         */
+        getList(path,params){
+            this.loading = true;
+            let param = {
+                currentPage: this.currentPage,
+                pageSize: this.pageSize
+            };
+            this.$ajax.post(path,Object.assign(param,params)).then((res) => {
+                this.total = res.totalCount;
+                this.tableData = res.list;
+            },(err) => {
+                this.$msgErr(err.msg);
+            }).finally(() => {
+                this.loading = false;
+            })
+        },
+
+        /**
+         * 商品类型>属性列表 添加编辑接口
+         * @param url
+         * @param data
+         */
+        addEdit(url, data){
+            this.$ajax.post(url, data).then(() => {
+                this.$msgSuc("提交成功");
+                setTimeout(() => {
+                    this.back();
+                }, 500)
+            },(err) => {
+                this.$msgErr(err.msg);
+            })
         },
 
         //公共表头样式
