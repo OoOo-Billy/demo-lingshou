@@ -91,6 +91,36 @@ export default new Router({ //创建路由
                     name: 'addProp',
                     component: resolve => {require(['@/views/goods/addProp'], resolve)},
                 },
+                {
+                    path: '/goods/type/params/:id',   //商品参数列表
+                    //:id 是router的params传参的参数名
+                    name: 'params',
+                    component: resolve => {require(['@/views/goods/params'], resolve)},
+                },
+                {
+                    path: '/goods/type/addParams',   //添加商品参数
+                    //:id 是router的params传参的参数名
+                    name: 'addParams',
+                    component: resolve => {require(['@/views/goods/addParams'], resolve)},
+                },
+                {
+                    path: '/goods/brand',   //品牌管理
+                    //:id 是router的params传参的参数名
+                    name: 'brand',
+                    component: resolve => {require(['@/views/goods/brand'], resolve)},
+                },
+                {
+                    path: '/goods/brand/addBrand',   //添加商品品牌
+                    //:id 是router的params传参的参数名
+                    name: 'addBrand',
+                    component: resolve => {require(['@/views/goods/addBrand'], resolve)},
+                },
+                {
+                    path: '/goods/imgGallery',   //商品图片库
+                    //:id 是router的params传参的参数名
+                    name: 'imgGallery',
+                    component: resolve => {require(['@/views/goods/imgGallery'], resolve)},
+                },
             ]
         }
     ]
