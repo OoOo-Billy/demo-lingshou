@@ -109,7 +109,7 @@
                         if (this.isAdd) {
                             this.addEdit("merchantGoodsType/merchant_add_goods_type");
                         } else {
-                            this.$set(this.ruleForm, 'id', this.$route.query.id);
+                            this.ruleForm.id = this.$route.query.id;
                             this.addEdit("merchantGoodsType/merchant_goods_type_update");
                         }
                     } else {
