@@ -182,6 +182,8 @@
                     this.$ajax.post("/merchantGoodsComment/delete_batch",id).then(() => {
                         this.$msgSuc("删除成功");
                         this.getList();
+                    },(err) => {
+                        this.$msgErr(err.msg);
                     })
                 },(err) => {
                     // console.log("取消删除");
