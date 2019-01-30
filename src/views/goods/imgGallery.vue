@@ -25,31 +25,101 @@
             <div class="box-title flex between h-center">
                 <span class="font-20">数据列表</span>
                 <div class="flex h-center">
-                    <el-button @click="">添加品牌</el-button>
+                    <el-button @click="$router.push('/goods/imgGallery/addImage')">添加相册</el-button>
                 </div>
             </div>
+
+            <!--数据区域-->
+            <el-table class="mall-table" :data="tableData" v-loading="loading" ref="table"
+                      @selection-change="tableSelection" max-height="800" :header-cell-style="headerStyle"
+                      :cell-style="tdStyle">
+                <el-table-column type="selection" prop="id" width="55"></el-table-column>
+                <el-table-column label="编号" prop="id" width="55"></el-table-column>
+                <el-table-column label="相册名称" prop="name"></el-table-column>
+                <el-table-column label="封面">
+                    <template slot-scope="scope">
+                        <img :src="scope.row.cover" alt="">
+                    </template>
+                </el-table-column>
+                <el-table-column label="图片数量" prop="imgTotal"></el-table-column>
+                <el-table-column label="排序" prop="sorting"></el-table-column>
+                <el-table-column label="描述" prop="description" width="300"></el-table-column>
+                <el-table-column label="操作">
+                    <template slot-scope="scope">
+                        <span class="table-btn" @click="$router.push('/goods/imgGallery/' + scope.row.id)">查看</span>
+                        <span class="table-btn" @click="$router.push('/goods/imgGallery/addImage?id=' + scope.row.id)">编辑</span>
+                        <span class="table-btn" @click="remove([scope.row.id])">删除</span>
+                    </template>
+                </el-table-column>
+            </el-table>
+
+            <!--分页组件-->
+            <pagination :total="total" :pageSize="pageSize" ref="pagination" :optionsList="optionsList"
+                        @confirmBatch="confirmBatch" @next="next" @handleChangeAll="handleChangeAll"></pagination>
         </div>
     </div>
 </template>
 
 <script>
     import subTitle from '@/components/subTitle'
+    import pagination from '@/components/pagination'
     import mixin from '@/utils/mixin'
+
     export default {
         name: "imgGallery",
         mixins: [mixin],
-        components:{
+        components: {
             subTitle,
+            pagination
         },
-        data(){
+        data() {
             return {
                 //筛选栏数据
                 imgName: '',
+                tableData: [
+                    {
+                        id: 222,
+                        name: '情趣丝袜',
+                        cover: 'https://img.alicdn.com/bao/uploaded/i1/O1CN01XN44iP2GH0jMcjYGC_!!0-rate.jpg_400x400.jpg',
+                        imgTotal: 5,
+                        sorting: 1,
+                        description: '情调衣人黑色女情趣袜夹蕾丝吊袜带性感透明吊带袜丝袜套装长筒袜',
+                    },
+                ],
+                checkItemId: [],
+                optionsList: {
+                    'delete': '删除'
+                },
             }
         },
-        methods:{
-            getList(){
+        mounted(){
+            // this.getList();
+        },
+        methods: {
+            getList() {
+                this.$ajax.post("merchant_goods_galleries/query_for_page",{
+                    currentPage: this.currentPage,
+                    pageSize: this.pageSize,
+                    name: this.imgName
+                }).then((res) => {
+                    this.total = res.totalCount;
+                    this.tableData = res.list;
+                },(err) => {
+                    this.$msgErr(err.msg);
+                })
+            },
 
+            remove(id) {
+                this.$confirm("确认删除吗?").then(() => {
+                    this.$ajax.post("/merchant_goods_galleries/delete_batch",id).then(() => {
+                        this.$msgSuc("删除成功");
+                        this.getList();
+                    },(err) => {
+                        this.$msgErr(err.msg);
+                    })
+                },(err) => {
+                    // console.log("取消删除");
+                })
             }
         }
     }
