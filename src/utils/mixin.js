@@ -31,7 +31,7 @@ export default {
 
         /**
          * 上传图片文件
-         * @param file
+         * @param {Array}file
          * @returns {Promise<any>}
          */
         uploadFiles(file){
@@ -48,7 +48,6 @@ export default {
                         //连接+后缀名
                     });
                 },(err) => {
-                    this.$msgErr(err);
                     reject(err);
                 })
             })
@@ -87,9 +86,14 @@ export default {
                 //3.显示品牌
                 else if ('show' === val){
                     this.batchShow(this.checkItemId,1);
-                }//4.隐藏品牌
+                }
+                //4.隐藏品牌
                 else if ('hide' === val){
                     this.batchShow(this.checkItemId,0);
+                }
+                //5.转移相册
+                else if ('shift' === val){
+                    this.shiftItem(this.checkItemId);
                 }
             } else {
                 this.$msgWar("未选择操作项");
@@ -109,7 +113,7 @@ export default {
         },
 
         /*
-         * 批量操作操作选项选择事件
+         * 批量操作操作选项改变事件
          * @param val
         batchChange(val){
             console.log(typeof val,val);//string delete
