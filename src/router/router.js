@@ -117,9 +117,23 @@ export default new Router({ //创建路由
                 },
                 {
                     path: '/goods/imgGallery',   //商品图片库
-                    //:id 是router的params传参的参数名
                     name: 'imgGallery',
                     component: resolve => {require(['@/views/goods/imgGallery'], resolve)},
+                },
+                {
+                    path: '/goods/imgGallery/addImage', //添加商品图片库
+                    name: 'addImage',
+                    component: resolve => {require(['@/views/goods/addImage'], resolve)},
+                },
+                /*注意：
+                *   ↑'/goods/imgGallery/addImage'
+                * 和↓'/goods/imgGallery/:id'
+                * 的顺序不能颠倒,因为路由匹配顺序从上往下
+                * */
+                {
+                    path: '/goods/imgGallery/:id', //查看相册图片
+                    name: 'imageList',
+                    component: resolve => {require(['@/views/goods/imageList'], resolve)},
                 },
             ]
         }
