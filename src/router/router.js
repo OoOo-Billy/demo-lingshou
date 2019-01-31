@@ -135,6 +135,16 @@ export default new Router({ //创建路由
                     name: 'imageList',
                     component: resolve => {require(['@/views/goods/imageList'], resolve)},
                 },
+                {
+                    path: '/order/list', //订单列表
+                    name: 'orderList',
+                    component: resolve => {require(['@/views/order/list'], resolve)},
+                },
+                {
+                    path: '/order/list/orderDetail', //订单列表
+                    name: 'orderDetail',
+                    component: resolve => {require(['@/views/order/orderDetail'], resolve)},
+                },
             ]
         }
     ]
