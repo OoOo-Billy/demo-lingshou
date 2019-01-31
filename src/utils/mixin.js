@@ -75,7 +75,7 @@ export default {
          */
         confirmBatch(val){
             if (val && this.checkItemId.length > 0){
-                //1.删除商品
+                //1.删除
                 if ('delete' === val){
                     this.remove(this.checkItemId);
                 }
@@ -95,6 +95,10 @@ export default {
                 else if ('shift' === val){
                     this.shiftItem(this.checkItemId);
                 }
+                //6.关闭订单
+                else if (val === 'close'){
+                    this.closeItem(this.checkItemId);
+                }
             } else {
                 this.$msgWar("未选择操作项");
             }
@@ -112,12 +116,7 @@ export default {
             }
         },
 
-        /*
-         * 批量操作操作选项改变事件
-         * @param val
-        batchChange(val){
-            console.log(typeof val,val);//string delete
-        }*/
+
 
         /**
          * 表格selection事件
