@@ -184,7 +184,7 @@
                     receiver: '',
                     phone: '',
                     address: '',
-                    status: 0,
+                    status: 1,
                     creatTime: '',
                     finishTime: '',
                     sendEndTime: '',
@@ -212,6 +212,7 @@
                 mechantRemark: '',
 
                 ruleForm: {
+                    id: '',
                     receiver: '',
                     phone: '',
                     address: '',
@@ -223,12 +224,74 @@
                 }
             }
         },
+        /*created() {
+           if (this.$route.query.id) {
+               this.mobilePhone = this.$route.query.mobilePhone;
+               this.getList;
+           }
+        },*/
         methods: {
             getList() {
+                this.$ajax.post("merchant_order/query_By_Id",{
+                    id: this.$route.query.id,
+                    merchantId : JSON.parse(localStorage.userInfo).merchantId
+                }).then((res) => {
+                    this.datalist = res;
+                    this.$set(this.ruleForm, 'receiver', res.receiver);
+                    this.$set(this.ruleForm, 'phone', res.phone);
+                    this.$set(this.ruleForm, 'address', res.address);
+                    this.$set(this.ruleForm, 'id', res.id);
+                },(err) => {
+                    this.$msgErr(err.msg);
+                })
             },
             close() {
+                this.$confirm("确定关闭订单嘛?").then(() => {
+                    this.$ajax.post("merchant_order/update",{
+                        id: this.$route.query.id,
+                        status: 0
+                    }).then(() => {
+                        this.$msgSuc("关闭成功");
+                        this.getList();
+                    },(err) => {
+                        this.$msgErr(err.msg);
+                    })
+                },() => {
+                    // console.log("quxiaoshanchu");
+                })
             },
-            submitForm() {
+
+            /**
+             *
+             * @param {String}formName
+             */
+            submitForm(formName) {
+                if (this.dialogStatus === 1) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid){
+                            this.$ajax.post("merchant_order/updateOrder", this.ruleForm).then(() => {
+                                this.$msgSuc("操作成功");
+                                this.dialogVisible = false;
+                                this.getList();
+                            },(err) => {
+                                this.$msgErr(err.msg);
+                            })
+                        } else {
+                            return false
+                        }
+                    })
+                }else {
+                    this.$ajax.post("merchant_order/updateOrder", {
+                        id: this.ruleForm.id,
+                        mechantRemark: this.mechantRemark
+                    }).then(() => {
+                        this.$msgSuc("操作成功");
+                        this.dialogVisible = false;
+                        this.getList();
+                    },(err) => {
+                        this.$msgErr(err.msg);
+                    })
+                }
             },
         }
     }
@@ -277,6 +340,10 @@
                 }
             }
         }
+    }
+
+    .form{
+        width: 90%;
     }
 
     .dialog-footer {
