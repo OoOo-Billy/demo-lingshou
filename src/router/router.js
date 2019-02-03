@@ -145,6 +145,26 @@ export default new Router({ //创建路由
                     name: 'orderDetail',
                     component: resolve => {require(['@/views/order/orderDetail'], resolve)},
                 },
+                {
+                    path: '/order/receipt', //确认收货
+                    name: 'receipt',
+                    component: resolve => {require(['@/views/order/receipt'], resolve)},
+                },
+                {
+                    path: '/order/orderSetting', //订单设置
+                    name: 'orderSetting',
+                    component: resolve => {require(['@/views/order/orderSetting'], resolve)},
+                },
+                {
+                    path: '/order/returnGoods', //退货申请处理
+                    name: 'returnGoods',
+                    component: resolve => {require(['@/views/order/returnGoods'], resolve)},
+                },
+                {
+                    path: '/order/returnGoods/returnGoodsDetail', //退货详情
+                    name: 'returnGoodsDetail',
+                    component: resolve => {require(['@/views/order/returnGoodsDetail'], resolve)},
+                },
             ]
         }
     ]
