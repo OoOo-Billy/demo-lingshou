@@ -60,36 +60,40 @@
 
 <script>
     import subTitle from '@/components/subTitle'
+
     export default {
         name: "systemInfo",
-        components:{
+        components: {
             subTitle,
         },
     }
 </script>
 
 <style scoped lang="scss">
-    .table-middle{
+    .table-middle {
         width: 70%;
-        margin: 0 auto;
-        margin-bottom: 30px;
+        margin: 0 auto 30px;
         border-right: 1px solid #b4b4b4;
         border-bottom: 1px solid #b4b4b4;
-    tr{
-        height: 60px;
-        background-color: #fff;
-    }
-    td{
-        padding: 0 20px;
-        border-left: 1px solid #b4b4b4;
-        border-top: 1px solid #b4b4b4;
-        color: #5a5a5a;
-    &:nth-child(1){
-         background-color: #F9FAFC;
-     }
-    &:nth-child(3){
-         background-color: #F9FAFC;
-     }
-    }
+
+        tr {
+            height: 60px;
+            background-color: #fff;
+        }
+
+        td {
+            padding: 0 20px;
+            border-left: 1px solid #b4b4b4;
+            border-top: 1px solid #b4b4b4;
+            color: #5a5a5a;
+
+            &:nth-child(1) {
+                background-color: #F9FAFC;
+            }
+
+            &:nth-child(3) {
+                background-color: #F9FAFC;
+            }
+        }
     }
 </style>
