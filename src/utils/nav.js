@@ -91,7 +91,7 @@ export default {
                     },
                     {
                         name: "订单设置",
-                        path: "/order/orderSeting"
+                        path: "/order/orderSetting"
                     },
                 ]
             },
