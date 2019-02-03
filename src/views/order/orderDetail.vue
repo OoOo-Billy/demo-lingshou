@@ -90,7 +90,8 @@
 
             <!---->
             <p class="box-title font-20">商品信息</p>
-            <el-table class="mall-table" :data="datalist.details" :header-cell-style="headerStyle" :cell-style="tdStyle" max-height="800">
+            <el-table class="mall-table" :data="datalist.details" :header-cell-style="headerStyle" :cell-style="tdStyle"
+                      max-height="800">
                 <el-table-column label="商品图片">
                     <template slot-scope="scope">
                         <img :src="getGoodImg(scope.row.goodsPic)" alt="">
@@ -131,10 +132,10 @@
 
             <!---->
             <el-dialog
-                :title="title"
-                :visible.sync="dialogVisible"
-                :append-to-body="true"
-                width="30%">
+                    :title="title"
+                    :visible.sync="dialogVisible"
+                    :append-to-body="true"
+                    width="30%">
                 <el-form :model="ruleForm" :rules="rules1" ref="ruleForm" label-width="100px" class="form">
                     <div v-if="dialogStatus === 1">
                         <el-form-item label="收货人姓名: " prop="receiver">
@@ -166,6 +167,7 @@
     import subTitle from '@/components/subTitle'
     import filters from '@/utils/filters'
     import mixin from '@/utils/mixin'
+
     export default {
         name: "orderDetail",
         filters: filters,
@@ -218,9 +220,17 @@
                     address: '',
                 },
                 rules1: {
-                    receiver: [],
-                    phone: [],
-                    address: [],
+                    receiver: [
+                        {required: true, message: '请输入收货人姓名', trigger: 'blur'},
+                        {max: 20, message: '长度必须小于20个字符', trigger: 'blur'}
+                    ],
+                    phone: [
+                        {required: true, message: '请输入手机号', trigger: 'blur'},
+                        {max: 11, message: '请输入正确的手机号', trigger: 'blur'},
+                    ],
+                    address: [
+                        {required: true, message: '请输入详细地址', trigger: 'blur'}
+                    ],
                 }
             }
         },
@@ -232,31 +242,31 @@
         },*/
         methods: {
             getList() {
-                this.$ajax.post("merchant_order/query_By_Id",{
+                this.$ajax.post("merchant_order/query_By_Id", {
                     id: this.$route.query.id,
-                    merchantId : JSON.parse(localStorage.userInfo).merchantId
+                    merchantId: JSON.parse(localStorage.userInfo).merchantId
                 }).then((res) => {
                     this.datalist = res;
                     this.$set(this.ruleForm, 'receiver', res.receiver);
                     this.$set(this.ruleForm, 'phone', res.phone);
                     this.$set(this.ruleForm, 'address', res.address);
                     this.$set(this.ruleForm, 'id', res.id);
-                },(err) => {
+                }, (err) => {
                     this.$msgErr(err.msg);
                 })
             },
             close() {
                 this.$confirm("确定关闭订单嘛?").then(() => {
-                    this.$ajax.post("merchant_order/update",{
+                    this.$ajax.post("merchant_order/update", {
                         id: this.$route.query.id,
                         status: 0
                     }).then(() => {
                         this.$msgSuc("关闭成功");
                         this.getList();
-                    },(err) => {
+                    }, (err) => {
                         this.$msgErr(err.msg);
                     })
-                },() => {
+                }, () => {
                     // console.log("quxiaoshanchu");
                 })
             },
@@ -268,19 +278,19 @@
             submitForm(formName) {
                 if (this.dialogStatus === 1) {
                     this.$refs[formName].validate((valid) => {
-                        if (valid){
+                        if (valid) {
                             this.$ajax.post("merchant_order/updateOrder", this.ruleForm).then(() => {
                                 this.$msgSuc("操作成功");
                                 this.dialogVisible = false;
                                 this.getList();
-                            },(err) => {
+                            }, (err) => {
                                 this.$msgErr(err.msg);
                             })
                         } else {
                             return false
                         }
                     })
-                }else {
+                } else {
                     this.$ajax.post("merchant_order/updateOrder", {
                         id: this.ruleForm.id,
                         mechantRemark: this.mechantRemark
@@ -288,7 +298,7 @@
                         this.$msgSuc("操作成功");
                         this.dialogVisible = false;
                         this.getList();
-                    },(err) => {
+                    }, (err) => {
                         this.$msgErr(err.msg);
                     })
                 }
@@ -299,21 +309,26 @@
 
 <style scoped lang="scss">
     @import "~@/assets/css/common";
+
     .el-steps {
         margin-bottom: 30px;
     }
-    .order-info{
+
+    .order-info {
         background-color: #efefef;
         padding: 20px;
         border: $border;
-        p{
+
+        p {
             line-height: 38px;
         }
     }
-    .table{
+
+    .table {
         margin: 30px 0;
         border: $border;
-        .title{
+
+        .title {
             width: 100%;
             border-bottom: $border;
             line-height: 40px;
@@ -322,17 +337,21 @@
             box-sizing: border-box;
             background-color: #EFEFEF;
         }
-        >div{
+
+        > div {
             flex: 1;
             border-right: $border;
-            &:last-child{
+
+            &:last-child {
                 border-right: none;
             }
-            >div{
+
+            > div {
                 line-height: 49px;
                 font-size: 15px;
                 text-align: center;
-                &:first-child{
+
+                &:first-child {
                     color: $gray;
                     font-weight: 700;
                     background-color: #F6F6F6;
@@ -342,7 +361,7 @@
         }
     }
 
-    .form{
+    .form {
         width: 90%;
     }
 
