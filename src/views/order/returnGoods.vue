@@ -41,7 +41,7 @@
                     <el-input class="search-input" v-model="receiver" placeholder="收货人姓名" @clear="search"
                               @keyup.enter.native="search" clearable>
                     </el-input>
-                    <span class="font-14 gray">提价时间</span>
+                    <span class="font-14 gray">提价时间:</span>
                     <el-date-picker
                             v-model="creatTime"
                             align="right"
@@ -129,11 +129,39 @@
                 searchcode: '',
                 receiver: '',
                 creatTime: '',
-                pickerOptions: {},
+                pickerOptions: {
+                    disabledDate(time) {
+                        return time.getTime() > Date.now();
+                    },
+                    shortcuts: [
+                        {
+                            text: '今天',
+                            onClick(picker) {
+                                picker.$emit('pick', new Date());
+                            }
+                        },
+                        {
+                            text: '昨天',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24);
+                                picker.$emit('pick', date);
+                            }
+                        },
+                        {
+                            text: '一周前',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                                picker.$emit('pick', date);
+                            }
+                        }
+                    ]
+                },
 
                 tableData: [
                     {
-                        id:  '12101',
+                        id: '12101',
                         code: 'abcd1234efgn5643ddie463',
                         creatTime: '2001-1-1',
                         mobilePhone: '13878568840',
@@ -141,7 +169,7 @@
                         status: 1,
                     },
                     {
-                        id:  '12102',
+                        id: '12102',
                         code: 'abcd1234efgn5643ddie463',
                         creatTime: '2001-1-1',
                         mobilePhone: '13878568840',
@@ -149,7 +177,7 @@
                         status: 2,
                     },
                     {
-                        id:  '12103',
+                        id: '12103',
                         code: 'abcd1234efgn5643ddie463',
                         creatTime: '2001-1-1',
                         mobilePhone: '13878568840',
@@ -178,7 +206,7 @@
                     contact: this.receiver,
                     code: this.searchcode,
                     status: this.isactive,
-                    creatTime : this.creatTime,
+                    creatTime: this.creatTime,
                     merchantId: this.merchantId
                 }).then((res) => {
                     this.tableData = res.list;
