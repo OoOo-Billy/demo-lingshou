@@ -165,6 +165,21 @@ export default new Router({ //创建路由
                     name: 'returnGoodsDetail',
                     component: resolve => {require(['@/views/order/returnGoodsDetail'], resolve)},
                 },
+                {
+                    path: '/order/refund', //退货详情
+                    name: 'refund',
+                    component: resolve => {require(['@/views/order/refund'], resolve)},
+                },
+                {
+                    path: "/order/refund/refundDetail",//退款详情
+                    name: 'refundDetail',
+                    component: resolve => {require(['@/views/order/refundDetail'], resolve)},
+                },
+                {
+                    path: "/order/returnCause",//退货原因设置
+                    name: 'returnCause',
+                    component: resolve => {require(['@/views/order/returnCause'], resolve)},
+                },
             ]
         }
     ]
