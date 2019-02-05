@@ -92,7 +92,7 @@
                 <tr>
                     <td>确认退款金额</td>
                     <td>
-                        <span class="returnMoney">
+                        <span>
                             <el-input v-model="returnMoney" @keyup.native="returnMoneychange"></el-input>
                         </span>
                     </td>
