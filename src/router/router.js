@@ -180,6 +180,16 @@ export default new Router({ //创建路由
                     name: 'returnCause',
                     component: resolve => {require(['@/views/order/returnCause'], resolve)},
                 },
+                {
+                    path: "/order/address",//退货点
+                    name: 'address',
+                    component: resolve => {require(['@/views/order/addressList'], resolve)},
+                },
+                {
+                    path: "/order/address/addAddress",//发货点信息管理
+                    name: 'addAddress',
+                    component: resolve => {require(['@/views/order/addAddress'], resolve)},
+                },
             ]
         }
     ]
