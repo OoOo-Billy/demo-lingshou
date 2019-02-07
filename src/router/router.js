@@ -181,14 +181,24 @@ export default new Router({ //创建路由
                     component: resolve => {require(['@/views/order/returnCause'], resolve)},
                 },
                 {
-                    path: "/order/address",//退货点
+                    path: "/order/address",//发货点信息管理
                     name: 'address',
                     component: resolve => {require(['@/views/order/addressList'], resolve)},
                 },
                 {
-                    path: "/order/address/addAddress",//发货点信息管理
+                    path: "/order/address/addAddress",//添加/编辑发货点
                     name: 'addAddress',
                     component: resolve => {require(['@/views/order/addAddress'], resolve)},
+                },
+                {
+                    path: "/promotion/header",//头部列表
+                    name: 'headerList',
+                    component: resolve => {require(['@/views/promotion/header'], resolve)},
+                },
+                {
+                    path: "/promotion/addHeader",//添加头部
+                    name: 'addHeader',
+                    component: resolve => {require(['@/views/promotion/addHeader'], resolve)},
                 },
             ]
         }
