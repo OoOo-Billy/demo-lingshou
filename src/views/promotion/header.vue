@@ -112,13 +112,24 @@
 
                 tableData: [
                     {
-                        id: '',
-                        navName: '',
+                        id: '11',
+                        navName: '服装',
                         navIcon: '',
-                        parentId: '',
+                        parentId: '0',
                         status: 2,
-                        navSort: '',
-                        navTop: 0
+                        navSort: '1',
+                        navTop: 0,
+                        navDesc: '',
+                    },
+                    {
+                        id: '333',
+                        navName: '食品',
+                        navIcon: '',
+                        parentId: '0',
+                        status: 2,
+                        navSort: '1',
+                        navTop: 0,
+                        navDesc: '',
                     },
                 ],
 
@@ -151,6 +162,11 @@
                 })
             },
 
+            /**
+             *
+             * @param {Boolean}flag
+             * @param id
+             */
             switchQuery(flag, id){
                 this.currentPage = 1;
                 this.headerId = flag ? id : 0;
@@ -158,13 +174,98 @@
                 this.getList();
             },
 
-            handleShow(){
-
+            /**
+             * 控制显示switch事件
+             * @param {value}$event
+             * @param {Object}data
+             */
+            handleShow($event, data){
+                data.status = $event;
+                this.$ajax.post("merchantNavigation/merchant_navigation_update", data).then(() => {
+                    this.$msgSuc("操作成功");
+                }, (err) => {
+                    this.$msgErr(err.msg);
+                })
             },
 
-            handleNavSort(){},
-            setTop(){},
-            remove(ids){},
+            /**
+             * 排序事件
+             * @param {event}$event
+             * @param data
+             */
+            handleNavSort($event, data){
+                if ($event.target.value < 0 || $event.target.value > 999){
+                    this.$msgWar("排序在0 - 999之间");
+                    return
+                }
+                data.navSort = $event.target.value;
+                this.$ajax.post("merchantNavigation/merchant_navigation_update", data).then(() => {
+                    this.$msgSuc("操作成功");
+                    this.getList();
+                }, (err) => {
+                    this.$msgErr(err.msg);
+                })
+            },
+
+            /**
+             * 置顶
+             * @param id
+             * @param value
+             */
+            setTop(id, value){
+                this.$ajax.post("merchantNavigation/set_nav_top", {
+                    id: id,
+                    navTop: value === 0 ? '' : 0
+                }).then(() => {
+                    this.$msgSuc("操作成功");
+                    this.getList();
+                }, (err) => {
+                    this.$msgErr(err.msg);
+                })
+            },
+
+            /**
+             * 删除
+             * @param {Array}ids
+             */
+            remove(ids){
+                this.$confirm("确认删除吗?").then(() => {
+                    this.$ajax.post("merchantNavigation/merchant_nav_batch", {
+                        ids: ids,
+                        oprate: 1
+                    }).then(() => {
+                        this.$msgSuc("删除成功");
+                        this.getList();
+                    }, (err) => {
+                        this.$msgErr(err.msg);
+                    })
+                },() => {
+                    console.log("取消了删除");
+                })
+            },
+
+            /**
+             *
+             * @param {Array}ids
+             * @param {value}status
+             */
+            batchShow(ids,status){
+                let oprate;
+                if (status === 0){
+                    oprate = 2;
+                } else if (status === 1){
+                    oprate = 0;
+                }
+                this.$ajax.post("merchantNavigation/merchant_nav_batch", {
+                    ids: ids,
+                    oprate: oprate
+                }).then(() => {
+                    this.$msgSuc("操作成功");
+                    this.getList();
+                }, (err) => {
+                    this.$msgErr(err.msg);
+                })
+            }
         }
     }
 </script>
