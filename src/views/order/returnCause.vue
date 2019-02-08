@@ -44,7 +44,7 @@
                     :append-to-body="true">
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="form">
                     <el-form-item label="原因类型" prop="reasonType">
-                        <el-input v-model="ruleForm.reasonType"></el-input>
+                        <el-input v-model="ruleForm.reasonType" type="textarea" resize="none" rows="5"></el-input>
                     </el-form-item>
                     <el-form-item label="排序" prop="sorts">
                         <el-input v-model="ruleForm.sorts" type="number" @keyup.native="number"></el-input>
@@ -216,4 +216,7 @@
 <style scoped lang="scss">
     @import "~@/assets/css/common";
 
+    .form {
+        width: 500px;
+    }
 </style>
