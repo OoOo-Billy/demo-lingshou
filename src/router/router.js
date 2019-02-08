@@ -200,6 +200,16 @@ export default new Router({ //创建路由
                     name: 'addHeader',
                     component: resolve => {require(['@/views/promotion/addHeader'], resolve)},
                 },
+                {
+                    path: "/promotion/list",//拼团商品列表
+                    name: 'promotionList',
+                    component: resolve => {require(['@/views/promotion/list'], resolve)},
+                },
+                {
+                    path: "/promotion/addGoods",//添加拼团商品
+                    name: 'addGoods',
+                    component: resolve => {require(['@/views/promotion/addGoods'], resolve)},
+                },
             ]
         }
     ]
