@@ -6,16 +6,16 @@
                 <el-form-item label="类目名称:" prop="navName">
                     <el-input v-model.trim="ruleForm.navName"></el-input>
                 </el-form-item>
-                <el-form-item label="上级类目:" prop="parentId">
+                <el-form-item label="上级类目:">
                     <el-select v-model="ruleForm.parentId" :disabled="!isAdd" placeholder="请选择分类">
                         <el-option v-for="item in headerList" :label="item.navName" :value="item.id"></el-option>
                     </el-select>
                     <p class="form-tips" v-if="isAdd">不选择分类默认为顶级分类</p>
                 </el-form-item>
-                <el-form-item label="排序:" prop="navSort">
+                <el-form-item label="排序:">
                     <el-input v-model="ruleForm.navSort" type="number"></el-input>
                 </el-form-item>
-                <el-form-item label="是否显示:" prop="status">
+                <el-form-item label="是否显示:">
                     <el-radio-group v-model="ruleForm.status">
                         <el-radio label="0">显示</el-radio>
                         <el-radio label="1">不显示</el-radio>
@@ -31,7 +31,7 @@
                         <p class="form-tips">建议图标尺寸为18*18比例，图片只能为jpg、png格式</p>
                     </div>
                 </el-form-item>
-                <el-form-item label="类目描述:" prop="navDesc">
+                <el-form-item label="类目描述:">
                     <el-input type="textarea" v-model="ruleForm.navDesc" resize="none" rows="3"></el-input>
                 </el-form-item>
                 <el-form-item>
@@ -53,6 +53,13 @@
             subTitle,
         },
         data(){
+            let navIconValid = (item, value, callback) => {
+                if (!this.ruleForm.navIcon && this.isAdd){
+                    callback(new Error('请上传类目图标'));
+                } else {
+                    callback();
+                }
+            };
             return {
                 ruleForm: {
                     navName: '',
@@ -63,7 +70,13 @@
                     navDesc: '',
                 },
                 rules: {
-
+                    navName: [
+                        { required: true, message: '请输入分类名称', trigger: 'blur' },
+                        { max: 20, message: '长度必须小于20个字符', trigger: 'blur' }
+                    ],
+                    navIcon: [
+                        { validator: navIconValid, trigger: 'change'}
+                    ]
                 },
                 headerList: [
                     {id: 0, navName: '顶级类目'},
