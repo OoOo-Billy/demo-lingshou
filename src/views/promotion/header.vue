@@ -91,11 +91,9 @@
     import subTitle from "@/components/subTitle"
     import pagination from "@/components/pagination"
     import mixin from "@/utils/mixin"
-    import filters from "@/utils/filters"
     export default {
         name: "headerList",
         mixins: [mixin],
-        filters: filters,
         components: {
             subTitle,
             pagination
