@@ -85,6 +85,7 @@
             return {
                 goodsId: '',
                 ruleForm: {
+                    id: '',
                     goodsId: '',
                     skuId: '',
                     merchantGoodsGroup: [
@@ -220,7 +221,51 @@
                 })
             },
             submitForm(){
-
+                this.$refs['ruleForm'].validate((valid) => {
+                    if (valid){
+                        let isValid;
+                        this.ruleForm.merchantGoodsGroup.forEach((item) => {
+                            if (!item.groupUserNum || !item.groupPrice || !item.groupTime || !item.groupMaxNum) {
+                                this.$msgWar("请填写完整拼团规格列表");
+                                isValid = false;
+                                return
+                            }
+                            if (item.groupMaxNum > 100 || item.groupMaxNum < 0) {
+                                this.$msgWar("成团个数在0到100之间");
+                                isValid = false;
+                            }
+                        });
+                        if (!isValid){
+                            return
+                        }
+                        this.submitLoading = true;
+                        if (this.isAdd){
+                            this.addEdit("merchantGoodsGroup/goods_group_add");
+                        } else {
+                            //处理表单数据
+                            this.ruleForm.goodsId = String(this.goodsId);
+                            this.ruleForm.id = this.$route.query.id;
+                            this.ruleForm = Object.assign(this.ruleForm, this.ruleForm.merchantGoodsGroup[0]);
+                            delete this.ruleForm.merchantGoodsGroup;
+                            this.addEdit("merchantGoodsGroup/goods_group_update");
+                        }
+                    } else {
+                        return false
+                    }
+                })
+            },
+            addEdit(path){
+                let ruleForm = Object.assign({}, this.ruleForm);
+                this.$ajax.post(path, ruleForm).then(() => {
+                    this.$msgSuc("提交成功");
+                    setTimeout(() => {
+                        this.$router.push('/promotion/list');
+                        this.submitLoading = false;
+                    }, 500)
+                },(err) => {
+                    this.submitLoading = false;
+                    this.$msgErr(err.msg);
+                })
             },
         }
     }
