@@ -88,7 +88,7 @@
                             :total="dialogTotal"
                             :page-size="dialogPageSize"
                             background
-                            layout="total, prev, pager, next, jumper"></el-pagination>
+                            layout="total, prev, pager, next, jumper"/>
                 </div>
             </el-dialog>
 
