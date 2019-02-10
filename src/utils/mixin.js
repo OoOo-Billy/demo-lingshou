@@ -182,6 +182,36 @@ export default {
             })
         },
 
+        /**
+         * 获取入库类型
+         * @param type
+         */
+        getStockType(type){
+            this.$ajax.post("merchant_goods_log/query_type",{
+                type: type
+            },{type: 'form'}).then((res) => {
+                this.stockTypeList = res;
+            })
+        },
+
+
+        /**
+         * 时间选择器change事件
+         * @param val
+         */
+        handleDate(val){
+            if (val && val.length > 0) {
+                this.beginTime = val[0];
+                this.endTime = val[1];
+                this.getList();
+            }else {
+                this.datePicker = [];
+                this.beginTime = '';
+                this.endTime = '';
+                this.getList();
+            }
+        },
+
         //公共表头样式
         headerStyle(){
             return {
