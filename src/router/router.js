@@ -220,6 +220,21 @@ export default new Router({ //创建路由
                     name: 'groupOrder',
                     component: resolve => {require(['@/views/promotion/groupOrder'], resolve)},
                 },
+                {
+                    path: "/stock/in",//商品入库
+                    name: 'stockIn',
+                    component: resolve => {require(['@/views/stock/stockIn'], resolve)},
+                },
+                {
+                    path: "/stock/out",//商品出库
+                    name: 'stockOut',
+                    component: resolve => {require(['@/views/stock/stockOut'], resolve)},
+                },
+                {
+                    path: "/user/list",//用户列表
+                    name: 'userList',
+                    component: resolve => {require(['@/views/user/list'], resolve)},
+                },
             ]
         }
     ]
