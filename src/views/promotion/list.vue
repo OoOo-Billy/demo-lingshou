@@ -41,7 +41,7 @@
                 <el-table-column label="编号" prop="id" width="55"></el-table-column>
                 <el-table-column label="商品名称" prop="goodsName"></el-table-column>
                 <el-table-column label="团个数" prop="groupMaxNum"></el-table-column>
-                <el-table-column label="团规格" prop="groupMaxNum">
+                <el-table-column label="团规格">
                     <template slot-scope="scope">
                         {{ `${scope.row.groupUserNum}人-${scope.row.groupPrice}元` }}
                     </template>
