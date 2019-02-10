@@ -210,6 +210,16 @@ export default new Router({ //创建路由
                     name: 'addGoods',
                     component: resolve => {require(['@/views/promotion/addGoods'], resolve)},
                 },
+                {
+                    path: "/promotion/groupList",//成团管理
+                    name: 'groupList',
+                    component: resolve => {require(['@/views/promotion/groupList'], resolve)},
+                },
+                {
+                    path: "/promotion/groupOrder",//订单管理
+                    name: 'groupOrder',
+                    component: resolve => {require(['@/views/promotion/groupOrder'], resolve)},
+                },
             ]
         }
     ]
