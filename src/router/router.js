@@ -235,6 +235,11 @@ export default new Router({ //创建路由
                     name: 'userList',
                     component: resolve => {require(['@/views/user/list'], resolve)},
                 },
+                {
+                    path: "/user/list/info/:id",//用户详情
+                    name: 'userInfo',
+                    component: resolve => {require(['@/views/user/info'], resolve)},
+                },
             ]
         }
     ]
