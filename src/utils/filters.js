@@ -35,6 +35,12 @@ const promotionOrderStatus = {
     '20': '已删除',
 };
 
+const sexList = {
+    '0': '女',
+    '1': '男',
+    '2': '未知',
+};
+
 function getPropSelect(param) {
     return propSelectList[param]
 }
@@ -51,10 +57,15 @@ function getPromotionOrderStatus(param) {
     return promotionOrderStatus[param]
 }
 
+function getSex(param) {
+    return sexList[param]
+}
+
 export default {
     getPropSelect: getPropSelect,
     getOrderStatus: getOrderStatus,
     getPromotionStatus: getPromotionStatus,
     promotionStatus: promotionStatus,
-    getPromotionOrderStatus: getPromotionOrderStatus
+    getPromotionOrderStatus: getPromotionOrderStatus,
+    getSex: getSex,
 }
