@@ -240,6 +240,16 @@ export default new Router({ //创建路由
                     name: 'userInfo',
                     component: resolve => {require(['@/views/user/info'], resolve)},
                 },
+                {
+                    path: "/operate/advertising",//用户详情
+                    name: 'advertising',
+                    component: resolve => {require(['@/views/operate/advertising'], resolve)},
+                },
+                {
+                    path: "/operate/addAdvertising", //添加广告
+                    name: 'addAdvertising',
+                    component: resolve => {require(['@/views/operate/addAdvertising'], resolve)},
+                },
             ]
         }
     ]
