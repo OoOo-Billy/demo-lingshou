@@ -41,6 +41,11 @@ const sexList = {
     '2': '未知',
 };
 
+const adPositionList = {
+    '1': 'APP首页轮播',
+    '2': '分类轮播',
+};
+
 function getPropSelect(param) {
     return propSelectList[param]
 }
@@ -61,6 +66,10 @@ function getSex(param) {
     return sexList[param]
 }
 
+function getAdPosition(param) {
+    return adPositionList[param]
+}
+
 export default {
     getPropSelect: getPropSelect,
     getOrderStatus: getOrderStatus,
@@ -68,4 +77,5 @@ export default {
     promotionStatus: promotionStatus,
     getPromotionOrderStatus: getPromotionOrderStatus,
     getSex: getSex,
+    getAdPosition: getAdPosition
 }
