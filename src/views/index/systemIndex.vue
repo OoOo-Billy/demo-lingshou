@@ -174,16 +174,13 @@
         },*/
         methods: {
             linkUrl(path){
-                alert(`页面${path}未完成，无法跳转`)
-                // this.$router.push(path);
+                this.$router.push(path);
             },
             linkOrder() {
-                alert('页面未完成，无法跳转')
-                // this.$router.push('order/list');
+                this.$router.push('/order/list');
             },
             linkAdvertising(){
-                alert('页面未完成，无法跳转')
-                // this.$router.push('/operate/advertising');
+                this.$router.push('/operate/advertising');
             }
         },
 
