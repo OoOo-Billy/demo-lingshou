@@ -92,14 +92,14 @@
                     },
                     {
                         id: 211,
-                        name: '维多利亚的秘密',
+                        name: '阿迪达斯',
                         logo: '',
                         areaLogo: '',
                         story:'',
-                        firstChar: 'V',
+                        firstChar: 'A',
                         sorting: 2,
                         isShow: 1,
-                        goodsTotal: '性感内衣，性感蕾丝丝袜，情趣丝袜',
+                        goodsTotal: '运动鞋，休闲鞋，服装',
                     }
                 ],
                 checkItemId: [],

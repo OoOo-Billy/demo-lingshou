@@ -105,7 +105,7 @@
                     },
                     {
                         id: '5299',
-                        typeName: '情趣丝袜',
+                        typeName: '丝袜',
                         parentId: '1',
                         goodsNum: '8999',
                         goodsUnit: '件',
@@ -115,7 +115,7 @@
                     },
                     {
                         id: '1128',
-                        typeName: '性感蕾丝丝袜',
+                        typeName: '保暖裤',
                         parentId: '1',
                         goodsNum: '89',
                         goodsUnit: '件',

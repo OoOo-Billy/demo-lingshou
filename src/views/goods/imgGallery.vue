@@ -79,7 +79,7 @@
                 tableData: [
                     {
                         id: 222,
-                        name: '情趣丝袜',
+                        name: '性感丝袜',
                         cover: 'https://img.alicdn.com/bao/uploaded/i1/O1CN01XN44iP2GH0jMcjYGC_!!0-rate.jpg_400x400.jpg',
                         imgTotal: 5,
                         sorting: 1,
