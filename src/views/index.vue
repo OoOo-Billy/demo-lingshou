@@ -45,14 +45,11 @@
 <script>
     import { mapState } from 'vuex'
     import nav from '../utils/nav'
-    // import subTitle from '../components/subTitle'
-    // import pagination from '../components/pagination'
     export default {
         name: "index",
         computed: {//计算属性
             menu() {//根据vuex状态管理里的activeNav动态改变menu的值，然后重新生成菜单
                 return nav[this.$store.getters.activeNav].child
-                // return nav['index'].child
             },
             userInfo(){
                 return JSON.parse(this.$store.getters.userInfo);
@@ -71,15 +68,8 @@
         methods: {
             switchNav(path) {
                 this.$router.push(path);
-            },
-            /*refresh(){
-                alert("点击了刷新")
-            }*/
-        },
-        /*components: {
-            // subTitle,
-            // pagination,
-        }*/
+            }
+        }
     }
 </script>
 
