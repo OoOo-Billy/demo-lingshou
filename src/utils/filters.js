@@ -77,5 +77,6 @@ export default {
     promotionStatus: promotionStatus,
     getPromotionOrderStatus: getPromotionOrderStatus,
     getSex: getSex,
-    getAdPosition: getAdPosition
+    getAdPosition: getAdPosition,
+    adPositionList: adPositionList
 }
