@@ -250,6 +250,16 @@ export default new Router({ //创建路由
                     name: 'addAdvertising',
                     component: resolve => {require(['@/views/operate/addAdvertising'], resolve)},
                 },
+                {
+                    path: "/authority/authority", //操作日志
+                    name: 'authority',
+                    component: resolve => {require(['@/views/authority/authority'], resolve)},
+                },
+                /*{
+                    path: "/statistics/deal", //交易统计
+                    name: 'deal',
+                    component: resolve => {require(['@/views/statistics/deal'], resolve)},
+                },*/
             ]
         }
     ]
