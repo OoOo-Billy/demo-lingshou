@@ -211,10 +211,24 @@ export default {
             }
         ]
     },
+    /*statistics: {
+        title: "统计",
+        path: '/statistics/deal',
+        child: [
+            {
+                sub: "统计",
+                menu: [
+                    {
+                        name: "交易统计",
+                        path: "/statistics/deal"
+                    },
+                ]
+            }
+        ]
+    },*/
     authority: {
         title: "权限",
         path: '/authority/authority',
-        module: 'authority',
         child: [
             {
                 sub: "权限",
