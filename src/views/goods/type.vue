@@ -81,13 +81,13 @@
                     },
                     {
                         id: 5299,
-                        styleName: '情趣丝袜',
+                        styleName: '袜子',
                         propertyNum: 99,
                         paramNum: 50,
                     },
                     {
                         id: 1128,
-                        styleName: '性感蕾丝丝袜',
+                        styleName: '保暖裤',
                         propertyNum: 9999,
                         paramNum: 180,
                     },
