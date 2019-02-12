@@ -1,6 +1,6 @@
 <template>
     <div>
-        <subTitle :subTitle="'添加广告'"/>
+        <subTitle :subTitle="isAdd ? '添加广告' : '编辑广告'"/>
         <div class="body">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="form"
                      v-loading="loading">
@@ -59,10 +59,12 @@
 <script>
     import subTitle from "@/components/subTitle"
     import mixin from "@/utils/mixin"
+    import filters from "@/utils/filters"
 
     export default {
         name: "addAdvertising",
         mixins: [mixin],
+        filters: filters,
         components: {
             subTitle,
         },
@@ -75,12 +77,15 @@
                 }
             };
             return {
+                adLink: '',
                 ruleForm: {
+                    id: '',
                     adName: '',
                     adPosition: '',
                     online: '1',
                     adPicture: '',
                     adLink: '',
+                    remark: '',
                 },
                 rules: {
                     adName: [
@@ -100,7 +105,7 @@
                         {required: true, message: '请选择广告商品', trigger: 'change'}
                     ],
                 },
-                adPositionList: ['APP首页轮播', '分类轮播'],
+                adPositionList: filters.adPositionList,
                 goodsList: [
                     {
                         id: '12887',
@@ -109,18 +114,98 @@
                 ],
             }
         },
+        created() {
+            if (this.$route.query.id) {
+                this.isAdd = false;
+                /*this.loading = true;
+                this.$ajax.post("merchant_ad/get_single_merchant_ad", {
+                    id: this.$route.query.id
+                }).then((res) => {
+                    this.$set(this.ruleForm, 'adName', res.adName);
+                    this.$set(this.ruleForm, 'adPosition', String(res.adPosition));
+                    this.$set(this.ruleForm, 'online', res.online);
+                    this.$set(this.ruleForm, 'adPicture', res.adPicture);
+                    this.$set(this.ruleForm, 'remark', res.remark);
+                    this.adLink = res.adLink;
+                    this.$ajax.post("merchantGoods/merchant_goods_by_id", {
+                        id: res.adLink
+                    }).then((res) => {
+                        this.$set(this.ruleForm, 'adLink', res.goodsName);
+                        this.loading = false;
+                    }, (err) => {
+                        this.$msgErr(err.msg);
+                    })
+                }, (err) => {
+                    this.$msgErr(err.msg);
+                }).finally(() => {
+                    this.loading = false;
+                })*/
+            }
+        },
         methods: {
-            uploadadPicture() {
+            /**
+             * 上传图片按钮事件
+             * @param $event
+             */
+            uploadadPicture($event) {
+                let file = $event.target.files[0];
+                this.uploadFiles(file).then((res) => {
+                    this.$set(this.ruleForm, 'adPicture', res.imgUrl);
+                })
             },
-            handleGoods() {
-            }
-            ,
-            searchGoods() {
-            }
-            ,
+
+            /**
+             * 选择广告指定商品事件
+             * @param {id}$event
+             */
+            handleGoods($event) {
+                if ($event) {
+                    this.adLink = $event.toString();
+                }
+            },
+
+            /**
+             * 远程搜索
+             * @param val
+             */
+            searchGoods(val) {
+                this.$ajax.post("merchantGoods/merchant_goods_list_page", {
+                    currentPage: 1,
+                    pageSize: 100,
+                    goodsName: val,
+                }).then((res) => {
+                    this.goodsList = res.list;
+                }, (err) => {
+                    this.$msgErr(err.msg);
+                })
+            },
+
             submitForm() {
+                this.$refs['ruleForm'].validate((valid) => {
+                    if (valid) {
+                        if (this.isAdd) {
+                            this.addEdit("merchant_ad/add_merchant_ad");
+                        } else {
+                            this.$set(this.ruleForm, 'id', this.$route.query.id);
+                            this.$set(this.ruleForm, 'adLink', this.adLink);
+                            this.addEdit("merchant_ad/change_merchant_ad");
+                        }
+                    } else {
+                        return false
+                    }
+                })
+            },
+
+            addEdit(path) {
+                this.$ajax.post(path, this.ruleForm).then(() => {
+                    this.$msgSuc("提交成功");
+                    setTimeout(() => {
+                        this.$router.push('/operate/advertising')
+                    }, 500)
+                }, (err) => {
+                    this.$msgErr(err.msg);
+                })
             }
-            ,
         }
     }
 </script>
