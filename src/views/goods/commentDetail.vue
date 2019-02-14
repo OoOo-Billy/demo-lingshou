@@ -87,9 +87,9 @@
                 },
             }
         },
-        /*mounted(){
-            this.$ajax.post("/merchantGoodsComment/merchant_goods_type_list_page",{
-                id: this.$router.query.id
+        mounted(){
+            this.$ajax.post("merchantGoodsComment/merchant_goods_type_list_page",{
+                id: this.$route.query.id
             }).then((res) => {
                 for (let i =0; i < res.list.length; i++){
                     res.list[i].commentLevel1 = 5 - res.list[i].commentLevel;
@@ -99,7 +99,7 @@
                     this.picArray = this.tableData.imgUrl.split(',');
                 }
             })
-        },*/
+        },
         methods:{
             submitForm(){
                 if (this.ruleForm.commentContent === ''){

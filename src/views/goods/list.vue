@@ -39,7 +39,7 @@
             </div>
             <!--数据区域-->
             <el-table class="mall-table" :data="tableData" v-loading="loading" max-height="800"
-                      @selection-change="tableSelection" :header-cell-style="headerStyle" :cell-style="tdStyle">
+                      @selection-change="tableSelection" :header-cell-style="headerStyle" :cell-style="tdStyle" ref="table">
                 <el-table-column type="selection" prop="id" width="55"></el-table-column>
                 <el-table-column label="编号" prop="id"></el-table-column>
                 <el-table-column label="商品图片">
@@ -134,148 +134,7 @@
         data() {
             return {
                 //表格数据
-                tableData: [
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 0
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 1
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 1
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 1
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 0
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 0
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 1
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 0
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 0
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 1
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 0
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 0
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 1
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '../../assets/image.png',
-                        goodsName: '商品1',
-                        brandName: '品牌1',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                        buyNum: 8851,
-                        status: 1
-                    },
-                ],
+                tableData: [],
 
                 //库存编辑弹窗数据
                 dialogVisible: false,
@@ -304,15 +163,15 @@
         },
         mounted() {
             //初始化筛选框中的分类列表
-            /*this.$ajax.post('merchantGoodsType/query_goods_type_tree').then((res) => {
+            this.$ajax.post('merchantGoodsType/query_goods_type_tree').then((res) => {
                 this.categoryList = res;
-            });*/
+            });
             //初始化筛选框中的品牌列表
-            /*this.$ajax.post('merchant_goods_brand/query_list').then((res) => {
+            this.$ajax.post('merchant_goods_brand/query_list').then((res) => {
                 this.brandList = res;
-            });*/
+            });
             //初始化表格数据
-            //this.getList();
+            this.getList();
         },
         methods: {
             /**

@@ -86,64 +86,7 @@
         },
         data() {
             return {
-                tableData: [
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '超厚羽绒服',
-                        typeName: '服装',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '超厚羽绒服',
-                        typeName: '服装',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '超厚羽绒服',
-                        typeName: '服装',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '超厚羽绒服',
-                        typeName: '服装',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '超厚羽绒服',
-                        typeName: '服装',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '超厚羽绒服',
-                        typeName: '服装',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                    },
-                    {
-                        id: 52131,
-                        goodsImg: '@/assets/image.png',
-                        goodsName: '超厚羽绒服',
-                        typeName: '服装',
-                        goodsPrice: 9000,
-                        goodsNo: 'abcdefa95dag47gagd245d2',
-                    },
-                ],//商品回收站表格数据
+                tableData: [],//商品回收站表格数据
 
                 //搜索数据
                 goodsName: '',
@@ -164,15 +107,15 @@
         },
         mounted() {//与list组件一样
             //初始化筛选框中的分类列表
-            /*this.$ajax.post('merchantGoodsType/query_goods_type_tree').then((res) => {
+            this.$ajax.post('merchantGoodsType/query_goods_type_tree').then((res) => {
                 this.categoryList = res;
-            });*/
+            });
             //初始化筛选框中的品牌列表
-            /*this.$ajax.post('merchant_goods_brand/query_list').then((res) => {
+            this.$ajax.post('merchant_goods_brand/query_list').then((res) => {
                 this.brandList = res;
-            });*/
+            });
             //初始化表格数据
-            //this.getList();
+            this.getList();
         },
         methods: {
             /**

@@ -437,38 +437,14 @@
                         {required: true, message: '请输入库存预警值', trigger: 'blur'},
                     ]
                 },
-                typeList: [
-                    {styleName: '食品', id: 0},
-                    {styleName: '服装', id: 1},
-                    {styleName: '玩具', id: 2},
-                ],//类型列表
-                propList: [
-                    {name: '烧麦', value: ['大份', '小份']},
-                    {name: '包子', value: ['肉包', '菜包', "糖包"]},
-                ],//step2商品总的属性列表
+                typeList: [],//类型列表
+                propList: [],//step2商品总的属性列表
                 propHeader: ['包子', '烧卖'],//step2选中的商品属性名
                 checkProp: [],//step2商品选中的具体属性
                 checkPropList: [],//商品的选中属性总列表，编辑商品时通过服务器获取，添加商品时通过选择商品属性并点“添加”更新，处理后能得到propHeader和checkProp
-                propSpecList: [
-                    {
-                        nameValue: [{name: '烧麦', value: '大份'}, {name: '包子', value: '肉包'}],
-                        goodsSalePrice: 100,
-                        goodsStock: 42,
-                        stockWarning: 10
-                    },
-                    {
-                        nameValue: [{name: '烧麦', value: '小份'}, {name: '包子', value: '菜包'}],
-                        goodsSalePrice: 100,
-                        goodsStock: 42,
-                        stockWarning: 10
-                    },
-                ],//step2商品规格列表
+                propSpecList: [],//step2商品规格列表
                 propLoading: false,//属性loading
-                paramsList: [
-                    {name: '多肉', list: ['少', '中', '微']},
-                    {name: '多糖', list: ['全糖', '无糖']},
-                    {name: '多菜', list: ['有菜', '无菜']},
-                ],//step2商品参数列表
+                paramsList: [],//step2商品参数列表
 
                 //保存商品旧属性
                 oldStyleId: '',
@@ -483,50 +459,10 @@
                 albumImgList: [],//相册列表
                 checkAlbumImgList: [],//图片库选区图片
 
-                headerList:[
-                    {
-                        navName: '鞋子',
-                        id: '0',
-                        list:[
-                            {navName: '安踏', id: '0'},
-                            {navName: '特步', id: '1'},
-                            {navName: '耐克', id: '2'},
-                        ]
-                    },
-                    {
-                        navName: '数码',
-                        id: '1',
-                        list:[
-                            {navName: '索尼', id: '0'},
-                            {navName: '松下', id: '1'}
-                        ]
-                    },
-                    {
-                        navName: '服装',
-                        id: '2',
-                        list:[
-                            {navName: '杰克琼斯', id: '0'},
-                            {navName: '南极人', id: '1'},
-                            {navName: '李维斯', id: '2'},
-                        ]
-                    },
-                    {
-                        navName: '眼镜',
-                        id: '3',
-                        list: []
-                    },
-                ],//关联类目一级类目列表
-                childHeaderList: [
-                    {navName: '安踏', id: '0'},
-                    {navName: '特步', id: '1'},
-                    {navName: '耐克', id: '2'},
-                ],//关联类目二级类目列表
-                imgList: ['@', ''],//商品图片列表
-                albumList: [
-                    {name:'食品',id:0},
-                    {name:'服装',id:1},
-                    {name:'美妆',id:2},
-                ],//相册分类列表
+                headerList:[],//关联类目一级类目列表
+                childHeaderList: [],//关联类目二级类目列表
+                imgList: [],//商品图片列表
+                albumList: [],//相册分类列表
                 serverUrl: 'https://ls.diandianyuyue.com',//这里写你要上传的图片服务器地址
                 editorOption: {//富文本编辑器功能
                     placeholder: '',
@@ -550,7 +486,7 @@
                 }
             }
         },
-        /*mounted(){
+        mounted(){
             this.loading = true;
             //1.第一次请求:商品一级分类列表
             this.$ajax.post("merchantGoodsType/query_goods_type_tree").then((res) => {
@@ -655,7 +591,7 @@
                                             let checkProp = [];//选中的具体属性
                                             let propHeader = [];//选中的属性名
                                             //处理逻辑
-                                            this.checkPropList.map((item) => {
+                                            (this.checkPropList || []).map((item) => {
                                                 propHeader.push(item.name);
                                                 item.value.map((prop) => {
                                                     checkProp.push(item.name + prop);
@@ -690,7 +626,7 @@
                 })
 
             })
-        },*/
+        },
         methods: {
             /**
              * step0 点击商品一级分类
@@ -787,7 +723,7 @@
                          this.propList = list;
                          //2.3请求参数列表和商品参数名
                          this.$ajax.post("merchantGoodsParam/merchant_goods_property_list_page",{
-                             styleId: val,
+                             styleId: id,
                              currentPage: 1,
                              pageSize: 100,
                          }).then((res) => {
@@ -811,7 +747,7 @@
                              });
                              this.propLoading = false;
                          });
-                     },(err) => {
+                     },() => {
                          this.$msgErr('无法请求服务器')
                      })
                 }
@@ -1037,10 +973,10 @@
                     return
                 }
                 //2.检查商品规格是否选择
-                if (this.checkPropList.length === 0){
+                /*if (this.checkPropList.length === 0){
                     this.$msgWar("请选择商品规格");
                     return
-                }
+                }*/
                 //3检查商品规格列表是否填写
                 if (this.propSpecList.length === 0){
                     this.$msgWar("请添加商品规格列表");

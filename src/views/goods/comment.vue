@@ -88,7 +88,7 @@
             return {
                 //表格数据
                 tableData: [
-                    {
+                   /* {
                         id: 52131,
                         userName: '何***u',
                         goodsName: '超厚羽绒服',
@@ -117,7 +117,7 @@
                         commentIp: '0.0.0.0',
                         createTime: '2019-1-1',
                         status: 2//0 or 2
-                    },
+                    },*/
                 ],
                 checkItemId: [],
 
@@ -133,7 +133,7 @@
             }
         },
         mounted(){
-            // this.getList();
+            this.getList();
         },
         methods:{
             /**
