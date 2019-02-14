@@ -42,71 +42,39 @@
         data() {
             return {
                 tableData: [],
-                table: [
-                    {
-                        operateTime: '2019-1-23',
-                        ip: '192.163.0.1',
-                        description: {
-                            data: {
-                                country: '中国',
-                                region: '广东',
-                                city: '深圳'
-                            }
-                        },
-                        pack: 'chrome',
-                    },
-                    {
-                        operateTime: '2019-1-23',
-                        ip: '192.163.0.1',
-                        description: {
-                            data: {
-                                country: '中国',
-                                region: '广东',
-                                city: '深圳'
-                            }
-                        },
-                        pack: 'firefox',
-                    },
-                    {
-                        operateTime: '2019-1-23',
-                        ip: '192.163.0.1',
-                        description: {},
-                        pack: 'firefox',
-                    },
-                ],
+                table: [],
                 currentPage: 1,
                 total: 0,
                 pageSize: 10,
             }
         },
         created() {
-            // this.getList(1);
+            this.getList(1);
         },
         methods: {
             /**
              * 获取登录日志列表
-             * @param pageSize
+             * @param pageNum
              */
             getList(pageNum) {
-                let _this = this;
                 let formData = {
                     currentPage: pageNum,
                     pageSize: this.pageSize,
                     orderBy: 'operate_time desc'
                 };
-                this.$ajax.post("/merchant/get_merchant_login_info_list", formData, {
+                this.$ajax.post("merchant/get_merchant_login_info_list", formData, {
                     type: 'form'
                 }).then((res) => {
                     this.tableData = res.list;
                     this.total = res.tatalCount;
                     for (let i = 0; i < res.list.length; i++) {
-                        if (res.list[i].description != '') {
-                            if (res.list[i].description != '成功') {
-                                res.list[i].description = eval("(" + response.list[i].description + ")");
+                        if (res.list[i].description !== '') {
+                            if (res.list[i].description !== '成功') {
+                                res.list[i].description = eval("(" + res.list[i].description + ")");
                             }
                         }
                     }
-                    _this.table = res.list;
+                    this.table = res.list;
                 })
             },
 

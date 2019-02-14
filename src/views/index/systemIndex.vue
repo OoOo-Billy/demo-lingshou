@@ -29,7 +29,7 @@
                     <img src="@/assets/index/icon-4.png" alt="">
                     <div>
                         <p class="font-18 gray">近七日销售总额</p>
-                        <p class="font-18 red bold">{{'￥' + data.nearlySevenDayOrderMoney}}</p>
+                        <p class="font-18 red bold">{{'￥' + data.nearlySevenDaysOrderMoney}}</p>
                     </div>
                 </div>
             </div>
@@ -119,16 +119,16 @@
                 userData: {},
                 goodsData: {},
                 data: {
-                    todayOrderNum: 1111,//今日订单总数
-                    todayOrderMoney: 100000,//今日销售额
-                    yesterdayOrderMoney: 120203,//昨日销售额
-                    nearlySevenDayOrderMoney: 1005000,//近七日销售总额
-                    dfk: 0,//待付款数
-                    ywc: 0,//已完成数
-                    dqrth: 0,//待确认退货数
-                    dfh: 0,//代发货数
-                    dcltk: 0,//待处理退款数
-                    dsh: 0,//已发货数
+                    todayOrderNum: '',//今日订单总数
+                    todayOrderMoney: '',//今日销售额
+                    yesterdayOrderMoney: '',//昨日销售额
+                    nearlySevenDaysOrderMoney: '0',//近七日销售总额
+                    dfk: '',//待付款数
+                    ywc: '',//已完成数
+                    dqrth: '',//待确认退货数
+                    dfh: '',//代发货数
+                    dcltk: '',//待处理退款数
+                    dsh: '',//已发货数
                 },
                 entryList:[
                     {
@@ -159,19 +159,25 @@
                 ],
             }
         },
-        /*mounted() {
+        mounted() {
             this.$ajax.post("merchant_order/getOrderAllCount", {
                 merchantId: JSON.parse(this.$store.getters.userInfo).merchantId
             }).then((res) => {
                 this.data = res;
+            },(err) => {
+                this.$msgErr(err.msg)
             });
             this.$ajax.post("merchant/merchant_index").then((res) => {
                 this.userData = res;
+            },(err) => {
+                this.$msgErr(err.msg)
             });
             this.$ajax.post("merchantGoods/goodsCountStatistics").then((res) => {
                 this.goodsData = res;
+            },(err) => {
+                this.$msgErr(err.msg)
             })
-        },*/
+        },
         methods: {
             linkUrl(path){
                 this.$router.push(path);

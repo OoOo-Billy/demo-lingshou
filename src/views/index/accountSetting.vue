@@ -92,7 +92,7 @@
             uploadFile(file) {
                 let formData = new FormData();
                 formData.append('file', file.file);
-                this.$ajax.post("merchant/upload_file",formData,{
+                this.$ajax.post("api/merchant/upload_file",formData,{
                     type: 'form',
                     file: 'image'
                 }).then((res) => {
@@ -109,9 +109,9 @@
                 alert("提交名为" + formName + "的用户设置表单");
                 this.$refs[formName].validate((valid) => {
                     if (valid){//验证成功
-                        this.$ajax.post("/merchant/change_password",this.ruleForm,{
+                        this.$ajax.post("api/merchant/change_password",this.ruleForm,{
                             type: 'form'
-                        }).then((res) => {
+                        }).then(() => {
                             this.userInfo.merchantName = this.ruleForm.name;
                             this.userInfo.merchantLogo = this.ruleForm.merchantLogo;
                             this.$msgSuc('修改成功');
