@@ -32,14 +32,6 @@
             <!--表格头部-->
             <div class="box-title flex between h-center">
                 <span class="font-20">数据列表</span>
-                <div class="flex h-center">
-                    <!-- <el-select v-model="input" placeholder="显示条数" class="search-input">
-                      <el-option key="1" value="1" label="1"></el-option>
-                    </el-select>
-                    <el-select v-model="input" placeholder="排序方式" class="search-input">
-                      <el-option key="1" value="1" label="1"></el-option>
-                    </el-select>-->
-                </div>
             </div>
 
             <!--数据区域-->
@@ -95,9 +87,7 @@
 
                 //筛选栏数据
                 categoryList: [],
-                // categoryList: [{typeName: '大衣', id: 0}, {typeName: '长裙', id: 1}],
                 brandList: [],
-                // brandList: [{name: '安踏', id: 0}, {name: '贵人鸟', id: 1}]
                 checkItemId: [],//选中的物品ID
                 optionsList: {
                     'delete': '删除',
@@ -122,7 +112,6 @@
              * 从服务器获取表格数据
              */
             getList() {
-                //修改mixin里的loading属性，表示正在加载
                 this.loading = true;
                 //向服务器请求数据
                 this.$ajax.post('/merchantGoods/merchant_goods_recycling', {
@@ -160,9 +149,9 @@
                     }, (err) => {
                         this.$msgErr(err.msg);
                     })
-                },() => [
-
-                ])
+                },() => {
+                    //取消还原
+                })
             },
 
             /**

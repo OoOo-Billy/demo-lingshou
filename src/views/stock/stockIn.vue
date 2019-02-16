@@ -98,34 +98,15 @@
                 operateType: '',
                 beginTime: '',
                 endTime: '',
-                stockTypeList: [
-                    {
-                        code: '',
-                        name: '',
-                    },
-                ],
+                stockTypeList: [],
                 datePicker: [],
-
-                tableData: [
-                    {
-                        id: '',
-                        goodsImg: '',
-                        goodsName: '',
-                        brandName: '',
-                        goodsNo: '',
-                        property: '',
-                        changeNumber: '',
-                        changeAfter: '',
-                        typeName: '',
-                        createTime: '',
-                    },
-                ],
+                tableData: [],
             }
         },
-        /*mounted() {
+        mounted() {
             this.getStockType(1);
             this.getList();
-        },*/
+        },
         methods: {
             getList() {
                 this.loading = true;

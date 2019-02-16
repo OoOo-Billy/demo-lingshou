@@ -81,15 +81,7 @@
             return {
                 merchantId: '',
                 dialogVisible: false,
-                tableData: [
-                    {
-                        id: '68763',
-                        reasonType: '',
-                        sorts: '',
-                        isUse: 1,
-                        creatTime: '',
-                    },
-                ],
+                tableData: [],
                 ruleForm: {
                     id: '',
                     reasonType: '',
@@ -111,10 +103,10 @@
                 checkItemId: []
             }
         },
-        /*created() {
+        created() {
             this.merchantId = JSON.parse(localStorage.userInfo).merchantId;
             this.getList();
-        },*/
+        },
         methods: {
             getList() {
                 this.loading = true;

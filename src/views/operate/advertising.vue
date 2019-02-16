@@ -70,26 +70,16 @@
         },
         data(){
             return {
-                tableData: [
-                    {
-                        id: '654321',
-                        adName: '',
-                        adPosition: 1,
-                        adPicture: '',
-                        online: '1',
-                        clickNumber: '',
-                        topState: '1',
-                    },
-                ],
+                tableData: [],
                 checkItemId: [],
                 optionsList: {
                     'delete': '删除'
                 }
             }
         },
-       /* mounted(){
+        mounted(){
             this.getList();
-        },*/
+        },
         methods: {
             getList(){
                 this.$ajax.post("merchant_ad/get_merchant_ad_list", {

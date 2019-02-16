@@ -80,19 +80,19 @@
             return {
                 merchantId: '',
                 tableData: {
-                    id: '111111',
-                    code: 'abc12173',
-                    orderCode: 'a111213141241414',
-                    resloveTime: '2001-1-1',
-                    mobilePhone: '13888288868',
-                    returnMoney: 255,
+                    id: '',
+                    code: '',
+                    orderCode: '',
+                    resloveTime: '',
+                    mobilePhone: '',
+                    returnMoney: null,
                     returnReason: '',
                 },//退货订单信息
 
                 resolveRemark: '',
             }
         },
-       /* created() {
+        created() {
             this.merchantId = JSON.parse(this.$store.getters.userInfo).merchantId;
             this.$ajax.post("merchant_return_goods/query_By_Id", {
                 id: this.$route.query.id,
@@ -102,7 +102,7 @@
             }, (err) => {
                 this.$msgErr(err.msg);
             })
-        },*/
+        },
         methods: {
             sure(id) {
                 this.$ajax.post("merchant/return_money", {

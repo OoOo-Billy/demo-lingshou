@@ -127,27 +127,10 @@
                 formLoading: false,
                 checkItemId: [],
                 pageSize: 20,
-                list: [
-                    {
-                        id: '212',
-                        imgUrl: 'https://img.alicdn.com/bao/uploaded/i1/O1CN01XN44iP2GH0jMcjYGC_!!0-rate.jpg_400x400.jpg'
-                    },
-                    {
-                        id: '333',
-                        imgUrl: 'https://img.alicdn.com/bao/uploaded/i3/TB25B_qagHqK1RjSZJnXXbNLpXa_!!0-rate.jpg_400x400.jpg'
-                    },
-                    {
-                        id: '444',
-                        imgUrl: 'https://img.alicdn.com/bao/uploaded/i4/TB29fVmkyCYBuNkSnaVXXcMsVXa_!!0-rate.jpg_400x400.jpg'
-                    },
-                ],
+                list: [],
                 ruleForm: {
                     goodsGalleriesId: '',
-                    imgUrl: [
-                        'https://img.alicdn.com/bao/uploaded/i1/O1CN01XN44iP2GH0jMcjYGC_!!0-rate.jpg_400x400.jpg',
-                        'https://img.alicdn.com/bao/uploaded/i3/TB25B_qagHqK1RjSZJnXXbNLpXa_!!0-rate.jpg_400x400.jpg',
-                        'https://img.alicdn.com/bao/uploaded/i4/TB29fVmkyCYBuNkSnaVXXcMsVXa_!!0-rate.jpg_400x400.jpg'
-                    ],
+                    imgUrl: [],
                 },
                 ruleForm1: {
                     ids: [],//需要转移的图片ID
@@ -167,11 +150,7 @@
                         {required: true, message: '请选择相册'}
                     ],
                 },
-                albumList: [
-                    {id: '222', name: '情趣丝袜'},
-                    {id: '7891', name: '性感蕾丝丝袜'},
-                    {id: '1211', name: '运动鞋'},
-                ],//相册列表
+                albumList: [],//相册列表
                 optionsList: {
                     'delete': '删除',
                     'shift': '转移'
@@ -185,8 +164,8 @@
         mounted() {
             this.galleriesId = this.$route.params.id;
             this.ruleForm1.subGalleries = this.$route.params.id;
-            // this.getList();
-            // this.getAlbumList();
+            this.getList();
+            this.getAlbumList();
         },
         methods: {
             /**

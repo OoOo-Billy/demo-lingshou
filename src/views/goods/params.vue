@@ -57,35 +57,18 @@
         },
         data(){
             return {
-                tableData: [
-                    {
-                        id: 123,
-                        paramName: '透明度',
-                        styleName: '情趣丝袜',
-                        paramSelect: '1',
-                        paramList: ['半透明','网状','不透明'],
-                        paramSort: 1,
-                    },
-                    {
-                        id: 456,
-                        paramName: '形状',
-                        styleName: '情趣丝袜',
-                        paramSelect: '1',
-                        paramList: ['渔网状','纱状','大镂空'],
-                        paramSort: 2,
-                    },
-                ],
+                tableData: [],
                 checkItemId: [],
                 optionsList: {
                     'delete': '删除'
                 }
             }
         },
-        /* mounted(){
+         mounted(){
              this.getList("merchantGoodsParam/merchant_goods_property_list_page",{
                  styleId: this.$route.params.id
              })
-         },*/
+         },
         methods: {
             /**
              * 删除参数

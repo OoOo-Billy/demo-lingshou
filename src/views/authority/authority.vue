@@ -88,19 +88,11 @@
                         }
                     }]
                 },
-                tableData: [
-                    {
-                        id: '3321',
-                        operator: 'Administrator',
-                        operationDate: '2019-02-12',
-                        ip: '192.168.0.1',
-                        operationRecord: '--',
-                    },
-                ],
+                tableData: [],
             }
         },
         mounted() {
-            // this.getList();
+            this.getList();
         },
         methods: {
             getList() {

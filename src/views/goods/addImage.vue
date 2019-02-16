@@ -67,7 +67,7 @@
                 },
             }
         },
-        /*created(){
+        created(){
             if (this.$route.query.id){
                 this.isAdd = false;
                 this.$ajax.post("merchant_goods_galleries/query_by_id",{
@@ -83,7 +83,7 @@
                     this.$msgErr(err.msg);
                 })
             }
-        },*/
+        },
         methods: {
             /**
              * 上传封面图片

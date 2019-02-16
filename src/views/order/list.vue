@@ -153,87 +153,14 @@
                 dialogVisible: false,
                 dialogVisibled: false,
                 orderData: {
-                    allOrder: '115',//全部订单
-                    dfk: '5',//待付款
-                    dfh: '7',//代发货
-                    dsh: '15',//已发货
-                    ywc: '86',//已完成
-                    ygb: '2',//已关闭
+                    allOrder: '',//全部订单
+                    dfk: '',//待付款
+                    dfh: '',//代发货
+                    dsh: '',//已发货
+                    ywc: '',//已完成
+                    ygb: '',//已关闭
                 },
-                tableData: [
-                    {
-                        id: '10061',
-                        code: '78ab52147pokf1254d42',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 0,
-                        statuse: '已关闭',
-                    },
-                    {
-                        id: '10062',
-                        code: '78adag7521addg125df42',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 1,
-                        statuse: '待付款',
-                    },
-                    {
-                        id: '10063',
-                        code: 'dsadsga41316dsa96hgah',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 2,
-                        statuse: '代发货',
-                    },
-                    {
-                        id: '10064',
-                        code: 'do3892ngagaiadsgo322',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 3,
-                        statuse: '已发货',
-                    },
-                    {
-                        id: '10065',
-                        code: 'dagao3u29yutogjha8932',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 4,
-                        statuse: '已收货',
-                    },
-                    {
-                        id: '10066',
-                        code: '1tsdag94924sada9827',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 5,
-                        statuse: '已评价',
-                    },
-                    {
-                        id: '10067',
-                        code: '15t972hgasih9bay4',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 6,
-                        statuse: '已完成',
-                    },
-                    {
-                        id: '10068',
-                        code: 'vas0u2399298hsabihb',
-                        creatTime: '2019-1-31',
-                        mobilePhone: '18888888888',
-                        totalMoeny: '5000',
-                        status: 20,
-                        statuse: '已删除',
-                    },
-                ],
+                tableData: [],
 
                 //搜索栏数据
                 searchcode: '',
@@ -250,8 +177,8 @@
                     sendCode: '',
                 },
                 ruleForm1: {
-                    company: '顺丰快递',
-                    code: '8752x4gaeagzavv844da3g6',
+                    company: '',
+                    code: '',
                 },
                 rules: {
                     sendCompany: [
@@ -276,10 +203,10 @@
                 batchVal: '',
             }
         },
-        /*created(){
+        created(){
             this.merchantId = JSON.parse(this.$store.getters.userInfo).merchantId;
             this.getList(1,this.status);
-        },*/
+        },
         methods: {
             /**
              * 获取列表数据
@@ -371,7 +298,6 @@
              */
             deliver(id) {
                 this.dialogVisible = true;
-                // this.id = id;
                 this.ruleForm.id = id;
             },
 
@@ -381,7 +307,7 @@
              */
             delivered(id) {
                 this.dialogVisibled = true;
-                /* this.$ajax.post("merchant_order/query_By_Id",{
+                 this.$ajax.post("merchant_order/query_By_Id",{
                      id: id,
                      merchantId: this.merchantId
                  }).then((res) => {
@@ -389,7 +315,7 @@
                      this.ruleForm1.code = res.sendCode;
                  },(err) => {
                      this.$msgErr(err.msg);
-                 })*/
+                 })
             },
 
             /**

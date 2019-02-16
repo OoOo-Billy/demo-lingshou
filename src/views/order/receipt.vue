@@ -78,21 +78,13 @@
                 merchantId: '',
                 searchcode: '',
                 receiver: '',
-                tableData: [
-                    {
-                        id: '66432',
-                        code: 'abc134def765ght1335dd123',
-                        creatTime: '2018-12-31',
-                        mobilePhone: '18883883883',
-                        totalMoeny: '200',
-                    },
-                ],
+                tableData: [],
             }
         },
-       /* created(){
+        created(){
             this.merchantId = JSON.parse(this.$store.getters.userInfo).merchantId;
             this.getList();
-        },*/
+        },
         methods: {
             getList(){
                 this.loading = true;

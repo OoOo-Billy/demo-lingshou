@@ -190,17 +190,17 @@
                     creatTime: '',
                     finishTime: '',
                     sendEndTime: '',
-                    finishEndTime: '2018-12-31',
+                    finishEndTime: '',
                     details: [
                         {
                             goodsPic: '',
-                            goodsName: '1',
-                            goodsPrice: '2',
-                            goodsNo: '3',
-                            goodsDesc: '4',
-                            buyNum: '5',
-                            goodsBrand: '6',
-                            totalMoney: '7',
+                            goodsName: '',
+                            goodsPrice: '',
+                            goodsNo: '',
+                            goodsDesc: '',
+                            buyNum: '',
+                            goodsBrand: '',
+                            totalMoney: '',
                         },
                     ],
                     totalMoeny: '',
@@ -234,12 +234,12 @@
                 }
             }
         },
-        /*created() {
+        created() {
            if (this.$route.query.id) {
                this.mobilePhone = this.$route.query.mobilePhone;
                this.getList;
            }
-        },*/
+        },
         methods: {
             getList() {
                 this.$ajax.post("merchant_order/query_By_Id", {

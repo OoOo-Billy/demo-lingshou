@@ -108,28 +108,7 @@
                 second: false,
                 headerId: 0,
 
-                tableData: [
-                    {
-                        id: '11',
-                        navName: '服装',
-                        navIcon: '',
-                        parentId: '0',
-                        status: 2,
-                        navSort: '1',
-                        navTop: 0,
-                        navDesc: '',
-                    },
-                    {
-                        id: '333',
-                        navName: '食品',
-                        navIcon: '',
-                        parentId: '0',
-                        status: 2,
-                        navSort: '1',
-                        navTop: 0,
-                        navDesc: '',
-                    },
-                ],
+                tableData: [],
 
                 optionsList: {
                     'hide': '取消推荐',
@@ -138,9 +117,9 @@
                 }
             }
         },
-        /*mounted(){
+        mounted(){
             this.getList();
-        },*/
+        },
         methods: {
             getList(){
                 this.loading = true;

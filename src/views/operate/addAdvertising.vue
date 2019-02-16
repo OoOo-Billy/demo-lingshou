@@ -106,18 +106,13 @@
                     ],
                 },
                 adPositionList: filters.adPositionList,
-                goodsList: [
-                    {
-                        id: '12887',
-                        goodsName: '耐克球鞋',
-                    },
-                ],
+                goodsList: [],
             }
         },
         created() {
             if (this.$route.query.id) {
                 this.isAdd = false;
-                /*this.loading = true;
+                this.loading = true;
                 this.$ajax.post("merchant_ad/get_single_merchant_ad", {
                     id: this.$route.query.id
                 }).then((res) => {
@@ -139,8 +134,9 @@
                     this.$msgErr(err.msg);
                 }).finally(() => {
                     this.loading = false;
-                })*/
+                })
             }
+            this.loading = false;
         },
         methods: {
             /**
@@ -215,6 +211,10 @@
 
     .form {
         width: 500px;
+
+        img{
+            width: 100px;
+        }
 
         .form-tips {
             font-size: 12px;

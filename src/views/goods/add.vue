@@ -367,18 +367,9 @@
             return {
                 stepActive: 0,
                 dialogVisible: false,//图片库弹窗可视
-                categoryList: [
-                    {typeName: '化妆品', id: '0', list:[{typeName: '口红', id: '0'},{typeName:'眼影',id: '1'}]},
-                    {typeName: '食品', id: '1', list:[{typeName: '烧麦', id: '0'},{typeName: '包子', id: '1'},{typeName: '油条', id: '2'}]},
-                    {typeName: '服装', id: '2', list:[{typeName: '大衣', id: '0'},{typeName: '裙子', id: '1'}]},
-                    {typeName: '玩具', id: '3', list:[]}
-                ],//一级分类列表
+                categoryList: [],//一级分类列表
                 childCategoryList: [],//二级分类列表
-                brandList: [
-                    {name: '李宁',id: '0'},
-                    {name: '耐克',id: '1'},
-                    {name: '阿迪达斯',id: '2'},
-                ],//品牌列表
+                brandList: [],//品牌列表
                 categoryName: '',//商品一级分类名
                 childCategoryName: '',//商品二级分类名
                 ruleForm: {
@@ -400,17 +391,13 @@
                     merchantSpecifications: [], //商品属性列表
                     merchantGoodsTypePropertyList: [], //商品规格列表
                     merchantParamDetailIds: {
-                        merchantParamDetails: [
-                            {name: '多肉', specificationsValue: ''},
-                            {name: '多糖', specificationsValue: ''},
-                            {name: '多菜', specificationsValue: ''},
-                        ],
-                        mainMaterial: '0.5',
-                        paramObject: '所有人',
+                        merchantParamDetails: [],
+                        mainMaterial: '',
+                        paramObject: '',
                     }, //商品参数值列表
                     goodsImg: '', //商品图片
-                    navId: '0',//关联类目一级类目ID
-                    navChildId: '1',//关联类目二级类目ID
+                    navId: '',//关联类目一级类目ID
+                    navChildId: '',//关联类目二级类目ID
                 },
                 rules: {
                     goodsName: [
@@ -439,7 +426,7 @@
                 },
                 typeList: [],//类型列表
                 propList: [],//step2商品总的属性列表
-                propHeader: ['包子', '烧卖'],//step2选中的商品属性名
+                propHeader: [],//step2选中的商品属性名
                 checkProp: [],//step2商品选中的具体属性
                 checkPropList: [],//商品的选中属性总列表，编辑商品时通过服务器获取，添加商品时通过选择商品属性并点“添加”更新，处理后能得到propHeader和checkProp
                 propSpecList: [],//step2商品规格列表
@@ -1050,7 +1037,6 @@
              * step3 完成商品编辑并提交
              */
             submitGoods(){
-                alert('完成提交！');
                 //1.规则检查
                 if (this.ruleForm.navId && !this.ruleForm.navChildId){
                     this.$msgWar('选了一级类目必须选择二级类目');
@@ -1312,6 +1298,11 @@
     }
     .mt20{
         margin-top: 20px;
+    }
+    .img-table{
+        img{
+            width: 100px;
+        }
     }
     .dialog-footer{
         button:last-child{

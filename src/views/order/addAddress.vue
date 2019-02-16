@@ -66,7 +66,7 @@
         mounted() {
             if (this.$route.query.id){
                 this.isAdd = false;
-                /*this.$ajax.post("return_send/query_By_Id", {
+                this.$ajax.post("return_send/query_By_Id", {
                     id: this.$route.query.id
                 }).then((res) => {
                     this.$set(this.ruleForm, 'returnPname', res.returnPname);
@@ -75,7 +75,7 @@
                     this.$set(this.ruleForm, 'returnPhone', res.returnPhone);
                 }, (err) => {
                     this.$msgErr(err.msg);
-                })*/
+                })
             }
         },
         methods: {

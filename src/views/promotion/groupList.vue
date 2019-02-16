@@ -110,27 +110,10 @@
                 promotionStatus:filters.promotionStatus,
 
                 tableData: [
-                    {
-                        id: '777',
-                        goodsName: '',
-                        assembleState: 4,
-                        groupSpec: '',
-                        groupPrice: '',
-                        groupNum: '',
-                        commanderName: '',
-                        invitationTimes: '',
-                        createTime: '',
-                    },
                 ],
                 dialogVisible: false,
 
-                dialogData: [
-                    {
-                        createTime: '2018-12-22',
-                        content: '222',
-                        merchantName: 'Billy',
-                    },
-                ],
+                dialogData: [],
                 //弹窗分页组件数据
                 orderId: '',
                 dialogCurrentPage: 1,
@@ -138,9 +121,9 @@
                 dialogPageSize: 10,
             }
         },
-        /*mounted(){
+        mounted(){
             this.getList();
-        }, */
+        },
         methods: {
             getList(){
                 this.loading = true;

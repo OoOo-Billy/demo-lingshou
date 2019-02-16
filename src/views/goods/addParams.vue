@@ -71,14 +71,7 @@
                 }
             };
             return {
-                ruleForm: {
-                    id: '',
-                    paramName: '形状',
-                    styleId: '',
-                    paramSelect: 1,
-                    paramList: '',
-                    paramSort: '',
-                },
+                ruleForm: {},
                 rules: {
                     paramName: [
                         {required: true, message: '请输入参数名称', trigger:'blur'},
@@ -91,17 +84,13 @@
                         {validator: validParams, required: true, trigger: 'change'}
                     ]
                 },
-                typeList: [
-                    {id: 666, styleName: '服装'},
-                    {id: 5299, styleName: '情趣丝袜',},
-                    {id: 1128, styleName: '性感蕾丝丝袜',},
-                ],//商品类型列表
-                dynamicTags: ["渔网状", "纱状", "大镂空" ],
+                typeList: [],//商品类型列表
+                dynamicTags: [],
                 inputVisible: false,//默认false
                 inputValue: '',
             }
         },
-        /*mounted() {
+        mounted() {
             this.$ajax.post("merchantGoodsStyle/merchant_goods_type_list").then((res) => {
                 this.typeList = res;
                 if (this.$route.query.id){
@@ -123,7 +112,7 @@
             },(err) => {
                 this.$msgErr(err.msg);
             })
-        },*/
+        },
         methods:{
             /**
              * tag标签的关闭事件

@@ -65,13 +65,10 @@
                         {max: 20, message: '长度必须小于20个字符', trigger: 'blur'}
                     ],
                 },
-                categoryList: [
-                    {id: '0', typeName: '顶级分类'},
-                    {id: '666', typeName: '服装'},
-                ],
+                categoryList: [],
             }
         },
-        /*created(){
+        created(){
             this.$ajax("merchantGoodsType/query_goods_type_tree").then((res) => {
                 this.categoryList = [...this.categoryList, ...res];
                 if (this.$route.query.id){
@@ -96,8 +93,12 @@
                     this.$set(this.ruleForm, 'parentId', Number(this.$route.query.parentId));
                     this.isAddCategory = true;
                 }
+            },(err) => {
+                this.$msgErr(err.msg);
+            }).finally(() => {
+                this.loading = false;
             })
-        },*/
+        },
         methods: {
             /**
              * 提交表单

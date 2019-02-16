@@ -76,16 +76,7 @@
             return {
                 //筛选栏数据
                 imgName: '',
-                tableData: [
-                    {
-                        id: 222,
-                        name: '性感丝袜',
-                        cover: 'https://img.alicdn.com/bao/uploaded/i1/O1CN01XN44iP2GH0jMcjYGC_!!0-rate.jpg_400x400.jpg',
-                        imgTotal: 5,
-                        sorting: 1,
-                        description: '情调衣人黑色女情趣袜夹蕾丝吊袜带性感透明吊带袜丝袜套装长筒袜',
-                    },
-                ],
+                tableData: [],
                 checkItemId: [],
                 optionsList: {
                     'delete': '删除'
@@ -93,10 +84,11 @@
             }
         },
         mounted(){
-            // this.getList();
+            this.getList();
         },
         methods: {
             getList() {
+                this.loading = true;
                 this.$ajax.post("merchant_goods_galleries/query_for_page",{
                     currentPage: this.currentPage,
                     pageSize: this.pageSize,
@@ -106,6 +98,8 @@
                     this.tableData = res.list;
                 },(err) => {
                     this.$msgErr(err.msg);
+                }).finally(() => {
+                    this.loading = false;
                 })
             },
 

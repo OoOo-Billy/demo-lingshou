@@ -57,27 +57,18 @@
         },
         data(){
             return {
-                tableData: [
-                    {
-                        id: 5271,
-                        propertyName: '码数',
-                        styleName: '服装',
-                        propertySelect: '1',
-                        propertyList: ['S','M','L','XL','XXL','XXXL'],
-                        propertyOrder: 2,
-                    },
-                ],
+                tableData: [],
                 checkItemId: [],
                 optionsList: {
                     'delete': '删除'
                 }
             }
         },
-       /* mounted(){
+        mounted(){
             this.getList("merchantGoodsProperty/merchant_goods_property_list_page",{
                 styleId: this.$route.params.id
             })
-        },*/
+        },
         methods: {
             /**
              * 删除属性

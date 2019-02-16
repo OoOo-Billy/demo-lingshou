@@ -27,7 +27,7 @@
                         <p>{{ tableData.commentContent}}</p>
                         <span v-for="url in picArray" class="clear">
                             <a :href="url" target="_blank">
-                                <img :src="url" alt="">
+                                <img :src="getGoodImg(url)" alt="">
                             </a>
                         </span>
                     </div>
@@ -64,23 +64,18 @@
         data() {
             return {
                 tableData: {
-                    id: 52131,
-                    userName: 'v***o',
-                    goodsName: '性感蕾丝丝袜',
-                    commentLevel: 5,
-                    commentLevel1: 0,
-                    createTime: '2019-1-1',
-                    commentIp: '192.168.0.1',
-                    commentContent: '不错呦～质量很好！吊带开始不太会弄花了点时间，整体棒棒哒',
+                    id: null,
+                    userName: '',
+                    goodsName: '',
+                    commentLevel: null,
+                    commentLevel1: null,
+                    createTime: '',
+                    commentIp: '',
+                    commentContent: '',
                     status: 0,//0 or 2,
-                    imgUrl: 'https://img.alicdn.com/bao/uploaded/i1/O1CN01XN44iP2GH0jMcjYGC_!!0-rate.jpg_400x400.jpg,https://img.alicdn.com/bao/uploaded/i3/TB25B_qagHqK1RjSZJnXXbNLpXa_!!0-rate.jpg_400x400.jpg,https://img.alicdn.com/bao/uploaded/i4/TB29fVmkyCYBuNkSnaVXXcMsVXa_!!0-rate.jpg_400x400.jpg',
+                    imgUrl: '',
                 },
-                picArray: [
-                    'https://img.alicdn.com/bao/uploaded/i1/O1CN01XN44iP2GH0jMcjYGC_!!0-rate.jpg_400x400.jpg',
-                    'https://img.alicdn.com/bao/uploaded/i3/TB25B_qagHqK1RjSZJnXXbNLpXa_!!0-rate.jpg_400x400.jpg',
-                    'https://img.alicdn.com/bao/uploaded/i4/TB29fVmkyCYBuNkSnaVXXcMsVXa_!!0-rate.jpg_400x400.jpg',
-
-                ],
+                picArray: [],
                 ruleForm: {
                     name: JSON.parse(localStorage.userInfo).merchantName,
                     commentContent: '',

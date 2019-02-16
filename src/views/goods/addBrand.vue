@@ -70,16 +70,7 @@
                 }
             };
             return {
-                ruleForm: {
-                    id: 111,
-                    name: '',
-                    logo: '',
-                    areaLogo: '',
-                    story: '',
-                    firstChar: '',
-                    sorting: '',
-                    isShow: 1,
-                },
+                ruleForm: {},
                 rules: {
                     name: [
                         {required: true, message: '请输入品牌名字', trigger: 'blur'},
@@ -94,10 +85,10 @@
                 }
             }
         },
-     /*   created(){
-            if (this.$router.query.id){
+        created(){
+            if (this.$route.query.id){
                 this.$ajax.post("merchant_goods_brand/query_by_id",{
-                    id: this.$router.query.id
+                    id: this.$route.query.id
                 },{
                     type: 'form'
                 }).then((res) => {
@@ -113,7 +104,7 @@
                     this.$msgErr(err.msg);
                 })
             }
-        },*/
+        },
         methods:{
             /**
              * 上传品牌logo

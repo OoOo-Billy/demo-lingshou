@@ -151,23 +151,12 @@
         data() {
             return {
                 merchantId: '',
-                tableData: [
-                    {
-                        goodsPic: '',
-                        goodsName: 'xxx夹克衫',
-                        goodsPrice: '288',
-                        goodsSize: 'XL',
-                        goodsBrand: '耐克',
-                        goodsColor: '黑色',
-                        buyNum: '2',
-                        totalMoney: '576',
-                    },
-                ],//退货商品信息
+                tableData: [],//退货商品信息
                 tableData1: {
                     id: '',
-                    code: 'abc12173',
+                    code: '',
                     status: 1,
-                    orderCode: 'a111213141241414',
+                    orderCode: '',
                     creatTime: '',
                     mobilePhone: '',
                     contact: '',
@@ -198,7 +187,7 @@
                 resolveRemark: '',
             }
         },
-       /* created() {
+        created() {
             this.merchantId = JSON.parse(this.$store.getters.userInfo).merchantId;
             this.$ajax.post("merchant_return_goods/query_for_page",{
                 currentPage: 1,
@@ -222,7 +211,7 @@
             },(err) => {
                 this.$msgErr(err.msg);
             })
-        },*/
+        },
         methods: {
             returnMoneychange() {
                 this.returnMoney = this.num(this.returnMoney);

@@ -87,38 +87,7 @@
         data(){
             return {
                 //表格数据
-                tableData: [
-                   /* {
-                        id: 52131,
-                        userName: '何***u',
-                        goodsName: '超厚羽绒服',
-                        commentLevel: 3,
-                        commentLevel1: 2,
-                        commentIp: '0.0.0.0',
-                        createTime: '2019-1-1',
-                        status: 0//0 or 2
-                    },
-                    {
-                        id: 52131,
-                        userName: 'v***o',
-                        goodsName: '性感蕾丝丝袜',
-                        commentLevel: 5,
-                        commentLevel1: 0,
-                        commentIp: '0.0.0.0',
-                        createTime: '2019-1-1',
-                        status: 0//0 or 2
-                    },
-                    {
-                        id: 52131,
-                        userName: '苗***7',
-                        goodsName: '水陆两用飞机',
-                        commentLevel: 1,
-                        commentLevel1: 4,
-                        commentIp: '0.0.0.0',
-                        createTime: '2019-1-1',
-                        status: 2//0 or 2
-                    },*/
-                ],
+                tableData: [],
                 checkItemId: [],
 
                 //分页组件数据
@@ -163,14 +132,14 @@
              * @param id
              */
             handleStatus($event,id){
-                /*this.$ajax.post("/merchantGoodsComment/delete_not_show",{
+                this.$ajax.post("/merchantGoodsComment/delete_not_show",{
                     id: id,
                     status: $event
                 }).then(() => {
                     this.$msgSuc("操作成功");
                 },(err) => {
                     this.$msgErr(err.msg);
-                })*/
+                })
             },
 
             /**

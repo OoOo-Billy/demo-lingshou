@@ -15,7 +15,7 @@
                 <el-table-column label="分类名称" prop="typeName"></el-table-column>
                 <el-table-column label="级别">
                     <template slot-scope="scope">
-                        {{ scope.row.parentId === '0' ? '一级' : '二级'}}
+                        {{ scope.row.parentId === 0 ? '一级' : '二级'}}
                     </template>
                 </el-table-column>
                 <el-table-column label="商品数量" prop="goodsNum"></el-table-column>
@@ -90,60 +90,23 @@
         },
         data() {
             return {
-                dialogVisible: false,//默认false
-                second: false,//默认false
-                tableData: [
-                    {
-                        id: '666',
-                        typeName: '服装',
-                        parentId: '0',
-                        goodsNum: '8999',
-                        goodsUnit: '件',
-                        showStatus: 0,
-                        goodsSort: '1',
-                        typeIcon: ''
-                    },
-                    {
-                        id: '5299',
-                        typeName: '丝袜',
-                        parentId: '1',
-                        goodsNum: '8999',
-                        goodsUnit: '件',
-                        showStatus: 0,
-                        goodsSort: '2',
-                        typeIcon: ''
-                    },
-                    {
-                        id: '1128',
-                        typeName: '保暖裤',
-                        parentId: '1',
-                        goodsNum: '89',
-                        goodsUnit: '件',
-                        showStatus: 1,
-                        goodsSort: '8',
-                        typeIcon: ''
-                    },
-                ],//表格数据
+                dialogVisible: false,
+                second: false,
+                tableData: [],//表格数据
                 originalId: '',//原商品分类的ID
                 lastId: '',//商品欲转移分类的ID
-                addCategoryList: [
-                    {id: '666', typeName: '服装'},
-                    {id: '123', typeName: '鞋包'},
-                    {id: '998', typeName: '奢侈品'},
-                    {id: '5299', typeName: '情趣丝袜'},
-                    {id: '1128', typeName: '性感蕾丝丝袜'},
-                ],//所有商品分类列表
+                addCategoryList: [],//所有商品分类列表
                 childCategoryId: '',//二级分类ID
             }
         },
-        /* mounted(){
+         mounted(){
              this.getList();
              this.$ajax.post("merchantGoodsType/merchant_goods_type_list").then((res) => {
                  this.addCategoryList = res;
              },() => {
                  this.$msgErr("请求数据失败");
              })
-         },*/
+         },
         methods: {
             /**
              * 获取一级分类列表

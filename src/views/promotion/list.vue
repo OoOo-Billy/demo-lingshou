@@ -115,31 +115,11 @@
                 status: '',
 
                 tableData: [
-                    {
-                        id: '886',
-                        goodsName: '耐克球鞋',
-                        groupMaxNum: '100',
-                        groupUserNum: '45',
-                        groupPrice: '888',
-                        merchantGoodsTypeProperty: {
-                            goodsSalePrice: '1888',
-                        },
-                        openGroup: '1',
-                        endGroup: '5',
-                        status: 0,
-                        createTime: '2018-12-22',
-                    },
                 ],
 
                 dialogVisible: false,
                 groupId: '',
-                dialogData: [
-                    {
-                        createTime: '2018-12-22',
-                        content: '222',
-                        merchantName: 'Billy',
-                    },
-                ],
+                dialogData: [],
 
                 //弹窗分页组件数据
                 dialogCurrentPage: 1,
@@ -147,9 +127,9 @@
                 dialogPageSize: 10,
             }
         },
-        /*mounted() {
+        mounted() {
             this.getList();
-        },*/
+        },
         methods: {
             getList() {
                 this.loading = true;

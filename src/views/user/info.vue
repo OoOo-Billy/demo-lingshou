@@ -155,7 +155,7 @@
                 data: {
                     user: {
                         remark2: '',
-                        id: '88585858',
+                        id: '',
                         realName: '',
                         sex: '0',
                         birthday: '',
@@ -168,31 +168,14 @@
                     evaluation: '',
                     return_record: '',
                     login_count: '',
-                    addressList: [
-                        {
-                            userName: '',
-                            phone: '',
-                            address: '',
-                            postalCode: '',
-                            defaultState: 2,
-                        },
-                    ],
+                    addressList: [],
                 },
-                list: [
-                    {
-                        id: '555',
-                        code: '',
-                        creatTime: '',
-                        mobilePhone: '',
-                        totalMoeny: '',
-                        status: 2,
-                    },
-                ],
+                list: [],
             }
         },
-       /* mounted(){
+        mounted(){
             this.getList();
-        },*/
+        },
         methods: {
             getList(){
                 this.loading = true;

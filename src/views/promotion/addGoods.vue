@@ -88,20 +88,7 @@
                     id: '',
                     goodsId: '',
                     skuId: '',
-                    merchantGoodsGroup: [
-                        {
-                            groupUserNum: 2,
-                            groupPrice: '',
-                            groupTime: '12',
-                            groupMaxNum: 10,
-                        },
-                        {
-                            groupUserNum: 2,
-                            groupPrice: '',
-                            groupTime: '12',
-                            groupMaxNum: 10,
-                        },
-                    ],
+                    merchantGoodsGroup: [],
                 },
                 rules: {
                     goodsId: [
@@ -114,24 +101,13 @@
                         { required: true }
                     ],
                 },
-                goodsList: [
-                    {goodsName: '耐克球鞋', id: '88753'}
-                ],
+                goodsList: [],
                 specList: [
                     {
-                        id: '6543',
-                        nameValue: [
-                            {
-                                name: '气垫',
-                                value: '有',
-                            },
-                            {
-                                name: '鞋跟',
-                                value: '高',
-                            },
-                        ],
-                        goodsSalePrice: '1000',
-                        goodsStock: '50',
+                        id: '',
+                        nameValue: [],
+                        goodsSalePrice: '',
+                        goodsStock: '',
                     }
                 ],
                 submitLoading: false
@@ -140,7 +116,7 @@
         created(){
             if (this.$route.query.id){
                 this.isAdd = false;
-                /*this.loading = true;
+                this.loading = true;
                 this.$ajax.post("merchantGoodsGroup/goods_group_by_id", {
                     id: this.$route.query.id
                 }).then((res) => {
@@ -163,8 +139,9 @@
                     this.$msgErr(err.msg);
                 }).finally(() => {
                     this.loading = false;
-                })*/
+                })
             }
+            this.loading = false;
         },
         methods: {
             /**

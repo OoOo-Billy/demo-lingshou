@@ -72,26 +72,7 @@
         },
         data() {
             return {
-                tableData: [
-                    {
-                        id: 666,
-                        styleName: '服装',
-                        propertyNum: 1000,
-                        paramNum: 20,
-                    },
-                    {
-                        id: 5299,
-                        styleName: '袜子',
-                        propertyNum: 99,
-                        paramNum: 50,
-                    },
-                    {
-                        id: 1128,
-                        styleName: '保暖裤',
-                        propertyNum: 9999,
-                        paramNum: 180,
-                    },
-                ],
+                tableData: [],
                 dialogVisible: false,
                 ruleForm: {
                     id: '',
@@ -105,9 +86,9 @@
                 }
             }
         },
-        /*mounted(){
+        mounted(){
             this.getList();
-        },*/
+        },
         methods: {
             getList(){
                 this.loading = true;

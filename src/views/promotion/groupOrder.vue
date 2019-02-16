@@ -134,27 +134,7 @@
                 promotionOrderStatus: '',
                 promotionStatus: '',
 
-                tableData: [
-                    {
-                        id: '',
-                        code: '',
-                        groupManageId: '',
-                        details: [
-                            {
-                                goodsName: '',
-                            }
-                        ],
-                        groupStatus: 2,
-                        totalMoeny: '',
-                        status: 2,
-                        mobilePhone: '',
-                        receiver: '',
-                        phone: '',
-                        address: '',
-                        creatTime: '',
-                        returnStatus: 0,
-                    },
-                ],
+                tableData: [],
 
                 dialogVisible: false,
 
@@ -174,7 +154,7 @@
                 this.groupManageId = this.$route.query.id;
             }
             this.merchantId = JSON.parse(localStorage.getItem('userInfo')).merchantId;
-            // this.getList();
+            this.getList();
         },
         methods: {
             getList() {

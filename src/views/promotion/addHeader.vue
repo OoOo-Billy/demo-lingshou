@@ -80,13 +80,11 @@
                 },
                 headerList: [
                     {id: 0, navName: '顶级类目'},
-                    {navName: '服装', id: 11,},
-                    {navName: '食品', id: 333,},
                 ],
                 submitLoading: false,
             }
         },
-       /* created() {
+        created() {
             this.$ajax.post("merchantNavigation/query_navigation_type_tree").then((res) => {
                 this.headerList = [...this.headerList, ...res];
                 if (this.$route.query.parentId){
@@ -96,7 +94,7 @@
             }, (err) => {
                 this.$msgErr(err.msg)
             })
-        },*/
+        },
         methods: {
             uploadNavIcon($event) {
                 let files = $event.target.files;

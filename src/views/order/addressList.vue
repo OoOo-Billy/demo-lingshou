@@ -50,24 +50,16 @@
         },
         data() {
             return {
-                tableData: [
-                    {
-                        id: '66234',
-                        returnPname: '123',
-                        returnName: '333',
-                        returnAddress: '321',
-                        returnPhone: '13887888654',
-                    },
-                ],
+                tableData: [],
                 checkItemId: [],
                 optionsList: {
                     'delete': '删除'
                 },
             }
         },
-        /*mounted(){
+        mounted(){
             this.getList();
-        },*/
+        },
         methods: {
             getList() {
                 this.loading = true;

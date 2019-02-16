@@ -117,10 +117,10 @@
                 merchantId: '',
                 isactive: '',
                 refundData: {
-                    all: '29',
-                    all_wei: '2',
-                    all_return: '6',
-                    all_refuse: '1',
+                    all: '',
+                    all_wei: '',
+                    all_return: '',
+                    all_refuse: '',
                 },
 
                 //搜索数据
@@ -157,26 +157,7 @@
                     ]
                 },
 
-                tableData: [
-                    {
-                        id: '12101',
-                        code: 'abcd1234efgn5643ddie463',
-                        creatTime: '2001-1-1',
-                        mobilePhone: '13878568840',
-                        applicationReturnMoney: '1000',
-                        contact: 'Luna',
-                        status: 2,
-                    },
-                    {
-                        id: '12103',
-                        code: 'abcd1234efgn5643ddie463',
-                        creatTime: '2001-1-1',
-                        mobilePhone: '13878568840',
-                        applicationReturnMoney: '1000',
-                        contact: 'Luna',
-                        status: 5,
-                    }
-                ],
+                tableData: [],
 
                 checkItemId: [],
                 optionsList: {
@@ -185,8 +166,8 @@
             }
         },
         created(){
-            // this.merchantId = JSON.parse(localStorage.userInfo).merchantId;
-            // this.getList();
+            this.merchantId = JSON.parse(localStorage.userInfo).merchantId;
+            this.getList();
         },
         methods: {
             getList() {
@@ -279,7 +260,7 @@
                     status: status,
                     merchantId: this.merchantId
                 }).then((res) => {
-                    this.$set(this.returnGoodsData, keyName, res);
+                    this.refundData[keyName] = res;
                 })
             }
         }

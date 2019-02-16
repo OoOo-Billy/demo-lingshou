@@ -62,7 +62,7 @@
                 },
             }
         },
-        /* created() {
+         created() {
              this.$ajax.post("/merchant_order_set/queryOrderSet",{
                  merchantId:  JSON.parse(localStorage.userInfo).merchantId
              }).then((res) => {
@@ -74,7 +74,7 @@
              },(err) => {
                  this.$msgErr(err.msg);
              })
-         },*/
+         },
         methods: {
             submitForm() {
                 this.$refs['ruleForm'].validate((valid) => {

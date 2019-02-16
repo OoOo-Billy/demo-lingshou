@@ -78,30 +78,7 @@
         data() {
             return {
                 //表格数据
-                tableData: [
-                    {
-                        id: 111,
-                        name: '耐克',
-                        logo: '',
-                        areaLogo: '',
-                        story: '',
-                        firstChar: 'N',
-                        sorting: 1,
-                        isShow: 0,
-                        goodsTotal: '鞋，服装',
-                    },
-                    {
-                        id: 211,
-                        name: '阿迪达斯',
-                        logo: '',
-                        areaLogo: '',
-                        story:'',
-                        firstChar: 'A',
-                        sorting: 2,
-                        isShow: 1,
-                        goodsTotal: '运动鞋，休闲鞋，服装',
-                    }
-                ],
+                tableData: [],
                 checkItemId: [],
 
                 //分页组件数据
@@ -115,9 +92,9 @@
                 brandName: '',
             }
         },
-        /*mounted(){
+        mounted(){
             this.getList();
-        },*/
+        },
         methods: {
             getList() {
                 this.loading =true;

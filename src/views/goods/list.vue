@@ -151,9 +151,7 @@
 
                 //筛选栏数据
                 categoryList: [],
-                // categoryList: [{typeName: '大衣', id: 0}, {typeName: '长裙', id: 1}],
                 brandList: [],
-                // brandList: [{name: '安踏', id: 0}, {name: '贵人鸟', id: 1}],
 
                 optionsList: {
                     'delete': '删除'
@@ -287,6 +285,8 @@
                     }, (err) => {
                         this.$msgErr(err.msg);
                     })
+                },() => {
+                    //取消删除
                 })
             },
         }

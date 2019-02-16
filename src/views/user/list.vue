@@ -76,9 +76,6 @@
             subTitle,
             pagination
         },
-        mounted(){
-            // this.getList();
-        },
         data(){
             return {
                 //搜索栏数据
@@ -89,18 +86,12 @@
 
                 datePicker: [],
 
-                tableData: [
-                    {
-                        id: '111',
-                        headImg: '',
-                        mobilePhone: '',
-                        userName: '',
-                        openId: '',
-                        createTime: '',
-                    },
-                ],
+                tableData: [],
 
             }
+        },
+        mounted(){
+            this.getList();
         },
         methods: {
             getList() {
