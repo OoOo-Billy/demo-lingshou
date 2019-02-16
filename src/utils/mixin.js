@@ -1,7 +1,7 @@
 export default {
     data(){
         return {
-            loading: false,//默认为true
+            loading: true,//默认为true
             visibleSearch: false,
             currentPage: 1,//当前页数
             pageSize: 10,//页数大小
@@ -136,12 +136,11 @@ export default {
          * @returns {*}
          */
         getGoodImg(data){
-            /*if (data){
+            if (data){
                 return data.split(',')[0]
             } else {
                 return require('@/assets/image.png')
-            }*/
-            return require('@/assets/image.png')
+            }
         },
 
         /**
